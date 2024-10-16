@@ -4,3 +4,4 @@ Phantom is developing a data-powered website to help hoteliers solve inaccuracie
 
 [CMS Prototype](https://bryanblue11.wixsite.com/phantom)
 
+[Sprint 1](https://hotel-app-flax-chi.vercel.app/) 
