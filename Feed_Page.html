@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phantom Booking</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .card-container {
+        perspective: 1000px;
+        min-height: 500px;
+      }
+
+      .card-container:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .hotel-card {
+        transition: all 0.5s ease;
+        transform-style: preserve-3d;
+      }
+
+      .hotel-card.center {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+        z-index: 30;
+      }
+
+      .hotel-card.left {
+        transform: translateX(-320px) scale(0.95);
+        opacity: 0.7;
+        z-index: 20;
+      }
+
+      .hotel-card.right {
+        transform: translateX(320px) scale(0.95);
+        opacity: 0.7;
+        z-index: 20;
+      }
+
+      .hotel-card.far-left {
+        transform: translateX(-640px) scale(0.9);
+        opacity: 0.4;
+        z-index: 10;
+      }
+
+      .hotel-card.far-right {
+        transform: translateX(640px) scale(0.9);
+        opacity: 0.4;
+        z-index: 10;
+      }
+
+      @media (max-width: 768px) {
+        .hotel-card.left,
+        .hotel-card.far-left {
+          transform: translateX(-160px) scale(0.95);
+        }
+        .hotel-card.right,
+        .hotel-card.far-right {
+          transform: translateX(160px) scale(0.95);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+      <div
+        class="container mx-auto px-4 py-3 flex items-center justify-between"
+      >
+        <div class="text-2xl font-serif text-gray-800">Phantom</div>
+        <div class="flex items-center space-x-4">
+          <button class="text-gray-600 hover:text-gray-800" id="profile-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              fill="currentColor"
+              class="bi bi-person"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div
+      class="hidden fixed top-14 right-5 w-auto bg-white p-6 rounded-lg shadow-lg"
+      id="profile-modal"
+    >
+      <div class="flex items-center space-x-4">
+        <img
+          src="https://via.placeholder.com/50"
+          alt="Profile"
+          class="rounded-full"
+        />
+        <div>
+          <h2 class="text-lg font-medium">Bryan</h2>
+          <p class="text-gray-500">bryanhans19@outlook.com</p>
+          <a href="#" class="text-blue-500 hover:text-blue-600"
+            >Manage account</a
+          >
+        </div>
+      </div>
+      <button class="text-gray-500 hover:text-gray-600 mt-4" id="close-modal">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-x-lg"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <main class="min-h-screen">
+      <!-- Search Section -->
+      <section class="container mx-auto px-4 py-8">
+        <div class="bg-white w-full shadow-lg p-6 mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700"
+                >Destination</label
+              >
+              <input
+                type="text"
+                placeholder="Where are you going?"
+                class="w-full p-2 border rounded-lg"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700"
+                >Check-in</label
+              >
+              <input type="date" class="w-full p-2 border rounded-lg" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700"
+                >Check-out</label
+              >
+              <input type="date" class="w-full p-2 border rounded-lg" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700"
+                >Guests</label
+              >
+              <select class="w-full p-2 border rounded-lg">
+                <option>1 Guest</option>
+                <option>2 Guests</option>
+                <option>3 Guests</option>
+                <option>4+ Guests</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 mb-8">
+          <button
+            class="border border-black px-4 py-2 text-xl text-black hover:bg-black hover:text-white transition duration-300"
+          >
+            Price Range
+          </button>
+          <button
+            class="border border-black px-4 py-2 text-xl text-black hover:bg-black hover:text-white transition duration-300"
+          >
+            Property Type
+          </button>
+          <button
+            class="border border-black px-4 py-2 text-xl text-black hover:bg-black hover:text-white transition duration-300"
+          >
+            Amenities
+          </button>
+          <button
+            class="border border-black px-4 py-2 text-xl text-black hover:bg-black hover:text-white transition duration-300"
+          >
+            Rating
+          </button>
+        </div>
+      </section>
+
+      <!-- Carousel Section -->
+      <section class="relative w-full bg-gray-900 py-12 md:py-16">
+        <div class="container mx-auto px-4">
+          <div class="card-container relative flex items-center justify-center">
+            <!-- Navigation -->
+            <button
+              id="prevBtn"
+              class="absolute left-4 z-50 text-white hover:scale-110 transition bg-black/50 p-2 rounded-full"
+            >
+              ←
+            </button>
+            <button
+              id="nextBtn"
+              class="absolute right-4 z-50 text-white hover:scale-110 transition bg-black/50 p-2 rounded-full"
+            >
+              →
+            </button>
+
+            <!-- Cards Container -->
+            <div
+              id="carousel"
+              class="relative w-full flex items-center justify-center"
+            ></div>
+
+            <!-- Pagination -->
+            <div
+              class="absolute bg-white rounded-lg shadow-xl ${position} w-[300px] md:w-[400px] flex items-center justify-center"
+            >
+              <span id="current-slide" class="text-black text-lg">1</span>
+              <span class="text-black text-lg">/</span>
+              <span id="total-slides" class="text-black text-lg">5</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container mx-auto px-4 py-8 text-center">
+        <button
+          class="border-2 border-black px-8 py-4 text-xl text-black uppercase tracking-widest hover:bg-black hover:text-white transition duration-300"
+        >
+          Load More Hotels
+        </button>
+      </section>
+
+      <section class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold mb-4">Hotel Openings</h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4"
+          id="article-grid"
+        ></div>
+      </section>
+
+      <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+          <div class="text-sm">
+            © 2024 Phantom Booking, L.L.C. All rights reserved.
+          </div>
+          <div class="space-x-4">
+            <a href="#" class="hover:text-gray-400">Terms of Use</a>
+            <a href="#" class="hover:text-gray-400">BEIAN CN Site</a>
+            <a href="#" class="hover:text-gray-400">Do Not Sell Information</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const hotels = [
+        {
+          id: 1,
+          name: "HU AT KO OLINA",
+          location: "Ko Olina, Hawaii",
+          image: "images/bilderboken-rlwE8f8anOc-unsplash.jpg",
+          description: "Experience luxury in the heart of Hawaii",
+        },
+        {
+          id: 2,
+          name: "ANGUILLA",
+          location: "Caribbean Islands",
+          image: "images/hung-li-1HbWj9BDbjE-unsplash.jpg",
+          description: "Paradise found in the Caribbean",
+        },
+        {
+          id: 3,
+          name: "THE OCEAN CLUB",
+          location: "Bahamas",
+          image: "images/sara-dubler-Koei_7yYtIo-unsplash.jpg",
+          description:
+            "Connect with true Bahamian beauty and enjoy remarkable seclusion at this legendary Caribbean hideaway.",
+        },
+        {
+          id: 4,
+          name: "BORA BORA",
+          location: "French Polynesia",
+          image: "images/hung-li-1HbWj9BDbjE-unsplash.jpg",
+          description: "Escape to the pearl of the Pacific",
+        },
+        {
+          id: 5,
+          name: "COSTA RICA PENINSULA",
+          location: "Papagayo, Costa Rica",
+          image: "images/bilderboken-rlwE8f8anOc-unsplash.jpg",
+          description: "Where luxury meets nature",
+        },
+      ];
+
+      let currentIndex = 0;
+      const carousel = document.getElementById("carousel");
+      const currentSlide = document.getElementById("current-slide");
+      const totalSlides = document.getElementById("total-slides");
+
+      function createHotelCard(hotel, position) {
+        const card = document.createElement("div");
+        card.className = `hotel-card absolute bg-white rounded-lg shadow-xl ${position} w-[300px] md:w-[400px]`;
+
+        card.innerHTML = `
+                <div class="relative h-[400px] md:h-[500px] overflow-hidden rounded-lg">
+                    <img src="${hotel.image}" alt="${hotel.name}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/50 to-transparent p-6">
+                        <div class="space-y-2">
+                            <h2 class="text-white text-xl md:text-2xl font-light">${hotel.name}</h2>
+                            <p class="text-white text-sm md:text-base">${hotel.location}</p>
+                            <p class="text-white text-xs md:text-sm">${hotel.description}</p>
+                            <button class="mt-4 px-4 py-2 border border-white text-white hover:bg-white hover:text-black transition-colors text-sm md:text-base">
+                                VIEW PROPERTY
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        return card;
+      }
+
+      function updateCarousel() {
+        carousel.innerHTML = "";
+        currentSlide.textContent = currentIndex + 1;
+        totalSlides.textContent = hotels.length;
+
+        const positions = ["far-left", "left", "center", "right", "far-right"];
+        positions.forEach((position, i) => {
+          let index = currentIndex + (i - 2);
+          if (index < 0) index = hotels.length + index;
+          if (index >= hotels.length) index = index - hotels.length;
+
+          const card = createHotelCard(hotels[index], position);
+          carousel.appendChild(card);
+        });
+      }
+
+      function navigateCarousel(direction) {
+        if (direction === "next") {
+          currentIndex = (currentIndex + 1) % hotels.length;
+        } else {
+          currentIndex =
+            currentIndex === 0 ? hotels.length - 1 : currentIndex - 1;
+        }
+        updateCarousel();
+      }
+
+      document
+        .getElementById("prevBtn")
+        .addEventListener("click", () => navigateCarousel("prev"));
+      document
+        .getElementById("nextBtn")
+        .addEventListener("click", () => navigateCarousel("next"));
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") navigateCarousel("prev");
+        if (e.key === "ArrowRight") navigateCarousel("next");
+      });
+
+      updateCarousel();
+    </script>
+    <script>
+      const articles = [
+        {
+          image: "images/pexels-amar-saleem-15661-70441.jpg",
+          title: "Highly-anticipated Luxury Hotel Openings for 2025",
+          description:
+            "A preview of the highly-anticipated luxury hotel openings for 2025",
+          url: "https://www.luxurytravelmagazine.com/news-articles/highly-anticipated-luxury-hotel-openings-for-2025",
+        },
+        {
+          image: "images/pexels-chetanvlad-2957461.jpg",
+          title: "Park Hyatt & Aman will debut in Cabo in 2025 ",
+          description:
+            "Los Cabos has long been a favorite destination for U.S. travelers and the region continues to experience remarkable growth in both hospitality and real estate.",
+          url: "https://www.luxurytravelmagazine.com/news-articles/park-hyatt-aman-will-debut-in-cabo-in-2025",
+        },
+        {
+          image: "images/pexels-ericazhao-2670273.jpg",
+          title:
+            "Regent Santa Monica Beach Now Open Marking The Legendary Brand's Return To The Americas",
+          description:
+            "The legendary Regent brand returns to the shores of the United States with the opening of Regent Santa Monica Beach.",
+          url: "https://www.luxurytravelmagazine.com/news-articles/regent-santa-monica-beach-now-open",
+        },
+        {
+          image: "images/pexels-rickyrecap-1771832.jpg",
+          title: "Grand Hyatt Scottsdale Resort Debuts $115 Million Renovation",
+          description:
+            "Hyatt Hotels Corporation announces Grand Hyatt Scottsdale Resort has completed its highly anticipated $115 million property-wide renovation.",
+          url: "https://www.luxurytravelmagazine.com/news-articles/grand-hyatt-scottsdale-resort-debuts-115-million-renovation",
+        },
+        {
+          image: "images/pexels-soulful-pizza-2080276-3914755.jpg",
+          title:
+            "The Sira, New Luxury Resort to Open in Lombok, Indonesia Nov. 2024",
+          description:
+            "The Sira, a Luxury Collection Resort & Spa, Lombok is slated to open in November 2024 in North Lombok, Indonesia between the awe-inspiring Mount Rinjani volcano and the idyllic Gili Islands.",
+          url: "https://www.luxurytravelmagazine.com/news-articles/the-sira-new-luxury-resort-to-open-in-lombok-indonesia-nov-2024",
+        },
+        {
+          image: "images/pexels-pavel-danilyuk-9119733.jpg",
+          title:
+            "Sun Lodge Opens in the Heart of Southern Vermont as an All-Season Destination",
+          description:
+            "Saltaire Hotels announces its latest opening, Sun Lodge. Located in Peru, VT, 15 minutes Northeast of the Manchester area, the newly opened Sun Lodge invites travelers to experience comfortable lodge-style living at the foot of Bromley Mountain.",
+          url: "https://www.luxurytravelmagazine.com/news-articles/sun-lodge-opens-in-the-heart-of-southern-vermont-as-an-all-season-destination",
+        },
+      ];
+
+      function createArticleCard(article) {
+        const card = document.createElement("div");
+        card.classList.add("bg-white", "rounded-lg", "shadow-lg", "p-4");
+
+        card.innerHTML = `
+            <img src="${article.image}" alt="Article Image" class="w-full h-48 object-cover ">
+            <h3 class="text-xl font-bold mt-2">${article.title}</h3>
+            <p class="text-gray-600 mt-2">${article.description}</p>
+            <a href="${article.url}" class="block mt-4 text-blue-500 hover:underline">Read More</a>
+          `;
+
+        return card;
+      }
+
+      const articleGrid = document.getElementById("article-grid");
+      articles.forEach((article) => {
+        articleGrid.appendChild(createArticleCard(article));
+      });
+
+      const profileBtn = document.getElementById("profile-btn");
+      const profileModal = document.getElementById("profile-modal");
+      const closeModal = document.getElementById("close-modal");
+
+      profileBtn.addEventListener("click", () => {
+        profileModal.classList.remove("hidden");
+      });
+
+      closeModal.addEventListener("click", () => {
+        profileModal.classList.add("hidden");
+      });
+    </script>
+  </body>
+</html>
