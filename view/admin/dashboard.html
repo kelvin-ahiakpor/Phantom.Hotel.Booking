@@ -72,7 +72,7 @@
                 <!-- VIP Guest Card -->
                 <div class="bg-gray-100 rounded-lg shadow p-4">
                     <div class="flex items-center space-x-4 mb-4">
-                        <img src="images/john-doe.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
+                        <img src="/assets/images/john-doe.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">John Doe</h3>
                             <p class="text-gray-500">Suite 302</p>
@@ -84,7 +84,7 @@
 
                 <div class="bg-gray-100 rounded-lg shadow p-4">
                     <div class="flex items-center space-x-4 mb-4">
-                        <img src="images/emma-jhonson.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
+                        <img src="/assets/images/emma-jhonson.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">Emily Clarke</h3>
                             <p class="text-gray-500">Penthouse Suite</p>
@@ -99,14 +99,6 @@
 
         
     </main>
-
-
-
-
-   
-          
-
-
         <!-- Modals -->
         <div id="guestModal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-20">
             <div class="bg-white rounded-lg p-6 w-80">
@@ -121,10 +113,10 @@
         <div id="addGuestModal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center z-20">
             <div class="bg-white rounded-lg p-6 w-80">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Add New Guest</h2>
-                <input id="newGuestName" type="text" placeholder="Guest Name" class="w-full p-2 border rounded-lg mb-3" required>
-                <input id="newGuestRoom" type="text" placeholder="Room" class="w-full p-2 border rounded-lg mb-3" required>
-                <input id="newGuestCheckIn" type="date" class="w-full p-2 border rounded-lg mb-3" required>
-                <input id="newGuestCheckOut" type="date" class="w-full p-2 border rounded-lg mb-3" required>
+                <input id="newGuestName" type="text" placeholder="Guest Name" class="w-full p-2 border rounded-lg mb-3" >
+                <input id="newGuestRoom" type="text" placeholder="Room" class="w-full p-2 border rounded-lg mb-3" >
+                <input id="newGuestCheckIn" type="date" class="w-full p-2 border rounded-lg mb-3" >
+                <input id="newGuestCheckOut" type="date" class="w-full p-2 border rounded-lg mb-3" >
                 <input type="file" id="newGuestImage" class="w-full p-2 border rounded-lg mb-3" accept="image/*">
 
                 <button onclick="addGuest()" class="px-4 py-2 bg-blue-600 text-white rounded-lg w-full">Add Guest</button>
@@ -136,10 +128,10 @@
     <script>
         // Sample data for guests
         let guests = [
-            { id: 1, name: "Emma Johnson", room: "Deluxe Room - 205", status: "Checked In", checkIn: "2024-11-01", checkOut: "2024-11-07", profileImage: "images/emily-clark.avif" },
-            { id: 2, name: "John Doe", room: "Suite - 302", status: "Checked Out", checkIn: "2024-10-20", checkOut: "2024-10-27", profileImage: "images/john-doe.avif" },
-            { id: 3, name: "Sarah Connor", room: "Standard Room - 110", status: "Checked In", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "images/conner-guest.avif" },
-            { id: 4, name: "Emily Clarke", room: "Penthouse Suite", status: "Checked Out", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "images/emma-jhonson.avif" }
+            { id: 1, name: "Emma Johnson", room: "Deluxe Room - 205", status: "Checked In", checkIn: "2024-11-01", checkOut: "2024-11-07", profileImage: "/assets/images/emily-clark.avif" },
+            { id: 2, name: "John Doe", room: "Suite - 302", status: "Checked Out", checkIn: "2024-10-20", checkOut: "2024-10-27", profileImage: "/assets/images/john-doe.avif" },
+            { id: 3, name: "Sarah Connor", room: "Standard Room - 110", status: "Checked In", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "/assets/images/conner-guest.avif" },
+            { id: 4, name: "Emily Clarke", room: "Penthouse Suite", status: "Checked Out", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "/assets/images/emma-jhonson.avif" }
         ];
 
                 // Color-coded badge
