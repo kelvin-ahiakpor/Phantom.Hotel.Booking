@@ -67,17 +67,17 @@
                         <button type="submit" class="w-full bg-black text-white uppercase tracking-widest py-2 hover:bg-gray-800 transition">Sign Up</button>
                         <div class="text-center text-sm">
                             Already have an account? 
-                            <a href="/view/login.html" class="text-gray-800 hover:text-zinc-500">Login</a>
+                            <a href="../view/login.php" class="text-gray-800 hover:text-zinc-500">Login</a>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="w-1/2 bg-gray-100 hidden md:block">
-                <img src="../../assets/images/christian-lambert-vmIWr0NnpCQ-unsplash.jpg" alt="Background Image" class="w-full h-full object-cover">
+                <img src="../assets/images/christian-lambert-vmIWr0NnpCQ-unsplash.jpg" alt="Background Image" class="w-full h-full object-cover">
             </div>
         </div>
     </main>
 
-    <script src="../../assets/js/signup.js"></script>
+    <script src="../assets/js/signup.js"></script>
 </body>
 </html>
