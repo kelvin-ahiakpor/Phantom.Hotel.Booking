@@ -42,8 +42,8 @@
                     <option>es</option>
                 </select>
             </div>
-            <a href="../PHANTOM_HOTEL_BOOKING/view/login.html" class="text-black hover:text-black">Sign in</a>
-            <a href="../PHANTOM_HOTEL_BOOKING/view/hotel_feed.html" class="border border-black text-black bg-white font-serif uppercase tracking-widest hover:bg-black hover:text-white transition sm:px-5 sm:py-1.5">Book Now</a>
+            <a href="../PHANTOM_HOTEL_BOOKING/view/login.php" class="text-black hover:text-black">Sign in</a>
+            <a href="../PHANTOM_HOTEL_BOOKING/view/hotel_feed.php" class="border border-black text-black bg-white font-serif uppercase tracking-widest hover:bg-black hover:text-white transition sm:px-5 sm:py-1.5">Book Now</a>
         </nav>
     </header>
 
@@ -78,13 +78,13 @@
                     Experience unparalleled luxury with our curated collection of elite accommodations.
                 </p>
                 <div class="flex space-x-4 justify-center sm:space-x-6">
-                    <a href="../PHANTOM_HOTEL_BOOKING/view/hotel_feed.html" class="bg-white text-black px-6 py-2 hover:bg-gray-200 transition sm:px-8 sm:py-3">Book Now</a>
+                    <a href="../PHANTOM_HOTEL_BOOKING/view/hotel_feed.php" class="bg-white text-black px-6 py-2 hover:bg-gray-200 transition sm:px-8 sm:py-3">Book Now</a>
                     <button class="border border-white px-6 py-2 hover:bg-white hover:text-black transition sm:px-8 sm:py-3">How We Work</button>
                 </div>
             </div>
         </section>
     </main>
-
+    
     <!-- Curated Luxury Experiences -->
     <section class="w-full bg-gradient-to-b from-gray-100 to-gray-200 py-20 sm:py-24">
         <div class="container mx-auto px-4 sm:px-8">
