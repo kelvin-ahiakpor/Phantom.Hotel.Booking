@@ -90,7 +90,7 @@ const hotels = [
     }
     updateCarousel();
   }
-
+  
   document
     .getElementById("prevBtn")
     .addEventListener("click", () => navigateCarousel("prev"));

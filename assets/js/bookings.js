@@ -119,5 +119,4 @@ const bookings = [
       container.appendChild(createBookingCard(booking));
     });
   }
-
   displayBookings();
