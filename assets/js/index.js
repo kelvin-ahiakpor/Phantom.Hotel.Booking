@@ -4,28 +4,28 @@ const destinations = [
         title: "The Epitome of Luxury",
         description: "Experience unparalleled sophistication in the City of Light",
         highlights: ["Private Louvre Tours", "Michelin-Starred Dining", "Haute Couture"],
-        image: "../../assets/images/pexels-chetanvlad-2957461 copy.jpg"
+        image: "../PHANTOM_HOTEL_BOOKING/assets/images/pexels-chetanvlad-2957461 copy.jpg"
     },
     {
         name: "Dubai",
         title: "Ultimate Opulence",
         description: "Where modern luxury reaches new heights",
         highlights: ["7-Star Hotels", "Desert Safaris", "Private Yacht Tours"],
-        image: "../../assets/images/pexels-amar-saleem-15661-70441.jpg"
+        image: "../PHANTOM_HOTEL_BOOKING/assets/images/pexels-amar-saleem-15661-70441.jpg"
     },
     {
         name: "Maldives",
         title: "Private Paradise",
         description: "Exclusive island luxury in pristine waters",
         highlights: ["Overwater Villas", "Personal Butler", "Private Reefs"],
-        image: "../../assets/images/pexels-chetanvlad-2957461 copy.jpg"
+        image: "../PHANTOM_HOTEL_BOOKING/assets/images/pexels-chetanvlad-2957461 copy.jpg"
     },
     {
         name: "Swiss Alps",
         title: "Alpine Elegance",
         description: "Mountain luxury at its finest",
         highlights: ["Private Chalets", "Helicopter Tours", "Spa Retreats"],
-        image: "../../assets/images/pexels-amar-saleem-15661-70441.jpg"
+        image: "../PHANTOM_HOTEL_BOOKING/assets/images/pexels-amar-saleem-15661-70441.jpg"
     }
 ];
 

@@ -107,21 +107,21 @@ const hotels = [
 
   const articles = [
     {
-      image: "../../assets/images/pexels-amar-saleem-15661-70441.jpg",
+      image: "../assets/images/pexels-amar-saleem-15661-70441.jpg",
       title: "Highly-anticipated Luxury Hotel Openings for 2025",
       description:
         "A preview of the highly-anticipated luxury hotel openings for 2025",
       url: "https://www.luxurytravelmagazine.com/news-articles/highly-anticipated-luxury-hotel-openings-for-2025",
     },
     {
-      image: "../../assets/images/pexels-chetanvlad-2957461.jpg",
+      image: "../assets/images/pexels-chetanvlad-2957461.jpg",
       title: "Park Hyatt & Aman will debut in Cabo in 2025 ",
       description:
         "Los Cabos has long been a favorite destination for U.S. travelers and the region continues to experience remarkable growth in both hospitality and real estate.",
       url: "https://www.luxurytravelmagazine.com/news-articles/park-hyatt-aman-will-debut-in-cabo-in-2025",
     },
     {
-      image: "../../assets/images/pexels-ericazhao-2670273.jpg",
+      image: "../assets/images/pexels-ericazhao-2670273.jpg",
       title:
         "Regent Santa Monica Beach Now Open Marking The Legendary Brand's Return To The Americas",
       description:
@@ -129,14 +129,14 @@ const hotels = [
       url: "https://www.luxurytravelmagazine.com/news-articles/regent-santa-monica-beach-now-open",
     },
     {
-      image: "../../assets/images/pexels-rickyrecap-1771832.jpg",
+      image: "../assets/images/pexels-rickyrecap-1771832.jpg",
       title: "Grand Hyatt Scottsdale Resort Debuts $115 Million Renovation",
       description:
         "Hyatt Hotels Corporation announces Grand Hyatt Scottsdale Resort has completed its highly anticipated $115 million property-wide renovation.",
       url: "https://www.luxurytravelmagazine.com/news-articles/grand-hyatt-scottsdale-resort-debuts-115-million-renovation",
     },
     {
-      image: "../../assets/images/pexels-soulful-pizza-2080276-3914755.jpg",
+      image: "../assets/images/pexels-soulful-pizza-2080276-3914755.jpg",
       title:
         "The Sira, New Luxury Resort to Open in Lombok, Indonesia Nov. 2024",
       description:
