@@ -3,21 +3,21 @@ const hotels = [
       id: 1,
       name: "HU AT KO OLINA",
       location: "Ko Olina, Hawaii",
-      image: "/assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
+      image: "../../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
       description: "Experience luxury in the heart of Hawaii",
     },
     {
       id: 2,
       name: "ANGUILLA",
       location: "Caribbean Islands",
-      image: "/assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
+      image: "../../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
       description: "Paradise found in the Caribbean",
     },
     {
       id: 3,
       name: "THE OCEAN CLUB",
       location: "Bahamas",
-      image: "/assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg",
+      image: "../../assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg",
       description:
         "Connect with true Bahamian beauty and enjoy remarkable seclusion at this legendary Caribbean hideaway.",
     },
@@ -25,14 +25,14 @@ const hotels = [
       id: 4,
       name: "BORA BORA",
       location: "French Polynesia",
-      image: "/assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
+      image: "../../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
       description: "Escape to the pearl of the Pacific",
     },
     {
       id: 5,
       name: "COSTA RICA PENINSULA",
       location: "Papagayo, Costa Rica",
-      image: "/assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
+      image: "../../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
       description: "Where luxury meets nature",
     },
   ];
@@ -107,21 +107,21 @@ const hotels = [
 
   const articles = [
     {
-      image: "/assets/images/pexels-amar-saleem-15661-70441.jpg",
+      image: "../../assets/images/pexels-amar-saleem-15661-70441.jpg",
       title: "Highly-anticipated Luxury Hotel Openings for 2025",
       description:
         "A preview of the highly-anticipated luxury hotel openings for 2025",
       url: "https://www.luxurytravelmagazine.com/news-articles/highly-anticipated-luxury-hotel-openings-for-2025",
     },
     {
-      image: "/assets/images/pexels-chetanvlad-2957461.jpg",
+      image: "../../assets/images/pexels-chetanvlad-2957461.jpg",
       title: "Park Hyatt & Aman will debut in Cabo in 2025 ",
       description:
         "Los Cabos has long been a favorite destination for U.S. travelers and the region continues to experience remarkable growth in both hospitality and real estate.",
       url: "https://www.luxurytravelmagazine.com/news-articles/park-hyatt-aman-will-debut-in-cabo-in-2025",
     },
     {
-      image: "/assets/images/pexels-ericazhao-2670273.jpg",
+      image: "../../assets/images/pexels-ericazhao-2670273.jpg",
       title:
         "Regent Santa Monica Beach Now Open Marking The Legendary Brand's Return To The Americas",
       description:
@@ -129,14 +129,14 @@ const hotels = [
       url: "https://www.luxurytravelmagazine.com/news-articles/regent-santa-monica-beach-now-open",
     },
     {
-      image: "/assets/images/pexels-rickyrecap-1771832.jpg",
+      image: "../../assets/images/pexels-rickyrecap-1771832.jpg",
       title: "Grand Hyatt Scottsdale Resort Debuts $115 Million Renovation",
       description:
         "Hyatt Hotels Corporation announces Grand Hyatt Scottsdale Resort has completed its highly anticipated $115 million property-wide renovation.",
       url: "https://www.luxurytravelmagazine.com/news-articles/grand-hyatt-scottsdale-resort-debuts-115-million-renovation",
     },
     {
-      image: "/assets/images/pexels-soulful-pizza-2080276-3914755.jpg",
+      image: "../../assets/images/pexels-soulful-pizza-2080276-3914755.jpg",
       title:
         "The Sira, New Luxury Resort to Open in Lombok, Indonesia Nov. 2024",
       description:
@@ -144,7 +144,7 @@ const hotels = [
       url: "https://www.luxurytravelmagazine.com/news-articles/the-sira-new-luxury-resort-to-open-in-lombok-indonesia-nov-2024",
     },
     {
-      image: "/assets/images/pexels-pavel-danilyuk-9119733.jpg",
+      image: "../../assets/images/pexels-pavel-danilyuk-9119733.jpg",
       title:
         "Sun Lodge Opens in the Heart of Southern Vermont as an All-Season Destination",
       description:

@@ -73,11 +73,11 @@
                 </div>
             </div>
             <div class="w-1/2 bg-gray-100 hidden md:block">
-                <img src="/assets/images/christian-lambert-vmIWr0NnpCQ-unsplash.jpg" alt="Background Image" class="w-full h-full object-cover">
+                <img src="../../assets/images/christian-lambert-vmIWr0NnpCQ-unsplash.jpg" alt="Background Image" class="w-full h-full object-cover">
             </div>
         </div>
     </main>
 
-    <script src="/assets/js/signup.js"></script>
+    <script src="../../assets/js/signup.js"></script>
 </body>
 </html>
