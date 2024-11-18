@@ -103,19 +103,19 @@
                     <h2 class="text-xl font-semibold mb-4">Hotel Image Preview</h2>
                     <div class="grid grid-cols-4 gap-4 mb-8" id="imagePreview">
                         <div class="col-span-2 row-span-2">
-                            <img id="previewImage1" src="/assets/images/jude-wilson-qeiqU0f7TyE-unsplash.jpg" alt="Hotel Preview" class="w-full h-full object-cover rounded-lg">
+                            <img id="previewImage1" src="../../assets/images/jude-wilson-qeiqU0f7TyE-unsplash.jpg" alt="Hotel Preview" class="w-full h-full object-cover rounded-lg">
                         </div>
                         <div>
-                            <img id="previewImage2" src="/assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg" alt="Hotel Room" class="w-full h-full object-cover rounded-lg">
+                            <img id="previewImage2" src="../../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg" alt="Hotel Room" class="w-full h-full object-cover rounded-lg">
                         </div>
                         <div>
-                            <img id="previewImage3" src="/assets/images/crew-szCvt1gP2d4-unsplash.jpg" alt="Hotel Pool" class="w-full h-full object-cover rounded-lg">
+                            <img id="previewImage3" src="../../assets/images/crew-szCvt1gP2d4-unsplash.jpg" alt="Hotel Pool" class="w-full h-full object-cover rounded-lg">
                         </div>
                         <div>
-                            <img id="previewImage4" src="/assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg" alt="Hotel Restaurant" class="w-full h-full object-cover rounded-lg">
+                            <img id="previewImage4" src="../../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg" alt="Hotel Restaurant" class="w-full h-full object-cover rounded-lg">
                         </div>
                         <div>
-                            <img id="previewImage5" src="/assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg" alt="Hotel Spa" class="w-full h-full object-cover rounded-lg">
+                            <img id="previewImage5" src="../../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg" alt="Hotel Spa" class="w-full h-full object-cover rounded-lg">
                         </div>
                     </div>
                     <p class="text-gray-600 text-sm">These images will be shown on your hotel page once the creation is complete. Ensure they represent your hotel accurately!</p>
@@ -131,6 +131,6 @@
     </footer>
 
     <!-- Link to external JavaScript file -->
-    <script src="/assets/js/create_hotel.js"></script>
+    <script src="../../assets/js/create_hotel.js"></script>
 </body>
 </html>

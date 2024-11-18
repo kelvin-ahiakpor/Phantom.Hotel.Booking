@@ -38,10 +38,10 @@ if (image3) {
 // Sample data for guests
 let guests = [
 
-    { id: 1, name: "Emma Johnson", room: "Deluxe Room - 205", status: "Checked In", checkIn: "2024-11-01", checkOut: "2024-11-07", profileImage: "/assets/images/emily-clark.avif" },
-    { id: 2, name: "John Doe", room: "Suite - 302", status: "Checked Out", checkIn: "2024-10-20", checkOut: "2024-10-27", profileImage: "/assets/images/john-doe.avif" },
-    { id: 3, name: "Sarah Connor", room: "Standard Room - 110", status: "Checked In", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "/assets/images/conner-guest.avif" },
-    { id: 4, name: "Emily Clarke", room: "Penthouse Suite", status: "Checked Out", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "/assets/images/emma-jhonson.avif" }
+    { id: 1, name: "Emma Johnson", room: "Deluxe Room - 205", status: "Checked In", checkIn: "2024-11-01", checkOut: "2024-11-07", profileImage: "../../assets/images/emily-clark.avif" },
+    { id: 2, name: "John Doe", room: "Suite - 302", status: "Checked Out", checkIn: "2024-10-20", checkOut: "2024-10-27", profileImage: "../../assets/images/john-doe.avif" },
+    { id: 3, name: "Sarah Connor", room: "Standard Room - 110", status: "Checked In", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "../../assets/images/conner-guest.avif" },
+    { id: 4, name: "Emily Clarke", room: "Penthouse Suite", status: "Checked Out", checkIn: "2024-11-05", checkOut: "2024-11-12", profileImage: "../../assets/images/emma-jhonson.avif" }
 ];
 
     // Color-coded badge

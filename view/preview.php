@@ -27,19 +27,19 @@
         <!-- Hotel Images Gallery -->
         <div class="grid grid-cols-4 gap-4 mb-8">
             <div class="col-span-2 row-span-2">
-                <img src="/assets/images/jude-wilson-qeiqU0f7TyE-unsplash.jpg" alt="Main Hotel View" class="w-full h-full object-cover rounded-lg">
+                <img src="../../assets/images/jude-wilson-qeiqU0f7TyE-unsplash.jpg" alt="Main Hotel View" class="w-full h-full object-cover rounded-lg">
             </div>
             <div>
-                <img src="/assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg" alt="Hotel Room" class="w-full h-full object-cover rounded-lg">
+                <img src="../../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg" alt="Hotel Room" class="w-full h-full object-cover rounded-lg">
             </div>
             <div>
-                <img src="/assets/images/crew-szCvt1gP2d4-unsplash.jpg" alt="Hotel Pool" class="w-full h-full object-cover rounded-lg">
+                <img src="../../assets/images/crew-szCvt1gP2d4-unsplash.jpg" alt="Hotel Pool" class="w-full h-full object-cover rounded-lg">
             </div>
             <div>
-                <img src="/assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg" alt="Hotel Restaurant" class="w-full h-full object-cover rounded-lg">
+                <img src="../../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg" alt="Hotel Restaurant" class="w-full h-full object-cover rounded-lg">
             </div>
             <div>
-                <img src="/assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg" alt="Hotel Spa" class="w-full h-full object-cover rounded-lg">
+                <img src="../../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg" alt="Hotel Spa" class="w-full h-full object-cover rounded-lg">
             </div>
         </div>
 
@@ -120,7 +120,7 @@
                     <!-- Deluxe Room -->
                     <div class="border-b pb-6 mb-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <img src="/assets/images/frames-for-your-heart-FqqiAvJejto-unsplash.jpg" alt="Deluxe Room" class="w-full h-48 object-cover rounded-lg">
+                            <img src="../../assets/images/frames-for-your-heart-FqqiAvJejto-unsplash.jpg" alt="Deluxe Room" class="w-full h-48 object-cover rounded-lg">
                             <div class="md:col-span-2">
                                 <div class="flex justify-between items-start mb-2">
                                     <h3 class="text-lg font-semibold">Deluxe Room</h3>
@@ -142,7 +142,7 @@
                     <!-- Suite -->
                     <div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <img src="/assets/images/linus-mimietz-p3UWyaujtQo-unsplash.jpg" alt="Suite" class="w-full h-48 object-cover rounded-lg">
+                            <img src="../../assets/images/linus-mimietz-p3UWyaujtQo-unsplash.jpg" alt="Suite" class="w-full h-48 object-cover rounded-lg">
                             <div class="md:col-span-2">
                                 <div class="flex justify-between items-start mb-2">
                                     <h3 class="text-lg font-semibold">Vendôme Suite</h3>
