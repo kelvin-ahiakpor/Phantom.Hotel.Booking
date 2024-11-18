@@ -3,21 +3,21 @@ const hotels = [
       id: 1,
       name: "HU AT KO OLINA",
       location: "Ko Olina, Hawaii",
-      image: "../../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
+      image: "../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
       description: "Experience luxury in the heart of Hawaii",
     },
     {
       id: 2,
       name: "ANGUILLA",
       location: "Caribbean Islands",
-      image: "../../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
+      image: "../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
       description: "Paradise found in the Caribbean",
     },
     {
       id: 3,
       name: "THE OCEAN CLUB",
       location: "Bahamas",
-      image: "../../assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg",
+      image: "../assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg",
       description:
         "Connect with true Bahamian beauty and enjoy remarkable seclusion at this legendary Caribbean hideaway.",
     },
@@ -25,14 +25,14 @@ const hotels = [
       id: 4,
       name: "BORA BORA",
       location: "French Polynesia",
-      image: "../../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
+      image: "../assets/images/hung-li-1HbWj9BDbjE-unsplash.jpg",
       description: "Escape to the pearl of the Pacific",
     },
     {
       id: 5,
       name: "COSTA RICA PENINSULA",
       location: "Papagayo, Costa Rica",
-      image: "../../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
+      image: "../assets/images/bilderboken-rlwE8f8anOc-unsplash.jpg",
       description: "Where luxury meets nature",
     },
   ];
@@ -144,7 +144,7 @@ const hotels = [
       url: "https://www.luxurytravelmagazine.com/news-articles/the-sira-new-luxury-resort-to-open-in-lombok-indonesia-nov-2024",
     },
     {
-      image: "../../assets/images/pexels-pavel-danilyuk-9119733.jpg",
+      image: "../assets/images/pexels-pavel-danilyuk-9119733.jpg",
       title:
         "Sun Lodge Opens in the Heart of Southern Vermont as an All-Season Destination",
       description:
