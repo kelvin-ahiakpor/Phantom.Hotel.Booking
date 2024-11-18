@@ -92,6 +92,6 @@
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       ></div>
     </main>
-    <script src="/assets/js/bookings.js"></script>  
+    <script src="../../assets/js/bookings.js"></script>  
   </body>
 </html>

@@ -72,7 +72,7 @@
                 <!-- VIP Guest Card -->
                 <div class="bg-gray-100 rounded-lg shadow p-4">
                     <div class="flex items-center space-x-4 mb-4">
-                        <img src="/assets/images/john-doe.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
+                        <img src="../../assets/images/john-doe.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">John Doe</h3>
                             <p class="text-gray-500">Suite 302</p>
@@ -84,7 +84,7 @@
 
                 <div class="bg-gray-100 rounded-lg shadow p-4">
                     <div class="flex items-center space-x-4 mb-4">
-                        <img src="/assets/images/emma-jhonson.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
+                        <img src="../../assets/images/emma-jhonson.avif" alt="VIP Guest Image" class="w-16 h-16 rounded-full object-cover">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">Emily Clarke</h3>
                             <p class="text-gray-500">Penthouse Suite</p>
@@ -130,7 +130,7 @@
             &copy; 2024 Phantom Hotel Management. All rights reserved.
         </div>
     </footer>
-    <script src="/assets/js/dashboard.js"></script>
+    <script src="../../assets/js/dashboard.js"></script>
 </body>
 </html>
 

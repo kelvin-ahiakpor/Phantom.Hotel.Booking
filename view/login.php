@@ -24,7 +24,7 @@
     <main class="pt-16 min-h-screen flex items-center justify-center">
         <div class="bg-white shadow-lg rounded-lg w-full max-w-5xl flex">
             <div class="w-1/2 bg-cover bg-center">
-                <img src="/assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg" alt="Background Image" class="w-full h-full object-cover">
+                <img src="../../assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg" alt="Background Image" class="w-full h-full object-cover">
             </div>
             <div class="w-1/2 p-8">
                 <h1 class="text-3xl font-serif mb-6 text-center"> Sign in </h1>
@@ -53,6 +53,6 @@
             </div>
         </div>
     </main>
-    <script src="/assets/js/login.js"></script>  
+    <script src="../../assets/js/login.js"></script> 
 </body>
 </html>

@@ -9,7 +9,7 @@
 <body class="bg-black min-h-screen">
     <!-- Background Image -->
     <div class="fixed inset-0 z-0">
-        <img src="/assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg" alt="Background" class="w-full h-full object-cover opacity-30">
+        <img src="../../assets/images/sara-dubler-Koei_7yYtIo-unsplash.jpg" alt="Background" class="w-full h-full object-cover opacity-30">
     </div>
 
     <div id="carousel-container" class="relative w-full h-screen overflow-hidden flex items-center justify-center">
@@ -36,6 +36,6 @@
             <span id="total-slides" class="text-white text-lg font-light">9</span>
         </div>
     </div>
-    <script src="/assets/js/browse_hotels.js"></script>
+    <script src="../../assets/js/browse_hotels.js"></script>
 </body>
 </html>

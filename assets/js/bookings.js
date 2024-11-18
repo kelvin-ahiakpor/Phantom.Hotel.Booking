@@ -9,7 +9,7 @@ const bookings = [
       price: 1500,
       status: "confirmed",
       amenities: ["Ocean View", "King Bed", "Private Balcony"],
-      image: "/assets/images/linus-mimietz-p3UWyaujtQo-unsplash.jpg",
+      image: "../../assets/images/linus-mimietz-p3UWyaujtQo-unsplash.jpg",
       width: 400,
       height: 300
     },
@@ -22,7 +22,7 @@ const bookings = [
       price: 3000,
       status: "pending",
       amenities: ["City View", "2 King Beds", "Private Pool"],
-      image: "/assets/images/linus-mimietz-p3UWyaujtQo-unsplash.jpg",
+      image: "../../assets/images/linus-mimietz-p3UWyaujtQo-unsplash.jpg",
       width: 400,
       height: 300
     },

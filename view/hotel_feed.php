@@ -8,7 +8,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/css/styles-hotel_feed.css">
+    <link rel="stylesheet" href="../../assets/css/styles-hotel_feed.css">
   </head>
   <body class="bg-gray-50">
     <header class="bg-white shadow-sm sticky top-0 z-50">
@@ -198,6 +198,6 @@
         </div>
       </footer>
     </main>
-    <script src="/assets/js/hotel_feed.js"></script> 
+    <script src="../../assets/js/hotel_feed.js"></script> 
   </body>
 </html>
