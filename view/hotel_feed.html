@@ -8,63 +8,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
     />
-    <style>
-      .card-container {
-        perspective: 1000px;
-        min-height: 500px;
-      }
-
-      .card-container:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease-in-out;
-      }
-
-      .hotel-card {
-        transition: all 0.5s ease;
-        transform-style: preserve-3d;
-      }
-
-      .hotel-card.center {
-        transform: translateX(0) scale(1);
-        opacity: 1;
-        z-index: 30;
-      }
-
-      .hotel-card.left {
-        transform: translateX(-320px) scale(0.95);
-        opacity: 0.7;
-        z-index: 20;
-      }
-
-      .hotel-card.right {
-        transform: translateX(320px) scale(0.95);
-        opacity: 0.7;
-        z-index: 20;
-      }
-
-      .hotel-card.far-left {
-        transform: translateX(-640px) scale(0.9);
-        opacity: 0.4;
-        z-index: 10;
-      }
-
-      .hotel-card.far-right {
-        transform: translateX(640px) scale(0.9);
-        opacity: 0.4;
-        z-index: 10;
-      }
-
-      @media (max-width: 768px) {
-        .hotel-card.left,
-        .hotel-card.far-left {
-          transform: translateX(-160px) scale(0.95);
-        }
-        .hotel-card.right,
-        .hotel-card.far-right {
-          transform: translateX(160px) scale(0.95);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="/assets/css/styles-hotel_feed.css">
   </head>
   <body class="bg-gray-50">
     <header class="bg-white shadow-sm sticky top-0 z-50">
