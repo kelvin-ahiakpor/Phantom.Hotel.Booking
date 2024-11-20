@@ -47,9 +47,8 @@
         <div>
           <h2 class="text-lg font-medium">Bryan</h2>
           <p class="text-gray-500">bryanhans19@outlook.com</p>
-          <a href="#" class="text-blue-500 hover:text-blue-600"
-            >Manage account</a
-          >
+          <a href="#" class="text-blue-500 hover:text-blue-600">Manage account</a>
+          <a href="../actions/logout.php" class="text-blue-500 hover:text-blue-600">Log Out</a>
         </div>
       </div>
       <button class="text-gray-500 hover:text-gray-600 mt-4" id="close-modal">
