@@ -3,35 +3,35 @@ const hotels = [
         id: 1,
         name: "HU AT KO OLINA",
         location: "Ko Olina, Hawaii",
-        image: "../../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
         description: "Experience luxury in the heart of Hawaii"
     },
     {
         id: 2,
         name: "ANGUILLA",
         location: "Caribbean Islands",
-        image: "../../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
         description: "Paradise found in the Caribbean"
     },
     {
         id: 3,
         name: "THE OCEAN CLUB",
         location: "Bahamas",
-        image: "../.../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
         description: "Connect with true Bahamian beauty and enjoy remarkable seclusion at this legendary Caribbean hideaway."
     },
     {
         id: 4,
         name: "BORA BORA",
         location: "French Polynesia",
-        image: "../../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
         description: "Escape to the pearl of the Pacific"
     },
     {
         id: 5,
         name: "COSTA RICA PENINSULA",
         location: "Papagayo, Costa Rica",
-        image: "../../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
         description: "Where luxury meets nature"
     }
 ];
