@@ -10,28 +10,28 @@ const hotels = [
         id: 2,
         name: "ANGUILLA",
         location: "Caribbean Islands",
-        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/pexels-boonkong-boonpeng-442952-1134176.jpg",
         description: "Paradise found in the Caribbean"
     },
     {
         id: 3,
         name: "THE OCEAN CLUB",
         location: "Bahamas",
-        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/bahamas.jpeg",
         description: "Connect with true Bahamian beauty and enjoy remarkable seclusion at this legendary Caribbean hideaway."
     },
     {
         id: 4,
         name: "BORA BORA",
         location: "French Polynesia",
-        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/bora_bora.jpeg",
         description: "Escape to the pearl of the Pacific"
     },
     {
         id: 5,
         name: "COSTA RICA PENINSULA",
         location: "Papagayo, Costa Rica",
-        image: "../assets/images/engin-akyurt-SMwCQZWayj0-unsplash.jpg",
+        image: "../assets/images/pexels-kadiravsarr-14749858.jpg",
         description: "Where luxury meets nature"
     }
 ];
