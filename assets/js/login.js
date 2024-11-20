@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("login-form");
     const togglePasswordBtn = document.getElementById("togglePasswordBtn");
     const passwordInput = document.getElementById("password");
-
+    
     // Password toggle functionality
     if (togglePasswordBtn && passwordInput) {
         const eyeOpenIcon = `
@@ -49,12 +49,12 @@ document.addEventListener("DOMContentLoaded", function () {
             
             const email = document.getElementById("email").value.trim();
             const password = passwordInput.value.trim();
-            
+            console.log("Email:", email);
+            console.log("Password:", password);
+
             // Clear previous error messages
             const emailError = document.getElementById("email-error");
             const passwordError = document.getElementById("password-error");
-            emailError.textContent = "";
-            passwordError.textContent = "";
             
             // Input validation
             let isValid = true;
