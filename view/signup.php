@@ -29,7 +29,7 @@
             <div class="w-1/2 bg-white p-8">
                 <div id="signupForm">
                     <h2 class="text-2xl font-serif text-center mb-8">Create Profile</h2>
-                    <form id="signup-form" class="space-y-6" nonvalidate>
+                    <form id="signup-form" class="space-y-6" novalidate>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2" for="first-name">First Name</label>
                             <input type="text" id="first-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" >
@@ -48,19 +48,25 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2" for="password">Password</label>
                             <div class="relative">
-                                <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" >
-                                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" onclick="togglePassword(this)">
-                                    <i data-lucide="eye" class="w-5 h-5"></i>
-                                </button>
-                            </div>
-                            <div id="password-error" class="text-red-500 text-sm mt-1"></div>
+                            <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <p id="password-error" class="text-red-500 text-sm mt-1"></p>
+                            <button type="button" id="togglePasswordBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2" for="confirm-password">Confirm Password</label>
                             <div class="relative">
                                 <input type="password" id="confirm-password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" >
-                                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700" onclick="togglePassword(this)">
-                                    <i data-lucide="eye" class="w-5 h-5"></i>
+                                <button type="button" id="togglePasswordConfirmBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
                                 </button>
                             </div>
                             <div id="confirm-password-error" class="text-red-500 text-sm mt-1"></div>
