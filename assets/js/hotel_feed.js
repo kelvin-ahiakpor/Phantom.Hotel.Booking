@@ -176,10 +176,19 @@ const hotels = [
   const profileModal = document.getElementById("profile-modal");
   const closeModal = document.getElementById("close-modal");
 
-  profileBtn.addEventListener("click", () => {
-    profileModal.classList.remove("hidden");
-  });
+  let isModalOpen = false; // Track modal state
 
-  closeModal.addEventListener("click", () => {
-    profileModal.classList.add("hidden");
+  profileBtn.addEventListener("click", () => {
+    if (isModalOpen) {
+      profileModal.classList.add("hidden"); // Close modal
+    } else {
+      profileModal.classList.remove("hidden"); // Open modal
+    }
+    isModalOpen = !isModalOpen; // Toggle modal state
   });
+  
+  closeModal.addEventListener("click", () => {
+    profileModal.classList.add("hidden"); // Close modal
+    isModalOpen = false; // Reset modal state
+  });
+  

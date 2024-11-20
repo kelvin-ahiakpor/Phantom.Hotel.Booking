@@ -1,0 +1,21 @@
+.relative {
+    position: relative;
+}
+
+#togglePasswordBtn {
+    position: absolute;
+    right: 0.75rem; /* Adjust to match your design */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: none; /* Ensure no background blocks visibility */
+    border: none; /* Remove default button styles */
+}
+
+#password-error {
+    margin-top: 0.25rem;
+    color: #ff4d4f; /* Adjust error color */
+    font-size: 0.875rem; /* Adjust size to your design */
+    position: absolute; /* To avoid shifting content */
+    bottom: -1.5rem; /* Move error message below the input field */
+}

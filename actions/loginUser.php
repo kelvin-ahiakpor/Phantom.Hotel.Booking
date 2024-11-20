@@ -4,10 +4,13 @@ require '../db/config.php';
 
 $errors = [];
 
+// Decode the JSON input
+$input = json_decode(file_get_contents("php://input"), true);
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Sanitize input
-    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
-    $password = trim($_POST["password"]);
+    $email = filter_var(trim($input["email"]), FILTER_SANITIZE_EMAIL);
+    $password = trim($input["password"]);
 
     if (empty($email)) {
         $errors[] = ["field" => "email", "message" => "Email is required."];
@@ -40,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['userType'] = $userType;
 
                 // Redirect to dashboard or hotel feed
-                echo json_encode(["success" => true, "redirect" => "../PHANTOM_HOTEL_BOOKING/view/hotel_feed.php"]);
+                echo json_encode(["success" => true, "redirect" => "../view/hotel_feed.php"]);
                 exit;
             } else {
                 $errors[] = ["field" => "password", "message" => "Incorrect password."];

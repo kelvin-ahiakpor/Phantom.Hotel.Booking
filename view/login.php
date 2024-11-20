@@ -6,6 +6,7 @@
     <title>Login/Signup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 <body class="bg-gray-100">
     <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
