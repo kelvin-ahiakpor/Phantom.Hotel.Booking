@@ -1,0 +1,16 @@
+.slide-transition {
+    transition: transform 0.5s ease-in-out;
+}
+
+.destination-card {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.destination-card:hover {
+    opacity: 0.95;
+}
+
+.indicator.active {
+    width: 2rem;
+    background-color: #000;
+}
