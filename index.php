@@ -5,26 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phantom Booking</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/lucide-icons@0.263.1/dist/lucide.min.js"></script>
-
-    <style>
-        .slide-transition {
-            transition: transform 0.5s ease-in-out;
-        }
-        
-        .destination-card {
-            transition: opacity 0.3s ease-in-out;
-        }
-        
-        .destination-card:hover {
-            opacity: 0.95;
-        }
-
-        .indicator.active {
-            width: 2rem;
-            background-color: #000;
-        }
-    </style>
+    <link href="../PHANTOM_HOTEL_BOOKING/assets/css/index.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 </head>
 
 <body class="bg-gray-900 text-white min-h-screen">
@@ -46,7 +28,7 @@
             <a href="../PHANTOM_HOTEL_BOOKING/view/hotel_feed.php" class="border border-black text-black bg-white font-serif uppercase tracking-widest hover:bg-black hover:text-white transition sm:px-5 sm:py-1.5">Book Now</a>
         </nav>
     </header>
-
+    
     <header class="bg-white py-3 px-8 flex justify-between items-center">
         <div class="flex space-x-8">
             <a href="#" class="text-lg text-black font-serif relative group">
@@ -263,6 +245,6 @@
         <p class="text-sm">&copy; 2024 Phantom Luxury Accommodations. All Rights Reserved.</p>
         <p class="text-sm">14 White Hart Lane, Opulent City, OC1 2LD</p>
     </footer>
-<script src="../PHANTOM_HOTEL_BOOKING/assets/js/index.js"></script>
+    <script src="../PHANTOM_HOTEL_BOOKING/assets/js/index.js"></script>
 </body>
 </html>
