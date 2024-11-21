@@ -1,9 +1,10 @@
 <?php
-session_start();
+require "../../functions/session_check.php";
 require '../db/config.php';
 
 if (!isset($_SESSION['userId'])) {
     echo json_encode(["success" => false, "message" => "User not logged in"]);
+    header("Location: ../view/login.php");
     exit;
 }
 
