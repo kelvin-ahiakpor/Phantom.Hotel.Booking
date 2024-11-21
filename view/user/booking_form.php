@@ -71,6 +71,7 @@ $hotel = $result->fetch_assoc();
                     Confirm Booking
                 </button>
             </form>
+            <div id="formFeedback" class="mt-4"></div>
         </div>
     </main>
     <script src="../../assets/js/booking_form.js"></script>
