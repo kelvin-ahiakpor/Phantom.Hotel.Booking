@@ -1,3 +1,13 @@
+<?php
+require "../../functions/session_check.php";
+require '../../db/config.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['userId'])) {
+    header("Location: ../login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -80,10 +90,11 @@
             <option value="pending">Pending</option>
           </select>
           <button
-            class="px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
-          >
-            New Booking
-          </button>
+          class="px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
+          onclick="window.location.href='new_booking.php';"
+        >
+          New Booking
+        </button>
         </div>
       </div>
 
