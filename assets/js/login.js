@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = data.redirect;
+                    window.location.href = "../view/user/bookings.php";
                 } else {
                     data.errors.forEach(error => {
                         if (error.field === "email") {
