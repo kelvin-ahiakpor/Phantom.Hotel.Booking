@@ -1,4 +1,5 @@
 // Sample booking data (in a real application, this would come from an API)
+document.addEventListener("DOMContentLoaded", function () {
 const bookings = [
     {
       id: "BOK001",
@@ -120,3 +121,8 @@ const bookings = [
     });
   }
   displayBookings();
+
+  document.getElementById("signOutBtn").addEventListener("click", function () {
+    window.location.href = "../../actions/logout.php";
+  });
+});
