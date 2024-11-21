@@ -37,7 +37,7 @@
               </svg>
               <span>My Account</span>
             </button>
-            <button
+            <button id="signOutBtn"
               class="text-black hover:text-gray-800 flex items-center space-x-2"
             >
               <svg
