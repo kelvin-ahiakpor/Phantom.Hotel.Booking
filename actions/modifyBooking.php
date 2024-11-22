@@ -52,4 +52,24 @@ $booking = $result->fetch_assoc();
 $pricePerNight = (float) $booking['price_per_night'];
 
 // Calculate the number of nights
-$nights = (new DateTime($checkOu
+$nights = (new DateTime($checkOutDate))->diff(new DateTime($checkInDate))->days;
+
+// Recalculate total price
+$totalPrice = $nights * $pricePerNight;
+
+// Update the booking
+$updateStmt = $conn->prepare("UPDATE hb_bookings 
+                              SET check_in_date = ?, check_out_date = ?, guests = ?, total_price = ? 
+                              WHERE booking_id = ?");
+$updateStmt->bind_param("ssidi", $checkInDate, $checkOutDate, $guests, $totalPrice, $bookingId);
+
+if ($updateStmt->execute()) {
+    echo json_encode(["success" => true, "message" => "Booking modified successfully."]);
+} else {
+    echo json_encode(["success" => false, "message" => "Failed to modify booking."]);
+}
+
+// Close statements
+$stmt->close();
+$updateStmt->close();
+?>
