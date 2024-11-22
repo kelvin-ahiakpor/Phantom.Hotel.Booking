@@ -66,8 +66,8 @@ $totalPrice = $nights * $pricePerNight;
 
 // Save booking to database
 try {
-    $stmt = $conn->prepare("INSERT INTO hb_bookings (user_id, hotel_id, room_id, check_in_date, check_out_date, total_price) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiissd", $userId, $hotelId, $roomId, $checkIn, $checkOut, $totalPrice);
+    $stmt = $conn->prepare("INSERT INTO hb_bookings (user_id, hotel_id, room_id, check_in_date, check_out_date, guests, total_price) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiissid", $userId, $hotelId, $roomId, $checkIn, $checkOut, $guests, $totalPrice);
 
     if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "Booking successful.", "booking_id" => $stmt->insert_id]);

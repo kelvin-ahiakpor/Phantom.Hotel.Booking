@@ -17,6 +17,7 @@ $stmt->bind_param("i", $hotel_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
+
 if ($result->num_rows > 0) {
     $rooms = [];
     while ($room = $result->fetch_assoc()) {

@@ -13,14 +13,18 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
         if (data.success) {
             // Populate the dropdown
+            let selectedRoomId = roomSelect.value; // Store current selection
             roomSelect.innerHTML = data.rooms
                 .map(
                     (room) =>
-                        `<option value="${room.room_id}">
+                        `<option value="${room.room_id}" ${
+                            room.room_id === parseInt(selectedRoomId) ? "selected" : ""
+                        }>
                             ${room.room_type} - $${parseFloat(room.price_per_night).toFixed(2)}/night (Capacity: ${room.capacity})
                         </option>`
                 )
                 .join("");
+
         } else {
             // Handle no rooms available
             roomSelect.innerHTML = `<option value="">${data.message}</option>`;
