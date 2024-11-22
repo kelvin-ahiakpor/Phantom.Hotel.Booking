@@ -82,13 +82,14 @@ if (!isset($_SESSION['userId'])) {
           </p>
         </div>
         <div class="flex space-x-4">
-          <select
-            class="px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-          >
-            <option value="all">All Bookings</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
-          </select>
+        <select
+          class="px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+          <option value="all">All Bookings</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="pending">Pending</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+
           <button
           class="px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
           onclick="window.location.href='new_booking.php';"
