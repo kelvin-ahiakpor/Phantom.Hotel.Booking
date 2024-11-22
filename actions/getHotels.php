@@ -1,4 +1,5 @@
 <?php
+require '../functions/session_check.php';
 require '../db/config.php';
 
 try {
