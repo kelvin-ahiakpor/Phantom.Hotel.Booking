@@ -3,6 +3,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const formFeedback = document.getElementById("formFeedback");
     const hotelId = document.querySelector('input[name="hotel_id"]').value;
     const roomSelect = document.getElementById("room_id");
+    const today = new Date().toISOString().split("T")[0];
+    const checkInInput = document.getElementById("check_in_date")
+    const checkOutInput = document.getElementById("check_out_date")
+
+    // Set the min attribute for both check-in and check-out dates
+    checkInInput.setAttribute("min", today);
+    checkOutInput.setAttribute("min", today);
+
+    // Update check-out min date when check-in changes
+    checkInInput.addEventListener("change", function () {
+        checkOutInput.setAttribute("min", this.value);
+    });
 
     // Track the selected room
     let selectedRoom = null;
@@ -61,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         // Form field values
+        const today = new Date().toISOString().split("T")[0];
         const roomId = roomSelect.value;
         const checkIn = document.getElementById("check_in_date").value;
         const checkOut = document.getElementById("check_out_date").value;
@@ -102,6 +115,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!roomId) {
             isValid = false;
             errors.push("Please select a room.");
+        }
+
+        if (checkIn < today) {
+            isValid = false;
+            errors.push("Check-in date cannot be in the past.");
+        }
+    
+        if (checkOut <= checkIn) {
+            isValid = false;
+            errors.push("Check-out date must be after the check-in date.");
         }
 
         if (!isValid) {
