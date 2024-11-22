@@ -1,5 +1,6 @@
 <?php
-require "../../functions/session_check.php";
+session_start();
+require '../functions/session_check.php';
 require '../db/config.php';
 
 if (!isset($_SESSION['userId'])) {
