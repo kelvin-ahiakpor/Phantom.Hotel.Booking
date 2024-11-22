@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const bookingsContainer = document.getElementById("bookings-container");
   const filterDropdown = document.querySelector("select");
+  const today = new Date().toISOString().split("T")[0];
+  const checkInInput = document.getElementById("check_in_date");
+  const checkOutInput = document.getElementById("check_out_date");
 
   // Load bookings on page load
   fetchBookings("all");
@@ -136,14 +139,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Open Modify Modal
   function openModifyModal(bookingId, checkIn, checkOut, guests) {
+    const today = new Date().toISOString().split("T")[0];
     const modalHtml = `
         <div id="modifyModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div class="bg-white rounded-lg p-6 w-1/3">
                 <h2 class="text-xl font-bold mb-4">Modify Booking</h2>
                 <label class="block text-sm mb-2">New Check-in Date:</label>
-                <input id="newCheckIn" type="date" class="w-full border p-2 rounded mb-4" value="${checkIn}" />
+                <input id="newCheckIn" type="date" class="w-full border p-2 rounded mb-4" value="${checkIn}" min="${today}" />
                 <label class="block text-sm mb-2">New Check-out Date:</label>
-                <input id="newCheckOut" type="date" class="w-full border p-2 rounded mb-4" value="${checkOut}" />
+                <input id="newCheckOut" type="date" class="w-full border p-2 rounded mb-4" value="${checkOut}" min="${today}" />
                 <label class="block text-sm mb-2">Number of Guests:</label>
                 <input id="newGuests" type="number" class="w-full border p-2 rounded mb-4" value="${guests}" />
                 <div class="flex justify-end space-x-4">
@@ -160,13 +164,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   
     document.getElementById("confirmModify").addEventListener("click", () => {
+      const today = new Date().toISOString().split("T")[0];
       const newCheckIn = document.getElementById("newCheckIn").value;
       const newCheckOut = document.getElementById("newCheckOut").value;
       const newGuests = document.getElementById("newGuests").value;
+      const errors = [];
+      let isValid = true;
   
       if (!newCheckIn || !newCheckOut || !newGuests) {
         showErrorModal("All fields are required.");
         return;
+      }
+
+      if (newCheckIn < today) {
+        isValid = false;
+        errors.push("Check-in date cannot be in the past.");
+      }
+
+      if (newCheckOut <= newCheckIn) {
+          isValid = false;
+          errors.push("Check-out date must be after the check-in date.");
+      }
+
+      if (!isValid) {
+          showErrorModal(errors.join(" "));
+          return;
       }
   
       fetch("../../actions/modifyBooking.php", {
