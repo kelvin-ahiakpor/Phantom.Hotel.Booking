@@ -1,6 +1,6 @@
 <?php
-require '../db/config.php';
 require '../functions/session_check.php';
+require '../db/config.php';
 
 // Ensure the user is logged in and is a Super Admin
 if (!isset($_SESSION['userId']) || $_SESSION['role'] != 1) {

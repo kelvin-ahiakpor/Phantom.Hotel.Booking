@@ -10,12 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Check database connection
-if ($conn->connect_error) {
-    echo json_encode(["success" => false, "message" => "Database connection failed: " . $conn->connect_error]);
-    exit;
-}
-
 // Parse JSON input
 $input = json_decode(file_get_contents("php://input"), true);
 
@@ -42,8 +36,8 @@ if (new DateTime($checkOut) <= new DateTime($checkIn)) {
     exit;
 }
 
-// Validate room availability
-$stmt = $conn->prepare("SELECT room_id, price_per_night FROM hb_rooms WHERE hotel_id = ? AND room_id = ? AND availability = TRUE");
+// Validate room availability and capacity
+$stmt = $conn->prepare("SELECT room_id, price_per_night, capacity FROM hb_rooms WHERE hotel_id = ? AND room_id = ? AND availability = TRUE");
 $stmt->bind_param("ii", $hotelId, $roomId);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -55,6 +49,13 @@ if ($result->num_rows === 0) {
 
 $room = $result->fetch_assoc();
 $pricePerNight = (float) $room['price_per_night'];
+$roomCapacity = (int) $room['capacity'];
+
+// Check if the number of guests exceeds the room's capacity
+if ($guests > $roomCapacity) {
+    echo json_encode(["success" => false, "message" => "The selected room cannot accommodate the number of guests."]);
+    exit;
+}
 
 // Calculate total price
 $nights = (new DateTime($checkOut))->diff(new DateTime($checkIn))->days;

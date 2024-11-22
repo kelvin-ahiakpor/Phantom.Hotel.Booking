@@ -4,35 +4,56 @@ document.addEventListener("DOMContentLoaded", function () {
     const hotelId = document.querySelector('input[name="hotel_id"]').value;
     const roomSelect = document.getElementById("room_id");
 
+    // Track the selected room
+    let selectedRoom = null;
+
     // Fetch available rooms on page load
     fetch(`../../actions/getAvailableRooms.php?hotel_id=${hotelId}`)
-    .then((response) => {
-        console.log("Response status:", response.status);
-        return response.json();
-    })
-    .then((data) => {
-        if (data.success) {
-            // Populate the dropdown
-            let selectedRoomId = roomSelect.value; // Store current selection
-            roomSelect.innerHTML = data.rooms
-                .map(
-                    (room) =>
-                        `<option value="${room.room_id}" ${
-                            room.room_id === parseInt(selectedRoomId) ? "selected" : ""
-                        }>
-                            ${room.room_type} - $${parseFloat(room.price_per_night).toFixed(2)}/night (Capacity: ${room.capacity})
-                        </option>`
-                )
-                .join("");
+        .then((response) => {
+            console.log("Response status:", response.status);
+            return response.json();
+        })
+        .then((data) => {
+            if (data.success) {
+                // Populate the dropdown
+                roomSelect.innerHTML = data.rooms
+                    .map(
+                        (room) =>
+                            `<option value="${room.room_id}">
+                                ${room.room_type} - $${parseFloat(room.price_per_night).toFixed(2)}/night (Capacity: ${room.capacity})
+                            </option>`
+                    )
+                    .join("");
 
-        } else {
-            // Handle no rooms available
-            roomSelect.innerHTML = `<option value="">${data.message}</option>`;
-        }
-    })
-    .catch((error) => {
-        console.error("Error fetching rooms:", error);
-        roomSelect.innerHTML = `<option value="">Failed to load rooms. Error: ${error.message}</option>`;
+                // Set default selected room
+                const defaultRoomId = roomSelect.value; // First option value
+                selectedRoom = data.rooms.find(
+                    (room) => room.room_id === parseInt(defaultRoomId)
+                );
+
+                console.log("Default selected room:", selectedRoom);
+            } else {
+                // Handle no rooms available
+                roomSelect.innerHTML = `<option value="">${data.message}</option>`;
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching rooms:", error);
+            roomSelect.innerHTML = `<option value="">Failed to load rooms. Error: ${error.message}</option>`;
+        });
+
+    // Update selectedRoom when the user changes the dropdown
+    roomSelect.addEventListener("change", function () {
+        const selectedRoomId = parseInt(roomSelect.value);
+        fetch(`../../actions/getAvailableRooms.php?hotel_id=${hotelId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                selectedRoom = data.rooms.find(
+                    (room) => room.room_id === selectedRoomId
+                );
+                console.log("Selected room updated:", selectedRoom);
+            })
+            .catch((error) => console.error("Error updating selected room:", error));
     });
 
     // Handle form submission
@@ -71,6 +92,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!guests || isNaN(guests) || guests <= 0) {
             isValid = false;
             errors.push("Please enter a valid number of guests.");
+        }
+
+        if (selectedRoom && guests > selectedRoom.capacity) {
+            isValid = false;
+            errors.push(`Number of guests exceeds room capacity (Max: ${selectedRoom.capacity}).`);
         }
 
         if (!roomId) {

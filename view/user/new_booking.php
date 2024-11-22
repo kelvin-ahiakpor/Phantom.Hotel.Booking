@@ -3,7 +3,20 @@
 require "../../functions/session_check.php";
 require '../../db/config.php';
 
-$query = "SELECT hotel_id, hotel_name, location, description, price_per_night, image FROM hb_hotels WHERE availability = TRUE";
+$query = "
+    SELECT 
+        h.hotel_id, 
+        h.hotel_name, 
+        h.location, 
+        h.description, 
+        h.image,
+        MIN(r.price_per_night) AS min_price, 
+        MAX(r.price_per_night) AS max_price
+    FROM hb_hotels h
+    JOIN hb_rooms r ON h.hotel_id = r.hotel_id
+    WHERE h.availability = TRUE
+    GROUP BY h.hotel_id, h.hotel_name, h.location, h.description, h.image
+";
 $result = $conn->query($query);
 
 $hotels = [];
@@ -44,7 +57,9 @@ if ($result->num_rows > 0) {
                     <h3 class="text-lg font-bold"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
                     <p class="text-sm text-gray-600"><?= htmlspecialchars($hotel['location']) ?></p>
                     <p class="text-sm text-gray-800 mt-2"><?= htmlspecialchars($hotel['description']) ?></p>
-                    <p class="text-xl font-bold mt-4">$<?= number_format($hotel['price_per_night'], 2) ?>/night</p>
+                    <p class="text-xl font-bold mt-4">
+                        $<?= number_format($hotel['min_price'], 2) ?> - $<?= number_format($hotel['max_price'], 2) ?>/night
+                    </p>
                     <button
                         class="mt-4 px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
                         onclick="window.location.href='booking_form.php?hotel_id=<?= $hotel['hotel_id'] ?>';"

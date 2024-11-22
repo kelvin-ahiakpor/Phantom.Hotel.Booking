@@ -28,14 +28,8 @@ if (new DateTime($checkOutDate) <= new DateTime($checkInDate)) {
     exit;
 }
 
-// Validate guests count
-if ($guests <= 0) {
-    echo json_encode(["success" => false, "message" => "Guests count must be greater than zero."]);
-    exit;
-}
-
-// Fetch booking details and room price
-$stmt = $conn->prepare("SELECT b.room_id, r.price_per_night 
+// Validate booking and room details
+$stmt = $conn->prepare("SELECT b.room_id, r.capacity 
                         FROM hb_bookings b 
                         JOIN hb_rooms r ON b.room_id = r.room_id 
                         WHERE b.booking_id = ? AND b.user_id = ?");
@@ -49,19 +43,22 @@ if ($result->num_rows === 0) {
 }
 
 $booking = $result->fetch_assoc();
-$pricePerNight = (float) $booking['price_per_night'];
+$roomCapacity = (int) $booking['capacity'];
 
-// Calculate the number of nights
+// Validate guest count
+if ($guests > $roomCapacity) {
+    echo json_encode(["success" => false, "message" => "The selected room cannot accommodate the number of guests."]);
+    exit;
+}
+
+// Calculate new total price
 $nights = (new DateTime($checkOutDate))->diff(new DateTime($checkInDate))->days;
-
-// Recalculate total price
-$totalPrice = $nights * $pricePerNight;
 
 // Update the booking
 $updateStmt = $conn->prepare("UPDATE hb_bookings 
-                              SET check_in_date = ?, check_out_date = ?, guests = ?, total_price = ? 
+                              SET check_in_date = ?, check_out_date = ?, guests = ? 
                               WHERE booking_id = ?");
-$updateStmt->bind_param("ssidi", $checkInDate, $checkOutDate, $guests, $totalPrice, $bookingId);
+$updateStmt->bind_param("ssii", $checkInDate, $checkOutDate, $guests, $bookingId);
 
 if ($updateStmt->execute()) {
     echo json_encode(["success" => true, "message" => "Booking modified successfully."]);
