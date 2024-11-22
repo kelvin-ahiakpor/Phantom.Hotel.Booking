@@ -44,4 +44,8 @@ function getBookingsByStatus($userId, $status = null)
     $bookings = [];
     
     while ($row = $result->fetch_assoc()) {
-       
+        $bookings[] = $row;
+    }
+
+    return $bookings;
+}
