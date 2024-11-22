@@ -62,11 +62,19 @@ $hotel = $result->fetch_assoc();
                     <input type="date" id="check_out_date" name="check_out_date" required class="mt-1 p-2 border border-gray-300 w-full">
                 </div>
 
+
+                <div>
+                    <label for="room_id" class="block text-gray-700">Select Room</label>
+                    <select id="room_id" name="room_id" required class="mt-1 p-2 border border-gray-300 w-full">
+                        <option value="">Loading rooms...</option>
+                    </select>
+                </div>
+
                 <div>
                     <label for="guests" class="block text-gray-700">Number of Guests</label>
                     <input type="number" id="guests" name="guests" min="1" required class="mt-1 p-2 border border-gray-300 w-full">
                 </div>
-
+    
                 <button id="submitBooking" type="submit" class="w-full px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150">
                     Confirm Booking
                 </button>
