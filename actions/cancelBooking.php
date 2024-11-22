@@ -37,4 +37,7 @@ $cancelStmt->bind_param("i", $bookingId);
 if ($cancelStmt->execute() && $cancelStmt->affected_rows > 0) {
     echo json_encode(["success" => true, "message" => "Booking cancelled successfully."]);
 } else {
-    error_log("Error cancelling booking: " . $cancelStmt->error
+    error_log("Error cancelling booking: " . $cancelStmt->error); // Log any issues
+    echo json_encode(["success" => false, "message" => "Failed to cancel booking."]);
+}
+?>
