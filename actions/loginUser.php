@@ -42,8 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['lastName'] = $lastName;
                 $_SESSION['userType'] = $userType;
 
-                // Redirect to dashboard or hotel feed
-                echo json_encode(["success" => true, "redirect" => "../view/hotel_feed.php"]);
+                // Determine redirect URL based on user type
+                $redirectUrl = $userType === 'owner'
+                    ? "../view/owner/manage_hotel.php"
+                    : "../view/hotel_feed.php";
+
+                echo json_encode([
+                    "success" => true,
+                    "redirect" => $redirectUrl
+                ]);
                 exit;
             } else {
                 $errors[] = ["field" => "password", "message" => "Incorrect password."];
@@ -59,4 +66,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo json_encode(["success" => false, "errors" => $errors]);
     exit;
 }
-?>
