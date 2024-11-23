@@ -8,15 +8,21 @@ $query = "
         h.hotel_id, 
         h.hotel_name, 
         h.location, 
-        h.description, 
-        h.image,
+        h.description,
         MIN(r.price_per_night) AS min_price, 
-        MAX(r.price_per_night) AS max_price
+        MAX(r.price_per_night) AS max_price,
+        (
+            SELECT hi.image_url 
+            FROM hb_hotel_images hi 
+            WHERE hi.hotel_id = h.hotel_id 
+            LIMIT 1
+        ) AS image_url
     FROM hb_hotels h
     JOIN hb_rooms r ON h.hotel_id = r.hotel_id
     WHERE h.availability = TRUE
-    GROUP BY h.hotel_id, h.hotel_name, h.location, h.description, h.image
+    GROUP BY h.hotel_id, h.hotel_name, h.location, h.description
 ";
+
 $result = $conn->query($query);
 
 $hotels = [];
@@ -65,10 +71,9 @@ if ($result->num_rows > 0) {
         </div>
 
         <div id="hotelGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Hotels will be dynamically loaded here -->
             <?php foreach ($hotels as $hotel): ?>
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="<?= htmlspecialchars($hotel['image'] ?: '../../assets/images/placeholder.jpg') ?>" alt="<?= htmlspecialchars($hotel['hotel_name']) ?>" class="h-48 w-full object-cover">
+            <img src="<?= htmlspecialchars(!empty($hotel['image_url']) ? '../../' . $hotel['image_url'] : '../../assets/images/placeholder.jpg') ?>" alt="<?= htmlspecialchars($hotel['hotel_name']) ?>" class="h-48 w-full object-cover">
                 <div class="p-6">
                     <h3 class="text-lg font-bold"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
                     <p class="text-sm text-gray-600"><?= htmlspecialchars($hotel['location']) ?></p>

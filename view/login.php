@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
     <link rel="stylesheet" href="../assets/css/login.css">
 </head>
+
 <body class="bg-gray-100">
     <header class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -43,8 +45,8 @@
                             <p id="password-error" class="text-red-500 text-sm mt-1"></p>
                             <button type="button" id="togglePasswordBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                 </svg>
                             </button>
                         </div>
@@ -52,11 +54,13 @@
                     <button type="submit" class="w-full bg-black text-white uppercase tracking-widest py-2 hover:bg-gray-800 transition">Login</button>
                 </form>
                 <div class="text-center text-sm py-8">
-                    Don't have an account? <a href="../view/signup.php" class="text-gray-800 hover:text-zinc-500">Sign up</a>
+                    Don't have an account? <a href="../view/signup.php" class="text-blue-500 font-semibold hover:text-blue-400">Sign up</a>
+
                 </div>
             </div>
         </div>
     </main>
-    <script src="../assets/js/login.js"></script> 
+    <script src="../assets/js/login.js"></script>
 </body>
+
 </html>
