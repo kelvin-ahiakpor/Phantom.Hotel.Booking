@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .map(
                 (hotel) => `
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="${hotel.image || '../../assets/images/placeholder.jpg'}" alt="${hotel.hotel_name}" class="h-48 w-full object-cover">
+                    <img src="${hotel.image_url}" alt="${hotel.hotel_name}" class="h-48 w-full object-cover">
                     <div class="p-6">
                         <h3 class="text-lg font-bold">${hotel.hotel_name}</h3>
                         <p class="text-sm text-gray-600">${hotel.location}</p>
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `
             )
             .join("");
-    };
+    };    
 
     const updateDropdown = (hotels, searchTerm) => {
         if (searchTerm.trim() === "") {
