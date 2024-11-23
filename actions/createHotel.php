@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Clean up uploaded images if hotel creation failed
                 foreach ($imageUrls as $imagePath) {
-                    $fullPath = '../' . $imagePath;
+                    $fullPath = '../../' . $imagePath;
                     if (file_exists($fullPath)) {
                         unlink($fullPath);
                     }
