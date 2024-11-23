@@ -49,7 +49,6 @@ try {
             $imageStmt->execute();
             $imageResult = $imageStmt->get_result();
             while ($image = $imageResult->fetch_assoc()) {
-                // echo $image['image_url'];
                 $hotelImages[] = $image['image_url'];
             }
 
