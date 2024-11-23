@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // Determine redirect URL based on user type
                 $redirectUrl = $userType === 'owner'
                     ? "../view/owner/manage_hotel.php"
-                    : "../view/hotel_feed.php";
+                    : "../view/user/bookings.php";
 
                 echo json_encode([
                     "success" => true,

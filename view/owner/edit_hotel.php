@@ -196,7 +196,7 @@ try {
                                         accept="image/jpeg,image/png"
                                         class="hidden">
                                     <?php if (isset($hotelImages[$i])): ?>
-                                        <img src="/<?php echo htmlspecialchars($hotelImages[$i]); ?>"
+                                        <img src="../../<?php echo htmlspecialchars($hotelImages[$i]); ?>"
                                             class="preview-image"
                                             id="preview<?php echo $i + 1; ?>"
                                             alt="Hotel image <?php echo $i + 1; ?>">

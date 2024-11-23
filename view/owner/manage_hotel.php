@@ -49,6 +49,7 @@ try {
             $imageStmt->execute();
             $imageResult = $imageStmt->get_result();
             while ($image = $imageResult->fetch_assoc()) {
+                // echo $image['image_url'];
                 $hotelImages[] = $image['image_url'];
             }
 
@@ -142,10 +143,9 @@ try {
                                 <!-- Main Image -->
                                 <div class="relative w-full h-64 rounded-lg overflow-hidden">
                                     <img
-                                        src="<?php echo !empty($hotelImages) ? '/' . htmlspecialchars($hotelImages[0]) : '/assets/images/default-hotel.jpg'; ?>"
+                                        src="<?php echo !empty($hotelImages) ? "../../". htmlspecialchars($hotelImages[0]) : '../../assets/images/default-hotel.jpg'; ?>"
                                         alt="<?php echo htmlspecialchars($hotelDetails['hotel_name']); ?>"
-                                        class="w-full h-full object-cover hotel-image"
-                                        onerror="this.src='/assets/images/default-hotel.jpg'" />
+                                        class="w-full h-full object-cover hotel-image" />
                                 </div>
 
                                 <!-- Additional Images -->
@@ -154,10 +154,9 @@ try {
                                         <?php for ($i = 1; $i < count($hotelImages); $i++): ?>
                                             <div class="relative w-full h-32 rounded-lg overflow-hidden">
                                                 <img
-                                                    src="/<?php echo htmlspecialchars($hotelImages[$i]); ?>"
+                                                    src="../../<?php echo htmlspecialchars($hotelImages[$i]); ?>"
                                                     alt="Additional view of <?php echo htmlspecialchars($hotelDetails['hotel_name']); ?>"
-                                                    class="w-full h-full object-cover hotel-image"
-                                                    onerror="this.src='/assets/images/default-hotel.jpg'" />
+                                                    class="w-full h-full object-cover hotel-image" />
                                             </div>
                                         <?php endfor; ?>
                                     </div>
