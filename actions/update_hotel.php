@@ -13,7 +13,7 @@ checkUserAccess('owner');
 function uploadImage($file)
 {
     try {
-        $uploadDir = '../../uploads/hotels/';
+        $uploadDir = '../uploads/';
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -23,7 +23,7 @@ function uploadImage($file)
         $targetPath = $uploadDir . $filename;
 
         if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-            return 'uploads/hotels/' . $filename;
+            return 'uploads/' . $filename;
         }
         return null;
     } catch (Exception $e) {
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Clean up newly uploaded images if update failed
                 foreach ($newImageUrls as $imagePath) {
-                    $fullPath = '../../' . $imagePath;
+                    $fullPath = '../' . $imagePath;
                     if (file_exists($fullPath)) {
                         unlink($fullPath);
                     }

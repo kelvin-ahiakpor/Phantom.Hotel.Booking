@@ -14,7 +14,7 @@ function uploadImage($file)
 {
     try {
         // Create upload directory if it doesn't exist
-        $uploadDir = '../../uploads/hotels/';
+        $uploadDir = '../uploads/';
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -27,7 +27,7 @@ function uploadImage($file)
         // Move uploaded file
         if (move_uploaded_file($file['tmp_name'], $targetPath)) {
             // Return relative path for database storage
-            return 'uploads/hotels/' . $filename;
+            return 'uploads/' . $filename;
         }
         return null;
     } catch (Exception $e) {
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Clean up uploaded images if hotel creation failed
                 foreach ($imageUrls as $imagePath) {
-                    $fullPath = '../../' . $imagePath;
+                    $fullPath = '../' . $imagePath;
                     if (file_exists($fullPath)) {
                         unlink($fullPath);
                     }
