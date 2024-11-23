@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Carousel</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<!-- // create logout button and redirect to the login page -->
+
 <body class="bg-black min-h-screen">
     <!-- Background Image -->
     <div class="fixed inset-0 z-0">
@@ -38,4 +41,5 @@
     </div>
     <script src="../assets/js/browse_hotels.js"></script>
 </body>
+
 </html>
