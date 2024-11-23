@@ -174,16 +174,6 @@ try {
                         <div id="descriptionError" class="error-text"></div>
                     </div>
 
-                    <!-- Price per Night -->
-                    <div>
-                        <label for="pricePerNight" class="block text-sm font-medium text-gray-700">Price per Night ($)</label>
-                        <input type="number" id="pricePerNight" name="pricePerNight"
-                            value="<?php echo htmlspecialchars($hotelDetails['price_per_night']); ?>"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black"
-                            min="0" step="0.01" required>
-                        <div id="priceError" class="error-text"></div>
-                    </div>
-
                     <!-- Images -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Hotel Images</label>

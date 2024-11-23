@@ -7,56 +7,7 @@
     <title>Create Your Hotel | Phantom</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .image-input-wrapper {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            border: 2px dashed #cbd5e0;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .image-input-wrapper input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .image-input-wrapper:hover {
-            border-color: #4a5568;
-        }
-
-        .preview-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .placeholder-text {
-            color: #718096;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .loading-spinner {
-            display: none;
-            margin-left: 0.5rem;
-        }
-
-        .error-text {
-            color: #e53e3e;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-    </style>
+    <link href="../../assets/css/create_hotel.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-50">

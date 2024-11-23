@@ -2,7 +2,7 @@
 require '../db/config.php';
 
 try {
-    $stmt = $conn->prepare("SELECT hotel_id, hotel_name, location, image, description FROM hb_hotels WHERE availability = TRUE");
+    $stmt = $conn->prepare("SELECT hotel_id, hotel_name, location, description FROM hb_hotels WHERE availability = TRUE");
     $stmt->execute();
     $result = $stmt->get_result();
 

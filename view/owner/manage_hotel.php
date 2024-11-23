@@ -98,7 +98,7 @@ try {
             <div class="text-2xl font-serif text-gray-800">Phantom</div>
             <div class="flex items-center space-x-4">
                 <?php if (!$hasHotel): ?>
-                    <a href="create_hotel.php" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
+                    <a href="createHotel.php" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
                         Create Hotel
                     </a>
                 <?php endif; ?>
@@ -162,7 +162,6 @@ try {
                                     </div>
                                 <?php endif; ?>
                             </div>
-
                             <!-- Hotel Details -->
                             <div class="space-y-4">
                                 <h3 class="text-xl font-bold"><?php echo htmlspecialchars($hotelDetails['hotel_name']); ?></h3>
@@ -246,7 +245,7 @@ try {
                 <div class="text-center py-12">
                     <h2 class="text-2xl font-semibold mb-4">Welcome to Phantom</h2>
                     <p class="text-gray-600 mb-6">You haven't created a hotel yet. Start by creating your first hotel.</p>
-                    <a href="create_hotel.php" class="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition">
+                    <a href="createHotel.php" class="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition">
                         Create Your Hotel
                     </a>
                 </div>
@@ -287,5 +286,4 @@ try {
         });
     </script>
 </body>
-
 </html>

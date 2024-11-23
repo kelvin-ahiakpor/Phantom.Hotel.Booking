@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const config = {
         maxFileSize: 5 * 1024 * 1024, // 5MB
         allowedImageTypes: ['image/jpeg', 'image/png', 'image/jpg'],
-        requiredFields: ['hotelName', 'location', 'address', 'description', 'pricePerNight']
+        requiredFields: ['hotelName', 'location', 'address', 'description']
     };
 
     // DOM Elements
@@ -111,13 +111,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Validate price
-        const price = parseFloat(document.getElementById('pricePerNight').value);
-        if (isNaN(price) || price <= 0) {
-            showError('priceError', 'Please enter a valid price');
-            isValid = false;
-        }
-
         return isValid;
     }
 
@@ -169,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const formData = new FormData(form);
             formData.append('availability', document.getElementById('availability').checked ? '1' : '0');
 
-            const response = await fetch('../../actions/update_hotel.php', {
+            const response = await fetch('../../actions/updateHotel.php', {
                 method: 'POST',
                 body: formData
             });

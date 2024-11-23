@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(pair[0] + ': ' + pair[1]);
             }
 
-            const response = await fetch('../../actions/create_hotel.php', {
+            const response = await fetch('../../actions/createHotel.php', {
                 method: 'POST',
                 body: formData
             });
