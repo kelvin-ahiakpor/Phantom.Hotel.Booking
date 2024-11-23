@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('availability', availabilityInput.checked ? '1' : '0');
 
         const url = currentMode === MODAL_MODES.ADD
-            ? '../../actions/create_room.php'
-            : '../../actions/update_room.php';
+            ? '../../actions/createRoom.php'
+            : '../../actions/updateRoom.php';
 
         fetch(url, {
             method: 'POST',
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
         submitButton.disabled = true;
         loadingSpinner.classList.remove('hidden');
 
-        fetch('../../actions/delete_room.php', {
+        fetch('../../actions/deleteRoom.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

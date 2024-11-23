@@ -8,7 +8,7 @@ if (!isset($_GET['hotel_id'])) {
 $hotel_id = intval($_GET['hotel_id']);
 
 // Fetch hotel details from the database
-$query = "SELECT hotel_name, location, description, price_per_night FROM hb_hotels WHERE hotel_id = ?";
+$query = "SELECT hotel_name, location, description FROM hb_hotels WHERE hotel_id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $hotel_id);
 $stmt->execute();
@@ -47,7 +47,7 @@ $hotel = $result->fetch_assoc();
             <h3 class="text-xl font-semibold mb-4"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
             <p class="text-gray-700 mb-2"><strong>Location:</strong> <?= htmlspecialchars($hotel['location']) ?></p>
             <p class="text-gray-700 mb-4"><strong>Description:</strong> <?= htmlspecialchars($hotel['description']) ?></p>
-            <p class="text-gray-900 text-lg font-bold mb-6">$<?= number_format($hotel['price_per_night'], 2) ?>/night</p>
+            
             
             <form novalidate class="space-y-4">
                 <input type="hidden" name="hotel_id" value="<?= $hotel_id ?>">
@@ -62,11 +62,19 @@ $hotel = $result->fetch_assoc();
                     <input type="date" id="check_out_date" name="check_out_date" required class="mt-1 p-2 border border-gray-300 w-full">
                 </div>
 
+
+                <div>
+                    <label for="room_id" class="block text-gray-700">Select Room</label>
+                    <select id="room_id" name="room_id" required class="mt-1 p-2 border border-gray-300 w-full">
+                        <option value="">Loading rooms...</option>
+                    </select>
+                </div>
+
                 <div>
                     <label for="guests" class="block text-gray-700">Number of Guests</label>
                     <input type="number" id="guests" name="guests" min="1" required class="mt-1 p-2 border border-gray-300 w-full">
                 </div>
-
+    
                 <button id="submitBooking" type="submit" class="w-full px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150">
                     Confirm Booking
                 </button>

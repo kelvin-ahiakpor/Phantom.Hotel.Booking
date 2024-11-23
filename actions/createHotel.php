@@ -100,24 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         address,
                         description, 
                         owner_id,
-                        price_per_night,
                         availability,
                         created_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, TRUE, NOW())
+                    ) VALUES (?, ?, ?, ?, ?, TRUE, NOW())
                 ");
 
                 // Set default price
-                $defaultPrice = 100.00;
                 $address = $location;
 
                 $stmt->bind_param(
-                    "sssssd",
+                    "sssss",
                     $hotelName,
                     $location,
                     $address,
                     $description,
-                    $ownerId,
-                    $defaultPrice
+                    $ownerId
                 );
 
                 if ($stmt->execute()) {
