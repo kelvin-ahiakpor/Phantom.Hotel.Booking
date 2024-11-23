@@ -14,12 +14,15 @@ $input = json_decode(file_get_contents("php://input"), true);
 error_log(print_r($input, true)); // Check server logs
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
-    // Use $input instead of $_POST
-    $firstName = htmlspecialchars(trim($input["first-name"]), ENT_QUOTES, 'UTF-8');
-    $lastName = htmlspecialchars(trim($input["last-name"]), ENT_QUOTES, 'UTF-8');
+    $firstName = htmlspecialchars(trim($input["first_name"]), ENT_QUOTES, 'UTF-8');
+    $lastName = htmlspecialchars(trim($input["last_name"]), ENT_QUOTES, 'UTF-8');
     $email = filter_var(trim($input["email"]), FILTER_SANITIZE_EMAIL);
     $password = trim($input["password"]);
-    $passwordConfirm = trim($input["confirm-password"]);
+    $passwordConfirm = trim($input["confirm_password"]);
+    $userType = htmlspecialchars(trim($input["user_type"]), ENT_QUOTES, 'UTF-8');
+
+    // Remove this line as it corrupts the JSON response
+    // echo "userType: $userType\n";
 
     // Validation checks
     if (empty($firstName)) {
@@ -39,9 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
     if (empty($password)) {
         $errors[] = ["field" => "password", "message" => "Password is required."];
     } elseif (
-        strlen($password) < 8 || 
-        !preg_match("/[A-Z]/", $password) || 
-        !preg_match("/[0-9]{3,}/", $password) || 
+        strlen($password) < 8 ||
+        !preg_match("/[A-Z]/", $password) ||
+        !preg_match("/[0-9]{3,}/", $password) ||
         !preg_match("/[@#$%^&*!_]/", $password)
     ) {
         $errors[] = ["field" => "password", "message" => "Password must be at least 8 characters long, contain one uppercase letter, three digits, and a special character."];
@@ -49,6 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
 
     if ($password !== $passwordConfirm) {
         $errors[] = ["field" => "confirm-password", "message" => "Passwords do not match."];
+    }
+
+    // Validate user type
+    if (!in_array($userType, ['guest', 'owner'])) {
+        $errors[] = ["field" => "user-type", "message" => "Invalid user type selected."];
     }
 
     // Check for duplicate email in the database
@@ -64,9 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
             // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Set default user_type to "guest"
-            $userType = "guest";
-
             // Insert user data into the database
             $stmt = $conn->prepare("INSERT INTO hb_users (first_name, last_name, email, password, user_type, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
             $stmt->bind_param("sssss", $firstName, $lastName, $email, $hashedPassword, $userType);
@@ -75,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
                 $_SESSION['userEmail'] = $email;
 
                 // Respond with success
+                header('Content-Type: application/json');
                 echo json_encode(["success" => true]);
                 exit;
             } else {
@@ -86,8 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
 
     // Output JSON response with errors if any
     if (!empty($errors)) {
+        header('Content-Type: application/json');
         echo json_encode(["success" => false, "errors" => $errors]);
     }
     exit;
 }
-?>
