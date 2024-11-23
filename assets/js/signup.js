@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordConfirmInput = document.getElementById("confirm-password");
 
   // Password toggle functionality
-  if (togglePasswordBtn && passwordInput ) {
+  if (togglePasswordBtn && passwordInput) {
     const eyeOpenIcon = `
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-   // Password toggle functionality
-   if (togglePasswordConfirmBtn && passwordConfirmInput ) {
+  // Password toggle functionality
+  if (togglePasswordConfirmBtn && passwordConfirmInput) {
     const eyeOpenIcon = `
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = document.getElementById("email").value.trim();
       const password = passwordInput.value.trim();
       const confirmPassword = passwordConfirmInput.value.trim();
+      const userType = document.getElementById("user-type").value.trim();
 
       // Clear previous error messages
       const firstNameError = document.getElementById("first-name-error");
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const emailError = document.getElementById("email-error");
       const passwordError = document.getElementById("password-error");
       const confirmPasswordError = document.getElementById("confirm-password-error");
+      const userTypeError = document.getElementById("user-type-error");
 
       // Input validation
       let isValid = true;
@@ -138,19 +140,33 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmPasswordError.textContent = "";
       }
 
+      // User Type validation
+      if (!userType || !['guest', 'owner'].includes(userType)) {
+        userTypeError.textContent = "Please select a valid account type";
+        isValid = false;
+      } else {
+        userTypeError.textContent = "";
+      }
+
       if (!isValid) return;
+
+      // Create the request data object
+      const requestData = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+        confirm_password: confirmPassword,
+        user_type: userType
+      };
 
       // AJAX Request
       fetch("../actions/registerUser.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          "first-name": firstName,
-          "last-name": lastName,
-          email,
-          password,
-          "confirm-password": confirmPassword,
-        }),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
       })
         .then((response) => response.json())
         .then((data) => {

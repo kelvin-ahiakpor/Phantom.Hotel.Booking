@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,7 @@
             <a href="../PHANTOM_HOTEL_BOOKING/view/hotel_feed.php" class="border border-black text-black bg-white font-serif uppercase tracking-widest hover:bg-black hover:text-white transition sm:px-5 sm:py-1.5">Book Now</a>
         </nav>
     </header>
-    
+
     <header class="bg-white py-3 px-8 flex justify-between items-center">
         <div class="flex space-x-8">
             <a href="#" class="text-lg text-black font-serif relative group">
@@ -66,7 +67,7 @@
             </div>
         </section>
     </main>
-    
+
     <!-- Curated Luxury Experiences -->
     <section class="w-full bg-gradient-to-b from-gray-100 to-gray-200 py-20 sm:py-24">
         <div class="container mx-auto px-4 sm:px-8">
@@ -75,7 +76,7 @@
                 <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto"></div>
                 <p class="text-gray-600 mt-6 text-lg font-light max-w-2xl mx-auto">Discover our collection of the world's most distinguished accommodations, where exceptional service meets unparalleled elegance.</p>
             </div>
-    
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
                 <!-- Hotel Card 1 -->
                 <div class="group bg-white shadow-xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
@@ -105,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- Hotel Card 2 -->
                 <div class="group bg-white shadow-xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
                     <div class="relative">
@@ -134,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- Hotel Card 3 -->
                 <div class="group bg-white shadow-xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
                     <div class="relative">
@@ -163,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- Hotel Card 4 -->
                 <div class="group bg-white shadow-xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-2">
                     <div class="relative">
@@ -203,7 +204,7 @@
                 <h2 class="text-5xl font-serif text-gray-900 mb-4">Curated Destinations</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto"></div>
                 <p class="text-gray-600 text-xl font-light max-w-3xl mx-auto">
-                    Discover our handpicked collection of the world's most prestigious destinations, 
+                    Discover our handpicked collection of the world's most prestigious destinations,
                     where extraordinary experiences await the discerning traveler
                 </p>
             </div>
@@ -211,20 +212,20 @@
             <div class="relative max-w-6xl mx-auto">
                 <div id="slider" class="overflow-hidden rounded-xl shadow-2xl">
                     <div id="slides-container" class="flex slide-transition">
-                        
+
                     </div>
                 </div>
 
                 <!-- Navigation arrows -->
                 <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
 
                 <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-4 rounded-full backdrop-blur-sm transition-all duration-300">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </button>
 
@@ -233,7 +234,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Footer -->
     <footer class="bg-black  py-4 px-8 text-center">
         <div class="flex justify-center space-x-4 mb-2">
@@ -247,4 +248,5 @@
     </footer>
     <script src="../PHANTOM_HOTEL_BOOKING/assets/js/index.js"></script>
 </body>
+
 </html>

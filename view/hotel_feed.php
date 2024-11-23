@@ -45,6 +45,7 @@
           class="rounded-full"
         />
         <div>
+          
           <h2 class="text-lg font-medium">Bryan</h2>
           <p class="text-gray-500">bryanhans19@outlook.com</p>
           <a href="#" class="text-blue-500 hover:text-blue-600">Manage account</a>
