@@ -34,6 +34,7 @@ if ($result->num_rows > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Booking</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../../assets/css/new-booking.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen">
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
@@ -48,8 +49,23 @@ if ($result->num_rows > 0) {
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
-        <h2 class="text-3xl font-serif font-bold text-gray-900 mb-6">Select a Hotel</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="mb-6 flex items-center justify-between">
+            <h2 class="text-3xl font-serif font-bold text-gray-900">Select a Hotel</h2>
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="hotelSearch" 
+                    placeholder="Search hotels..." 
+                    class="p-2 border border-gray-300 rounded-lg w-80"
+                />
+                <div id="dropdownResults" class="absolute bg-white border border-gray-300 rounded-lg mt-1 hidden max-h-60 overflow-y-auto w-80">
+                    <!-- Dropdown results will go here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="hotelGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Hotels will be dynamically loaded here -->
             <?php foreach ($hotels as $hotel): ?>
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img src="<?= htmlspecialchars($hotel['image'] ?: '../../assets/images/placeholder.jpg') ?>" alt="<?= htmlspecialchars($hotel['hotel_name']) ?>" class="h-48 w-full object-cover">
@@ -71,5 +87,6 @@ if ($result->num_rows > 0) {
             <?php endforeach; ?>
         </div>
     </main>
+    <script src="../../assets/js/search_hotels.js"></script>
 </body>
 </html>

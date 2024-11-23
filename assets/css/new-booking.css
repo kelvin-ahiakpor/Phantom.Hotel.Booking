@@ -1,0 +1,11 @@
+#dropdownResults {
+    display: none;
+}
+
+#dropdownResults.hidden {
+    display: none;
+}
+
+#dropdownResults:not(.hidden) {
+    display: block;
+}
