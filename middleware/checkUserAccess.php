@@ -9,7 +9,7 @@ function checkUserAccess($allowedUserType)
 
     // Check if user is logged in
     if (!isset($_SESSION['userId'])) {
-        header("Location: ../view/login.php");
+        header("Location: ../login.php");
         exit;
     }
 

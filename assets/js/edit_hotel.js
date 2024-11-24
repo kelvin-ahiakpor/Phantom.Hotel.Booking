@@ -3,7 +3,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const config = {
         maxFileSize: 5 * 1024 * 1024, // 5MB
         allowedImageTypes: ['image/jpeg', 'image/png', 'image/jpg'],
-        requiredFields: ['hotelName', 'location', 'address', 'description']
+        requiredFields: ['hotelName', 'location', 'address', 'description'],
+        amenityIcons: {
+            wifi: '📶',
+            pool: '🏊',
+            spa: '💆',
+            restaurant: '🍽️',
+            valet: '🚗',
+            concierge: '👨‍💼'
+        }
     };
 
     // DOM Elements
@@ -28,6 +36,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 profileModal.classList.add('hidden');
             }
         });
+    }
+
+    // Initialize amenities
+    function setupAmenities() {
+        const amenityCheckboxes = document.querySelectorAll('[type="checkbox"]');
+        amenityCheckboxes.forEach(checkbox => {
+            if (checkbox.id !== 'availability') {
+                checkbox.addEventListener('change', () => {
+                    updateAmenityStyle(checkbox);
+                });
+                // Initialize styles
+                updateAmenityStyle(checkbox);
+            }
+        });
+    }
+
+    function updateAmenityStyle(checkbox) {
+        const label = checkbox.closest('label');
+        const icon = label.querySelector('.amenity-icon');
+
+        if (checkbox.checked) {
+            label.classList.add('bg-blue-50');
+            label.classList.remove('bg-gray-50');
+            icon.style.transform = 'scale(1.1)';
+        } else {
+            label.classList.remove('bg-blue-50');
+            label.classList.add('bg-gray-50');
+            icon.style.transform = 'scale(1)';
+        }
     }
 
     // Image Upload Handlers
@@ -114,6 +151,55 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
+    // Form Submission Handler
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        clearErrors();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        loadingSpinner.style.display = 'block';
+
+        try {
+            const formData = new FormData(form);
+
+            // Add all amenities explicitly
+            ['wifi', 'pool', 'spa', 'restaurant', 'valet', 'concierge'].forEach(amenity => {
+                const checkbox = document.getElementById(amenity);
+                formData.append(amenity, checkbox.checked ? '1' : '0');
+            });
+
+            // Add availability
+            formData.append('availability', document.getElementById('availability').checked ? '1' : '0');
+
+            const response = await fetch('../../actions/updateHotel.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showNotification('Hotel updated successfully!');
+                setTimeout(() => {
+                    window.location.href = 'manage_hotel.php';
+                }, 1500);
+            } else {
+                throw new Error(data.errors?.join('\n') || 'Failed to update hotel');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification(error.message, 'error');
+        } finally {
+            submitButton.disabled = false;
+            loadingSpinner.style.display = 'none';
+        }
+    }
+
     // Error Handling
     function showError(elementId, message) {
         const errorElement = document.getElementById(elementId);
@@ -136,62 +222,32 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Notification System
     function showNotification(message, type = 'success') {
         const notification = document.createElement('div');
-        notification.className = `fixed top-20 right-4 px-6 py-3 rounded-lg text-white z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
-            }`;
+        notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 
+            ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}
+            transform transition-transform duration-300 ease-in-out`;
+
         notification.textContent = message;
         document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 5000);
-    }
 
-    // Form Submission Handler
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        clearErrors();
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateY(20px)';
+        }, 100);
 
-        if (!validateForm()) {
-            return;
-        }
-
-        const submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        loadingSpinner.style.display = 'block';
-
-        try {
-            const formData = new FormData(form);
-            formData.append('availability', document.getElementById('availability').checked ? '1' : '0');
-
-            const response = await fetch('../../actions/updateHotel.php', {
-                method: 'POST',
-                body: formData
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                showNotification('Hotel updated successfully!');
-                setTimeout(() => {
-                    window.location.href = 'manage_hotel.php';
-                }, 1500);
-            } else {
-                const errorMessage = Array.isArray(data.errors)
-                    ? data.errors.join('\n')
-                    : 'Failed to update hotel';
-                throw new Error(errorMessage);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            showNotification(error.message, 'error');
-        } finally {
-            submitButton.disabled = false;
-            loadingSpinner.style.display = 'none';
-        }
+        // Animate out and remove
+        setTimeout(() => {
+            notification.style.transform = 'translateY(-100%)';
+            setTimeout(() => notification.remove(), 300);
+        }, 4700);
     }
 
     // Initialize everything
     function initialize() {
         initializeProfileModal();
+        setupAmenities();
 
         // Setup image inputs
         for (let i = 1; i <= 3; i++) {
@@ -204,7 +260,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add input event listeners to clear errors
         config.requiredFields.forEach(field => {
             const input = document.getElementById(field);
-            input.addEventListener('input', () => hideError(`${field}Error`));
+            if (input) {
+                input.addEventListener('input', () => hideError(`${field}Error`));
+            }
         });
     }
 
