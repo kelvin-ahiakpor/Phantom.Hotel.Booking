@@ -44,14 +44,14 @@ if ($result->num_rows > 0) {
 </head>
 
 <body class="bg-gray-100 min-h-screen">
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50 py-2">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <h1 class="text-3xl font-serif font-bold text-gray-800">Phantom</h1>
-                <button onclick="window.history.back()" class="text-black hover:text-gray-800">
+        <div class="flex items-center justify-between h-20">
+            <h1 class="text-3xl font-serif font-bold text-gray-800">Phantom</h1>
+            <button onclick="window.history.back()" class="text-black hover:text-gray-800">
                     Back
                 </button>
-            </div>
+        </div>
         </div>
     </nav>
 
