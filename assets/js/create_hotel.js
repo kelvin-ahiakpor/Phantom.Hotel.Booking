@@ -9,6 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const profileModal = document.getElementById('profileModal');
     const closeProfileModal = document.getElementById('closeProfileModal');
 
+    // Configure validation rules
+    const config = {
+        maxFileSize: 5 * 1024 * 1024, // 5MB
+        allowedImageTypes: ['image/jpeg', 'image/png'],
+        requiredFields: ['hotelName', 'hotelLocation', 'hotelDescription']
+    };
+
     // Profile modal handlers
     if (profileBtn && profileModal && closeProfileModal) {
         profileBtn.addEventListener('click', () => {
@@ -26,13 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
-    // Configure validation rules
-    const config = {
-        maxFileSize: 5 * 1024 * 1024, // 5MB
-        allowedImageTypes: ['image/jpeg', 'image/png'],
-        requiredFields: ['hotelName', 'hotelLocation', 'hotelDescription']
-    };
 
     // Initialize preview areas
     function setupImagePreviews() {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const iconContainer = document.createElement('div');
                 iconContainer.className = 'w-full h-full flex items-center justify-center bg-gray-100 rounded-lg';
                 iconContainer.innerHTML = `
-                    <svg class="w-12 h-24 text-gray-400"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-12 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                               d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
                         </path>
@@ -64,8 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-
-    setupImagePreviews();
 
     // Handle image upload and preview
     function setupImageInput(inputId, formPreviewId, livePreviewId) {
@@ -129,11 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Set up image inputs
-    setupImageInput('hotelImage1', 'preview1', 'previewMainImage');
-    setupImageInput('hotelImage2', 'preview2', 'previewImage2');
-    setupImageInput('hotelImage3', 'preview3', 'previewImage3');
-
     // Handle live preview updates
     function setupLivePreview() {
         const elements = {
@@ -153,10 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    setupLivePreview();
-
-    // Handle amenities preview
-    const amenitiesContainer = document.getElementById('previewAmenities');
+    // Amenities handling
     const amenityIcons = {
         wifi: '📶',
         pool: '🏊',
@@ -166,24 +156,38 @@ document.addEventListener('DOMContentLoaded', function () {
         concierge: '👨‍💼'
     };
 
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', updateAmenitiesPreview);
-    });
+    function setupAmenities() {
+        const amenitiesContainer = document.getElementById('previewAmenities');
 
-    function updateAmenitiesPreview() {
-        amenitiesContainer.innerHTML = '';
-        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-            const badge = document.createElement('span');
-            badge.className = 'inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm mr-2 mb-2';
-            badge.innerHTML = `${amenityIcons[checkbox.id] || ''} ${checkbox.nextElementSibling.textContent.trim()}`;
-            amenitiesContainer.appendChild(badge);
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                updateAmenitiesPreview(amenitiesContainer);
+            });
         });
     }
 
+    function updateAmenitiesPreview(container) {
+        container.innerHTML = '';
+
+        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+            const amenityId = checkbox.id;
+            const amenityLabel = checkbox.nextElementSibling.textContent.trim();
+
+            const badge = createAmenityBadge(amenityId, amenityLabel);
+            container.appendChild(badge);
+        });
+    }
+
+    function createAmenityBadge(amenityId, label) {
+        const badge = document.createElement('span');
+        badge.className = 'inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm mr-2 mb-2 ' +
+            'transition-transform duration-200 hover:scale-105 hover:shadow-md';
+        badge.innerHTML = `${amenityIcons[amenityId]} ${label}`;
+        return badge;
+    }
+
     // Form submission handler
-    // Update the form submission handler in your JavaScript
-    // Form submission handler
-    hotelForm.addEventListener('submit', async function (e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
         clearErrors();
 
@@ -192,38 +196,29 @@ document.addEventListener('DOMContentLoaded', function () {
         submitButton.disabled = true;
         loadingSpinner.style.display = 'inline-block';
 
-        try {
-            const formData = new FormData();
+        const formData = new FormData();
 
-            // Add text fields
-            formData.append('hotelName', document.getElementById('hotelName').value);
-            formData.append('hotelLocation', document.getElementById('hotelLocation').value);
-            formData.append('hotelDescription', document.getElementById('hotelDescription').value);
+        // Add basic fields
+        config.requiredFields.forEach(field => {
+            formData.append(field, document.getElementById(field).value);
+        });
 
-            // Add images
-            const imageInputs = ['hotelImage1', 'hotelImage2', 'hotelImage3'];
-            imageInputs.forEach(inputId => {
-                const input = document.getElementById(inputId);
-                if (input.files[0]) {
-                    formData.append(inputId, input.files[0]);
-                }
-            });
-
-            // Add amenities
-            const amenities = ['wifi', 'pool', 'spa', 'restaurant', 'valet', 'concierge'];
-            amenities.forEach(amenity => {
-                const checkbox = document.getElementById(amenity);
-                if (checkbox.checked) {
-                    formData.append(amenity, '1');
-                }
-            });
-
-            // Log formData contents
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
+        // Add images
+        ['hotelImage1', 'hotelImage2', 'hotelImage3'].forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input.files[0]) {
+                formData.append(inputId, input.files[0]);
             }
+        });
 
-            const response = await fetch('../../actions/createHotel.php', {
+        // Add amenities
+        ['wifi', 'pool', 'spa', 'restaurant', 'valet', 'concierge'].forEach(amenity => {
+            const checkbox = document.getElementById(amenity);
+            formData.append(amenity, checkbox.checked ? '1' : '0');
+        });
+
+        try {
+            const response = await fetch('../../actions/create_hotel.php', {
                 method: 'POST',
                 body: formData
             });
@@ -238,36 +233,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Hotel created successfully!', 'success');
                 setTimeout(() => window.location.href = data.redirect, 1500);
             } else {
-                const errorMessage = Array.isArray(data.errors)
-                    ? data.errors.join('\n')
-                    : 'Failed to create hotel';
-                throw new Error(errorMessage);
+                throw new Error(data.errors?.join('\n') || 'Failed to create hotel');
             }
         } catch (error) {
             console.error('Error:', error);
-            showNotification(
-                error.message || 'An unexpected error occurred while creating the hotel',
-                'error'
-            );
+            showNotification(error.message, 'error');
         } finally {
             submitButton.disabled = false;
             loadingSpinner.style.display = 'none';
         }
-    });
+    }
 
-
-    // Helper functions
+    // Validation helpers
     function validateForm() {
         let isValid = true;
 
+        // Required fields
         config.requiredFields.forEach(field => {
             const input = document.getElementById(field);
             if (!input.value.trim()) {
-                showError(`${field}Error`, `${field.replace('hotel', '').replace(/([A-Z])/g, ' $1').trim()} is required`);
+                showError(
+                    `${field}Error`,
+                    `${field.replace('hotel', '').replace(/([A-Z])/g, ' $1').trim()} is required`
+                );
                 isValid = false;
             }
         });
 
+        // Image validation
         const hasImage = ['hotelImage1', 'hotelImage2', 'hotelImage3'].some(id => {
             const input = document.getElementById(id);
             return input.files && input.files[0];
@@ -302,13 +295,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function showNotification(message, type) {
+    function showNotification(message, type = 'success') {
         const notification = document.createElement('div');
-        notification.className = `fixed top-20 right-4 px-6 py-3 rounded-lg text-white z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
             }`;
         notification.textContent = message;
-        console.log('Error message:', message);
         document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 10000);
+        setTimeout(() => notification.remove(), 3000);
     }
+
+    // Initialize everything
+    function initialize() {
+        setupImagePreviews();
+        ['hotelImage1', 'hotelImage2', 'hotelImage3'].forEach(id => {
+            setupImageInput(id, `preview${id.slice(-1)}`, `previewMainImage${id.slice(-1) === '1' ? '' : id.slice(-1)}`);
+        });
+        setupLivePreview();
+        setupAmenities();
+        hotelForm.addEventListener('submit', handleFormSubmit);
+    }
+
+    // Start the application
+    initialize();
 });

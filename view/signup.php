@@ -47,6 +47,16 @@
                             <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <div id="email-error" class="text-red-500 text-sm mt-1"></div>
                         </div>
+                        <!-- Add this after the email input field -->
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <div class="mt-1">
+                                <input type="tel" id="phone" name="phone"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
+                                    placeholder="+1234567890">
+                                <div id="phone-error" class="text-red-500 text-sm mt-1"></div>
+                            </div>
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2" for="password">Password</label>
                             <div class="relative">

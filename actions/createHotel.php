@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(E_ALL); // Enable error reporting for debugging
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 header('Content-Type: application/json');
 
@@ -86,6 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        // Get amenities values
+        $amenities = [
+            'wifi' => isset($_POST['wifi']) && $_POST['wifi'] === '1',
+            'pool' => isset($_POST['pool']) && $_POST['pool'] === '1',
+            'spa' => isset($_POST['spa']) && $_POST['spa'] === '1',
+            'restaurant' => isset($_POST['restaurant']) && $_POST['restaurant'] === '1',
+            'valet' => isset($_POST['valet']) && $_POST['valet'] === '1',
+            'concierge' => isset($_POST['concierge']) && $_POST['concierge'] === '1'
+        ];
+
         // If there are no errors, proceed with hotel creation
         if (empty($response['errors'])) {
             // Start transaction
@@ -105,11 +115,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ) VALUES (?, ?, ?, ?, ?, TRUE, NOW())
                 ");
 
-                // Set default price
-                $address = $location;
+                $address = $location; // Using location as address for now
 
                 $stmt->bind_param(
-                    "sssss",
+                    "ssssi",
                     $hotelName,
                     $location,
                     $address,
@@ -133,19 +142,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
 
-                    // Process amenities
-                    $amenities = [
-                        'wifi' => isset($_POST['wifi']),
-                        'pool' => isset($_POST['pool']),
-                        'spa' => isset($_POST['spa']),
-                        'restaurant' => isset($_POST['restaurant']),
-                        'valet' => isset($_POST['valet']),
-                        'concierge' => isset($_POST['concierge'])
-                    ];
+                    // Insert amenities
+                    $amenitiesStmt = $conn->prepare("
+                        INSERT INTO hb_hotel_amenities (
+                            hotel_id, 
+                            wifi, 
+                            pool, 
+                            spa, 
+                            restaurant, 
+                            valet, 
+                            concierge
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ");
+
+                    // Convert boolean values to integers
+                    $wifiVal = $amenities['wifi'] ? 1 : 0;
+                    $poolVal = $amenities['pool'] ? 1 : 0;
+                    $spaVal = $amenities['spa'] ? 1 : 0;
+                    $restaurantVal = $amenities['restaurant'] ? 1 : 0;
+                    $valetVal = $amenities['valet'] ? 1 : 0;
+                    $conciergeVal = $amenities['concierge'] ? 1 : 0;
+
+                    $amenitiesStmt->bind_param(
+                        "iiiiiii",
+                        $hotelId,
+                        $wifiVal,
+                        $poolVal,
+                        $spaVal,
+                        $restaurantVal,
+                        $valetVal,
+                        $conciergeVal
+                    );
+
+                    if (!$amenitiesStmt->execute()) {
+                        throw new Exception("Error saving amenities");
+                    }
 
                     $conn->commit();
                     $response['success'] = true;
                     $response['redirect'] = 'manage_hotel.php';
+                    $response['hotelId'] = $hotelId;
                 } else {
                     throw new Exception("Error creating hotel");
                 }

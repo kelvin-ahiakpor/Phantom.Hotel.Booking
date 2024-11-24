@@ -7,24 +7,21 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 $errors = [];
-
 $input = json_decode(file_get_contents("php://input"), true);
 
 // Debug: Log input to error log
-error_log(print_r($input, true)); // Check server logs
+error_log(print_r($input, true));
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
     $firstName = htmlspecialchars(trim($input["first_name"]), ENT_QUOTES, 'UTF-8');
     $lastName = htmlspecialchars(trim($input["last_name"]), ENT_QUOTES, 'UTF-8');
     $email = filter_var(trim($input["email"]), FILTER_SANITIZE_EMAIL);
+    $phone = htmlspecialchars(trim($input["phone"] ?? ''), ENT_QUOTES, 'UTF-8');
     $password = trim($input["password"]);
     $passwordConfirm = trim($input["confirm_password"]);
     $userType = htmlspecialchars(trim($input["user_type"]), ENT_QUOTES, 'UTF-8');
 
-    // Remove this line as it corrupts the JSON response
-    // echo "userType: $userType\n";
-
-    // Validation checks
+    // Validation checks (existing checks remain the same)
     if (empty($firstName)) {
         $errors[] = ["field" => "first-name", "message" => "First name is required."];
     }
@@ -39,6 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
         $errors[] = ["field" => "email", "message" => "Invalid email format."];
     }
 
+    // Phone validation (optional but must be valid if provided)
+    if (!empty($phone) && !preg_match('/^\+?[\d\s-]{10,}$/', $phone)) {
+        $errors[] = ["field" => "phone", "message" => "Please enter a valid phone number."];
+    }
+
+    // Password validation (existing checks remain the same)
     if (empty($password)) {
         $errors[] = ["field" => "password", "message" => "Password is required."];
     } elseif (
@@ -54,12 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
         $errors[] = ["field" => "confirm-password", "message" => "Passwords do not match."];
     }
 
-    // Validate user type
     if (!in_array($userType, ['guest', 'owner'])) {
         $errors[] = ["field" => "user-type", "message" => "Invalid user type selected."];
     }
 
-    // Check for duplicate email in the database
+    // Check for duplicate email
     if (empty($errors)) {
         $stmt = $conn->prepare("SELECT user_id FROM hb_users WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -72,9 +74,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $input) {
             // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insert user data into the database
-            $stmt = $conn->prepare("INSERT INTO hb_users (first_name, last_name, email, password, user_type, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-            $stmt->bind_param("sssss", $firstName, $lastName, $email, $hashedPassword, $userType);
+            // Insert user data including phone number
+            $stmt = $conn->prepare("
+                INSERT INTO hb_users (
+                    first_name, 
+                    last_name, 
+                    email, 
+                    phone_number,
+                    password, 
+                    user_type, 
+                    created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, NOW())
+            ");
+            $stmt->bind_param(
+                "ssssss",
+                $firstName,
+                $lastName,
+                $email,
+                $phone,
+                $hashedPassword,
+                $userType
+            );
+
             if ($stmt->execute()) {
                 // Store email in session for potential autofill on login
                 $_SESSION['userEmail'] = $email;
