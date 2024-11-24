@@ -1,4 +1,5 @@
 <?php
+require "../../functions/session_check.php";
 require "../../db/config.php";
 
 if (!isset($_GET['hotel_id'])) {
@@ -23,12 +24,14 @@ $hotel = $result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book <?= htmlspecialchars($hotel['hotel_name']) ?></title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 min-h-screen">
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,8 +50,8 @@ $hotel = $result->fetch_assoc();
             <h3 class="text-xl font-semibold mb-4"><?= htmlspecialchars($hotel['hotel_name']) ?></h3>
             <p class="text-gray-700 mb-2"><strong>Location:</strong> <?= htmlspecialchars($hotel['location']) ?></p>
             <p class="text-gray-700 mb-4"><strong>Description:</strong> <?= htmlspecialchars($hotel['description']) ?></p>
-            
-            
+
+
             <form novalidate class="space-y-4">
                 <input type="hidden" name="hotel_id" value="<?= $hotel_id ?>">
 
@@ -74,7 +77,7 @@ $hotel = $result->fetch_assoc();
                     <label for="guests" class="block text-gray-700">Number of Guests</label>
                     <input type="number" id="guests" name="guests" min="1" required class="mt-1 p-2 border border-gray-300 w-full">
                 </div>
-    
+
                 <button id="submitBooking" type="submit" class="w-full px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150">
                     Confirm Booking
                 </button>
@@ -84,4 +87,5 @@ $hotel = $result->fetch_assoc();
     </main>
     <script src="../../assets/js/booking_form.js"></script>
 </body>
+
 </html>

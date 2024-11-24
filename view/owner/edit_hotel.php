@@ -37,6 +37,16 @@ try {
     while ($image = $imageResult->fetch_assoc()) {
         $hotelImages[] = $image['image_url'];
     }
+
+    // Get hotel amenities
+    $amenityStmt = $conn->prepare("
+        SELECT wifi, pool, spa, restaurant, valet, concierge 
+        FROM hb_hotel_amenities 
+        WHERE hotel_id = ?
+    ");
+    $amenityStmt->bind_param("i", $hotelDetails['hotel_id']);
+    $amenityStmt->execute();
+    $amenities = $amenityStmt->get_result()->fetch_assoc();
 } catch (Exception $e) {
     error_log("Database error: " . $e->getMessage());
     header("Location: manage_hotel.php");
@@ -52,6 +62,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Hotel | Phantom</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .image-input-wrapper {
             position: relative;
@@ -93,6 +104,18 @@ try {
             font-size: 0.875rem;
             display: none;
         }
+
+        .amenity-checkbox:checked+span {
+            color: #2563eb;
+        }
+
+        .amenity-icon {
+            transition: transform 0.2s ease;
+        }
+
+        .amenity-checkbox:checked~.amenity-icon {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 
@@ -102,9 +125,7 @@ try {
             <a href="manage_hotel.php" class="text-2xl font-serif text-gray-800">Phantom</a>
             <div class="flex items-center space-x-4">
                 <button id="profileBtn" class="text-gray-600 hover:text-gray-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                    </svg>
+                    <i class="fas fa-user"></i>
                 </button>
             </div>
         </div>
@@ -186,7 +207,7 @@ try {
                                         accept="image/jpeg,image/png"
                                         class="hidden">
                                     <?php if (isset($hotelImages[$i])): ?>
-                                        <img src="../../<?php echo htmlspecialchars($hotelImages[$i]); ?>"
+                                        <img src="/<?php echo htmlspecialchars($hotelImages[$i]); ?>"
                                             class="preview-image"
                                             id="preview<?php echo $i + 1; ?>"
                                             alt="Hotel image <?php echo $i + 1; ?>">
@@ -195,9 +216,7 @@ try {
                                             class="preview-image"
                                             style="display: none;">
                                         <div class="placeholder-text">
-                                            <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                            </svg>
+                                            <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
                                             <span class="text-sm text-gray-500">
                                                 <?php echo $i === 0 ? 'Main Image' : 'Additional Image'; ?>
                                             </span>
@@ -207,6 +226,55 @@ try {
                             <?php endfor; ?>
                         </div>
                         <div id="imageError" class="error-text mt-2"></div>
+                    </div>
+
+                    <!-- Amenities -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Amenities</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="checkbox" name="wifi" id="wifi"
+                                    class="amenity-checkbox rounded border-gray-300 text-black focus:ring-black"
+                                    <?php echo ($amenities['wifi'] ?? false) ? 'checked' : ''; ?>>
+                                <span class="text-gray-700">Free WiFi</span>
+                                <span class="amenity-icon">📶</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="checkbox" name="pool" id="pool"
+                                    class="amenity-checkbox rounded border-gray-300 text-black focus:ring-black"
+                                    <?php echo ($amenities['pool'] ?? false) ? 'checked' : ''; ?>>
+                                <span class="text-gray-700">Indoor Pool</span>
+                                <span class="amenity-icon">🏊</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="checkbox" name="spa" id="spa"
+                                    class="amenity-checkbox rounded border-gray-300 text-black focus:ring-black"
+                                    <?php echo ($amenities['spa'] ?? false) ? 'checked' : ''; ?>>
+                                <span class="text-gray-700">Luxury Spa</span>
+                                <span class="amenity-icon">💆</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="checkbox" name="restaurant" id="restaurant"
+                                    class="amenity-checkbox rounded border-gray-300 text-black focus:ring-black"
+                                    <?php echo ($amenities['restaurant'] ?? false) ? 'checked' : ''; ?>>
+                                <span class="text-gray-700">Fine Dining</span>
+                                <span class="amenity-icon">🍽️</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="checkbox" name="valet" id="valet"
+                                    class="amenity-checkbox rounded border-gray-300 text-black focus:ring-black"
+                                    <?php echo ($amenities['valet'] ?? false) ? 'checked' : ''; ?>>
+                                <span class="text-gray-700">Valet Parking</span>
+                                <span class="amenity-icon">🚗</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="checkbox" name="concierge" id="concierge"
+                                    class="amenity-checkbox rounded border-gray-300 text-black focus:ring-black"
+                                    <?php echo ($amenities['concierge'] ?? false) ? 'checked' : ''; ?>>
+                                <span class="text-gray-700">24/7 Concierge</span>
+                                <span class="amenity-icon">👨‍💼</span>
+                            </label>
+                        </div>
                     </div>
 
                     <!-- Availability -->

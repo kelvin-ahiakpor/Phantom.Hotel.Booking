@@ -117,7 +117,7 @@ try {
             <div class="flex flex-col space-y-2">
                 <h2 class="text-lg font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h2>
                 <p class="text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
-                <a href="manage_account.php" class="text-blue-500 hover:text-blue-600">Manage account</a>
+                <a href="../../view/manage_account.php" class="text-blue-500 hover:text-blue-600">Manage account</a>
                 <a href="../../actions/logout.php" class="text-blue-500 hover:text-blue-600">Log Out</a>
             </div>
         </div>
@@ -142,7 +142,7 @@ try {
                                 <!-- Main Image -->
                                 <div class="relative w-full h-64 rounded-lg overflow-hidden">
                                     <img
-                                        src="<?php echo !empty($hotelImages) ? "../../". htmlspecialchars($hotelImages[0]) : '../../assets/images/default-hotel.jpg'; ?>"
+                                        src="<?php echo !empty($hotelImages) ? "../../" . htmlspecialchars($hotelImages[0]) : '../../assets/images/default-hotel.jpg'; ?>"
                                         alt="<?php echo htmlspecialchars($hotelDetails['hotel_name']); ?>"
                                         class="w-full h-full object-cover hotel-image" />
                                 </div>
@@ -285,4 +285,5 @@ try {
         });
     </script>
 </body>
+
 </html>

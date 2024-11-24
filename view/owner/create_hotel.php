@@ -174,8 +174,25 @@
                         <!-- Amenities Preview -->
                         <div class="mt-4">
                             <h4 class="text-sm font-medium text-gray-700 mb-2">Amenities</h4>
-                            <div id="previewAmenities" class="flex flex-wrap gap-2">
-                                <!-- Amenities will be added here dynamically -->
+                            <div class="flex flex-wrap gap-2">
+                                <?php
+                                $amenityIcons = [
+                                    'wifi' => ['icon' => '📶', 'label' => 'Free WiFi'],
+                                    'pool' => ['icon' => '🏊', 'label' => 'Indoor Pool'],
+                                    'spa' => ['icon' => '💆', 'label' => 'Luxury Spa'],
+                                    'restaurant' => ['icon' => '🍽️', 'label' => 'Fine Dining'],
+                                    'valet' => ['icon' => '🚗', 'label' => 'Valet Parking'],
+                                    'concierge' => ['icon' => '👨‍💼', 'label' => '24/7 Concierge']
+                                ];
+
+                                foreach ($amenityIcons as $amenity => $details) {
+                                    if (isset($hotelDetails[$amenity]) && $hotelDetails[$amenity]) {
+                                        echo '<span class="inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">';
+                                        echo $details['icon'] . ' ' . $details['label'];
+                                        echo '</span>';
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>

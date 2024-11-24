@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0); // Disable error reporting to prevent HTML in output
+error_reporting(0);
 ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
@@ -11,16 +11,19 @@ require_once '../middleware/checkUserAccess.php';
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // Function to send JSON response
-function sendJsonResponse($success, $errors = []) {
+function sendJsonResponse($success, $errors = [], $data = [])
+{
     echo json_encode([
         'success' => $success,
-        'errors' => (array)$errors
+        'errors' => (array)$errors,
+        'data' => $data
     ]);
     exit;
 }
 
 // Handle file upload
-function uploadImage($file) {
+function uploadImage($file)
+{
     try {
         $uploadDir = '../../uploads/';
         if (!file_exists($uploadDir)) {
@@ -60,7 +63,7 @@ try {
     if (!isset($_SESSION['userId'])) {
         sendJsonResponse(false, "Unauthorized access");
     }
-    
+
     checkUserAccess('owner');
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -75,6 +78,16 @@ try {
     $description = trim($_POST['description'] ?? '');
     $availability = isset($_POST['availability']) && $_POST['availability'] === '1';
     $ownerId = $_SESSION['userId'];
+
+    // Get amenities values
+    $amenities = [
+        'wifi' => isset($_POST['wifi']) && $_POST['wifi'] === '1',
+        'pool' => isset($_POST['pool']) && $_POST['pool'] === '1',
+        'spa' => isset($_POST['spa']) && $_POST['spa'] === '1',
+        'restaurant' => isset($_POST['restaurant']) && $_POST['restaurant'] === '1',
+        'valet' => isset($_POST['valet']) && $_POST['valet'] === '1',
+        'concierge' => isset($_POST['concierge']) && $_POST['concierge'] === '1'
+    ];
 
     // Input validation
     $errors = [];
@@ -99,7 +112,7 @@ try {
     // Process images
     $newImageUrls = [];
     $imageFields = ['hotelImage1', 'hotelImage2', 'hotelImage3'];
-    
+
     foreach ($imageFields as $field) {
         if (isset($_FILES[$field]) && $_FILES[$field]['error'] === UPLOAD_ERR_OK) {
             $imagePath = uploadImage($_FILES[$field]);
@@ -141,7 +154,61 @@ try {
             $ownerId
         );
 
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update hotel details");
+        }
+
+        // Update amenities
+        // First, check if amenities record exists
+        $amenityCheckStmt = $conn->prepare("
+            SELECT amenity_id FROM hb_hotel_amenities WHERE hotel_id = ?
+        ");
+        $amenityCheckStmt->bind_param("i", $hotelId);
+        $amenityCheckStmt->execute();
+        $amenityExists = $amenityCheckStmt->get_result()->num_rows > 0;
+
+        if ($amenityExists) {
+            // Update existing amenities
+            $amenityStmt = $conn->prepare("
+                UPDATE hb_hotel_amenities 
+                SET wifi = ?,
+                    pool = ?,
+                    spa = ?,
+                    restaurant = ?,
+                    valet = ?,
+                    concierge = ?
+                WHERE hotel_id = ?
+            ");
+        } else {
+            // Insert new amenities
+            $amenityStmt = $conn->prepare("
+                INSERT INTO hb_hotel_amenities (
+                    hotel_id, wifi, pool, spa, restaurant, valet, concierge
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            ");
+        }
+
+        $wifiVal = $amenities['wifi'] ? 1 : 0;
+        $poolVal = $amenities['pool'] ? 1 : 0;
+        $spaVal = $amenities['spa'] ? 1 : 0;
+        $restaurantVal = $amenities['restaurant'] ? 1 : 0;
+        $valetVal = $amenities['valet'] ? 1 : 0;
+        $conciergeVal = $amenities['concierge'] ? 1 : 0;
+
+        $amenityStmt->bind_param(
+            "iiiiiii",
+            $hotelId,
+            $wifiVal,
+            $poolVal,
+            $spaVal,
+            $restaurantVal,
+            $valetVal,
+            $conciergeVal
+        );
+
+        if (!$amenityStmt->execute()) {
+            throw new Exception("Failed to update amenities");
+        }
 
         // Handle image updates if new images were uploaded
         if (!empty($newImageUrls)) {
@@ -177,11 +244,13 @@ try {
         }
 
         $conn->commit();
-        sendJsonResponse(true);
-
+        sendJsonResponse(true, [], [
+            'message' => 'Hotel updated successfully',
+            'hotelId' => $hotelId
+        ]);
     } catch (Exception $e) {
         $conn->rollback();
-        
+
         // Clean up newly uploaded images if update failed
         foreach ($newImageUrls as $imagePath) {
             $fullPath = '../../' . $imagePath;
@@ -189,11 +258,10 @@ try {
                 unlink($fullPath);
             }
         }
-        
-        error_log("Database error: " . $e->getMessage());
-        sendJsonResponse(false, "Database error occurred");
-    }
 
+        error_log("Database error: " . $e->getMessage());
+        sendJsonResponse(false, "Failed to update hotel: " . $e->getMessage());
+    }
 } catch (Exception $e) {
     error_log("Server error: " . $e->getMessage());
     sendJsonResponse(false, "Server error occurred");
