@@ -9,3 +9,8 @@
 #dropdownResults:not(.hidden) {
     display: block;
 }
+
+nav {
+    margin: 0;
+    padding: 0;
+}
