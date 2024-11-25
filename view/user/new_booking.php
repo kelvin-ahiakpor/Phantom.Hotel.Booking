@@ -81,12 +81,18 @@ if ($result->num_rows > 0) {
                         <p class="text-xl font-bold mt-4">
                             $<?= number_format($hotel['min_price'], 2) ?> - $<?= number_format($hotel['max_price'], 2) ?>/night
                         </p>
-                        <div class="flex"></div>
-                        <button
-                            class="mt-4 px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
-                            onclick="window.location.href='booking_form.php?hotel_id=<?= $hotel['hotel_id'] ?>';">
-                            Book Now
-                        </button>
+                        <div class="flex mr-4">
+                            <button
+                                class="mt-4 px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
+                                onclick="window.location.href='booking_form.php?hotel_id=<?= $hotel['hotel_id'] ?>';">
+                                Book Now
+                            </button>
+                            <button
+                                class="mt-4 px-4 py-2 bg-white text-black hover:bg-zinc-600 transition duration-150"
+                                onclick="window.location.href='view_hotel.php?hotel_id=<?= $hotel['hotel_id'] ?>';">
+                                View Hotel
+                            </button>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>

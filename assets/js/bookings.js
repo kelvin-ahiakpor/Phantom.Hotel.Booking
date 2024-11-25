@@ -38,89 +38,132 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
-  // Helper function to create a booking card
+  // Improved Booking card with status and action buttons
   function createBookingCard(booking) {
-    const statusClass =
-      booking.status === "confirmed"
-        ? "bg-green-100 text-green-800"
-        : booking.status === "pending"
-          ? "bg-yellow-100 text-yellow-800"
-          : booking.status === "cancelled"
-            ? "bg-red-100 text-red-800"
-            : "";
+    const statusClass = {
+      confirmed: "bg-green-100 text-green-800",
+      pending: "bg-yellow-100 text-yellow-800",
+      cancelled: "bg-red-100 text-red-800"
+    }[booking.status] || "";
 
     const card = document.createElement("div");
-    card.className =
-      "bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl";
+    card.className = "bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl";
 
     card.innerHTML = `
-        <div class="flex flex-col lg:flex-row">
-            <div class="lg:w-1/3 relative">
-                <img src="${booking.image_url}" alt="${booking.room_type}" class="h-48 lg:h-full w-full object-cover">
+        <div class="relative">
+            <!-- Image Section -->
+            <div class="h-56 relative">
+                <img src="${booking.image_url}" alt="${booking.room_type}" 
+                     class="h-full w-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div class="absolute top-4 left-4">
-                    <span class="px-4 py-2 rounded-full text-sm font-medium ${statusClass}">
+                    <span class="px-4 py-2 rounded-full text-sm font-medium ${statusClass} shadow-lg">
                         ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                     </span>
                 </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                    <h3 class="text-xl font-bold text-white mb-1">
+                        ${booking.hotel_name}
+                    </h3>
+                    <p class="text-white/90 text-sm">
+                        ${booking.room_type}
+                    </p>
+                </div>
             </div>
-            <div class="p-6 lg:p-8 lg:w-2/3">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">${booking.hotel_name} - ${booking.room_type}</h3>
-                        <p class="text-sm text-gray-600 mt-1">Booking ID: ${booking.booking_id}</p>
+
+            <!-- Content Section -->
+            <div class="p-6 space-y-6">
+                <!-- Booking Details -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2 text-gray-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <span>Booking ID: ${booking.booking_id}</span>
                     </div>
-                    <p class="text-2xl font-bold text-gray-900">$${parseFloat(booking.total_price).toFixed(2)}</p>
+                    <div class="flex justify-between items-center pb-4 border-b border-gray-100">
+                        <span class="text-2xl font-bold text-gray-900">
+                            $${parseFloat(booking.total_price).toFixed(2)}
+                        </span>
+                        <span class="text-gray-500">
+                            ${moment(booking.check_out_date).diff(moment(booking.check_in_date), "days")} Nights
+                        </span>
+                    </div>
                 </div>
-                <div class="mt-4 grid grid-cols-2 gap-4">
-                    <div>
+
+                <!-- Dates and Guests Grid -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="space-y-2">
                         <p class="text-sm font-medium text-gray-500">Check-in</p>
-                        <p class="mt-1 font-medium text-gray-900">${moment(booking.check_in_date).format("MMM D, YYYY")}</p>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="font-medium text-gray-900">
+                                ${moment(booking.check_in_date).format("MMM D, YYYY")}
+                            </p>
+                        </div>
                     </div>
-                    <div>
+
+                    <div class="space-y-2">
                         <p class="text-sm font-medium text-gray-500">Check-out</p>
-                        <p class="mt-1 font-medium text-gray-900">${moment(booking.check_out_date).format("MMM D, YYYY")}</p>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <p class="font-medium text-gray-900">
+                                ${moment(booking.check_out_date).format("MMM D, YYYY")}
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">Duration</p>
-                        <p class="mt-1 font-medium text-gray-900">${moment(booking.check_out_date).diff(moment(booking.check_in_date), "days")} Nights</p>
-                    </div>
-                    <div>
-                        <p class="text-sm font-medium text-gray-500">Guests</p>
-                        <p class="mt-1 font-medium text-gray-900">${booking.guests}</p>
+
+                    <div class="col-span-2 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        <p class="font-medium text-gray-900">${booking.guests} Guests</p>
                     </div>
                 </div>
-                <div class="mt-6 flex justify-end space-x-4">
-                    ${booking.status === "confirmed" || booking.status === "pending"
-        ? `
-                            <button class="modify-btn border border-black px-4 py-2 text-sm font-medium text-black hover:bg-black hover:text-white transition duration-150" 
-                                data-booking-id="${booking.booking_id}"
-                                data-check-in="${booking.check_in_date}"
-                                data-check-out="${booking.check_out_date}"
-                                data-guests="${booking.guests}">
-                                Modify
-                            </button>
-                            <button class="cancel-btn px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150" data-booking-id="${booking.booking_id}">
-                                Cancel
-                            </button>`
-        : ""
-      }
-                </div>
+
+                <!-- Action Buttons -->
+                ${booking.status === "confirmed" || booking.status === "pending" ? `
+                    <div class="flex justify-end space-x-4 pt-4 border-t border-gray-100">
+                        <button class="modify-btn px-6 py-2.5 border border-black text-sm font-medium text-black hover:bg-black hover:text-white transition duration-150" 
+                            data-booking-id="${booking.booking_id}"
+                            data-check-in="${booking.check_in_date}"
+                            data-check-out="${booking.check_out_date}"
+                            data-guests="${booking.guests}">
+                            Modify
+                        </button>
+                        <button class="cancel-btn px-6 py-2.5 bg-black text-white text-sm font-medium hover:bg-zinc-600 transition duration-150" 
+                            data-booking-id="${booking.booking_id}">
+                            Cancel
+                        </button>
+                    </div>
+                ` : ''}
             </div>
         </div>
     `;
 
-    // Attach event listeners for Modify and Cancel buttons
+    // Add event listeners for buttons
     if (booking.status === "confirmed" || booking.status === "pending") {
-      card.querySelector(".modify-btn").addEventListener("click", (e) => {
-        const button = e.target;
+      const modifyBtn = card.querySelector(".modify-btn");
+      const cancelBtn = card.querySelector(".cancel-btn");
+
+      modifyBtn.addEventListener("click", (e) => {
         openModifyModal(
-          button.dataset.bookingId,
-          button.dataset.checkIn,
-          button.dataset.checkOut,
-          button.dataset.guests
+          e.target.dataset.bookingId,
+          e.target.dataset.checkIn,
+          e.target.dataset.checkOut,
+          e.target.dataset.guests
         );
       });
-      card.querySelector(".cancel-btn").addEventListener("click", () => {
+
+      cancelBtn.addEventListener("click", () => {
         openCancelModal(booking.booking_id);
       });
     }

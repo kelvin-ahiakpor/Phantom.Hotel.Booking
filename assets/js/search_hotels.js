@@ -33,7 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .map(
                 (hotel) => `
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="${hotel.image_url}" alt="${hotel.hotel_name}" class="h-48 w-full object-cover">
+                    <img src="${hotel.image_url || '../../assets/images/placeholder.jpg'}" 
+                         alt="${hotel.hotel_name}" 
+                         class="h-48 w-full object-cover">
                     <div class="p-6">
                         <h3 class="text-lg font-bold">${hotel.hotel_name}</h3>
                         <p class="text-sm text-gray-600">${hotel.location}</p>
@@ -41,18 +43,24 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p class="text-xl font-bold mt-4">
                             $${parseFloat(hotel.min_price).toFixed(2)} - $${parseFloat(hotel.max_price).toFixed(2)}/night
                         </p>
-                        <button
-                            class="mt-4 px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
-                            onclick="window.location.href='booking_form.php?hotel_id=${hotel.hotel_id}';"
-                        >
-                            Book Now
-                        </button>
+                        <div class="flex mr-4 space-x-2">
+                            <button
+                                class="mt-4 px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
+                                onclick="window.location.href='booking_form.php?hotel_id=${hotel.hotel_id}'">
+                                Book Now
+                            </button>
+                            <button
+                                class="mt-4 px-4 py-2 bg-white text-black hover:bg-zinc-600 transition duration-150"
+                                onclick="window.location.href='view_hotel.php?hotel_id=${hotel.hotel_id}'">
+                                View Hotel
+                            </button>
+                        </div>
                     </div>
                 </div>
             `
             )
             .join("");
-    };    
+    };
 
     const updateDropdown = (hotels, searchTerm) => {
         if (searchTerm.trim() === "") {
