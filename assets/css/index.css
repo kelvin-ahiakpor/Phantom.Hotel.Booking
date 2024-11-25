@@ -1,3 +1,204 @@
+@font-face {
+    font-family: 'Kaftan';
+    /* src: url('../PHANTOM_HOTEL_BOOKING/assets/Kaftan.otf') format('opentype'); */
+    src: url('../../assets/Kaftan.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Add new mobile menu styles */
+.mobile-menu {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    visibility: hidden;
+    /* Hide menu by default */
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+/* Add overlay for mobile menu */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 40;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Update mobile menu positioning and width */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    /* Reduce width to show overlay */
+    height: 100vh;
+    background: black;
+    z-index: 50;
+    overflow-y: auto;
+}
+
+/* Close button for mobile menu */
+.close-menu {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Add responsive container max-widths */
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* Hamburger menu icon */
+.hamburger {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+
+.hamburger-line {
+    background-color: white;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.hamburger-line:nth-child(1) {
+    top: 4px;
+}
+
+.hamburger-line:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hamburger-line:nth-child(3) {
+    bottom: 4px;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg);
+    top: 50%;
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg);
+    bottom: 50%;
+}
+
+.kaftan {
+    font-family: 'Kaftan', serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.playfair {
+    font-family: 'Playfair Display', serif;
+}
+
+.carousel {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slides.active {
+    opacity: 1;
+}
+
+.nav-link {
+    position: relative;
+    text-decoration: none;
+    padding-bottom: 5px;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.booking-bar {
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.team-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
 .slide-transition {
     transition: transform 0.5s ease-in-out;
 }
@@ -13,4 +214,17 @@
 .indicator.active {
     width: 2rem;
     background-color: #000;
+}
+
+.btn {
+    background-color: #000;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #1a1a1a;
+}
+
+.btn-container {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
 }
