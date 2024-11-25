@@ -1,3 +1,8 @@
+<?php
+require "../middleware/checkInternetConnection.php";
+checkInternetConnection();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

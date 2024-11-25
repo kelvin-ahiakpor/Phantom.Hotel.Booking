@@ -1,6 +1,8 @@
 <?php
 require "../../functions/session_check.php";
 require "../../db/config.php";
+require "../middleware/checkInternetConnection.php";
+checkInternetConnection();
 
 if (!isset($_GET['hotel_id'])) {
     die("Invalid request. Hotel ID is required.");

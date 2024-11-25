@@ -1,3 +1,12 @@
+<?php
+session_start();
+require "../middleware/checkInternetConnection.php";
+checkInternetConnection();
+require_once '../../db/config.php';
+require_once '../../middleware/checkUserAccess.php';
+checkUserAccess('owner');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

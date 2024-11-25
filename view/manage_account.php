@@ -1,7 +1,9 @@
 <?php
 session_start();
 require_once '../db/config.php';
-require_once '../middleware/checkUserAccess.php';
+require "../functions/session_check.php";
+require "../middleware/checkInternetConnection.php";
+checkInternetConnection();
 
 try {
     // Get user details

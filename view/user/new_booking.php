@@ -1,6 +1,8 @@
 <?php
 // Fetch hotels dynamically from the database
 require '../../db/config.php';
+require "../middleware/checkInternetConnection.php";
+checkInternetConnection();
 
 $query = "
     SELECT 

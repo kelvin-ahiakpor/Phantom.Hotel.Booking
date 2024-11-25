@@ -1,6 +1,8 @@
 <?php
 require "../../functions/session_check.php";
 require '../../db/config.php';
+require "../middleware/checkInternetConnection.php";
+checkInternetConnection();
 
 // Check if user is logged in
 if (!isset($_SESSION['userId'])) {
