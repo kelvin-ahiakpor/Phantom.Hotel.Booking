@@ -46,12 +46,12 @@ if ($result->num_rows > 0) {
 <body class="bg-gray-100 min-h-screen">
     <nav class="bg-white shadow-lg fixed w-full top-0 z-50 py-2">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-20">
-            <h1 class="text-3xl font-serif font-bold text-gray-800">Phantom</h1>
-            <button onclick="window.history.back()" class="text-black hover:text-gray-800">
+            <div class="flex items-center justify-between h-20">
+                <h1 class="text-3xl font-serif font-bold text-gray-800">Phantom</h1>
+                <button onclick="window.history.back()" class="text-black hover:text-gray-800">
                     Back
                 </button>
-        </div>
+            </div>
         </div>
     </nav>
 
@@ -81,6 +81,7 @@ if ($result->num_rows > 0) {
                         <p class="text-xl font-bold mt-4">
                             $<?= number_format($hotel['min_price'], 2) ?> - $<?= number_format($hotel['max_price'], 2) ?>/night
                         </p>
+                        <div class="flex"></div>
                         <button
                             class="mt-4 px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150"
                             onclick="window.location.href='booking_form.php?hotel_id=<?= $hotel['hotel_id'] ?>';">
