@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load bookings on page load
   fetchBookings("all");
-  
+
   // Fetch bookings when filter changes
   filterDropdown.addEventListener("change", function () {
     const selectedStatus = this.value;
@@ -19,39 +19,39 @@ document.addEventListener("DOMContentLoaded", function () {
     bookingsContainer.innerHTML = `<p class="text-gray-600">Loading...</p>`;
     const statusQuery = status !== "all" ? `?status=${status}` : "";
     fetch(`../../actions/getBookings.php${statusQuery}`)
-    .then((response) => {
+      .then((response) => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
-    })
-    .then((data) => {
+      })
+      .then((data) => {
         if (data.success) {
-            displayBookings(data.bookings);
+          displayBookings(data.bookings);
         } else {
-            bookingsContainer.innerHTML = `<p class="text-red-500">${data.message}</p>`;
+          bookingsContainer.innerHTML = `<p class="text-red-500">${data.message}</p>`;
         }
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         bookingsContainer.innerHTML = `<p class="text-red-500">Error loading bookings: ${error.message}</p>`;
-    });
+      });
 
   }
 
   // Helper function to create a booking card
   function createBookingCard(booking) {
     const statusClass =
-        booking.status === "confirmed"
-            ? "bg-green-100 text-green-800"
-            : booking.status === "pending"
-            ? "bg-yellow-100 text-yellow-800"
-            : booking.status === "cancelled"
+      booking.status === "confirmed"
+        ? "bg-green-100 text-green-800"
+        : booking.status === "pending"
+          ? "bg-yellow-100 text-yellow-800"
+          : booking.status === "cancelled"
             ? "bg-red-100 text-red-800"
             : "";
 
     const card = document.createElement("div");
     card.className =
-        "bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl";
+      "bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl";
 
     card.innerHTML = `
         <div class="flex flex-col lg:flex-row">
@@ -90,9 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end space-x-4">
-                    ${
-                        booking.status === "confirmed" || booking.status === "pending"
-                            ? `
+                    ${booking.status === "confirmed" || booking.status === "pending"
+        ? `
                             <button class="modify-btn border border-black px-4 py-2 text-sm font-medium text-black hover:bg-black hover:text-white transition duration-150" 
                                 data-booking-id="${booking.booking_id}"
                                 data-check-in="${booking.check_in_date}"
@@ -103,8 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             <button class="cancel-btn px-4 py-2 bg-black text-white hover:bg-zinc-600 transition duration-150" data-booking-id="${booking.booking_id}">
                                 Cancel
                             </button>`
-                            : ""
-                    }
+        : ""
+      }
                 </div>
             </div>
         </div>
@@ -112,23 +111,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Attach event listeners for Modify and Cancel buttons
     if (booking.status === "confirmed" || booking.status === "pending") {
-        card.querySelector(".modify-btn").addEventListener("click", (e) => {
-            const button = e.target;
-            openModifyModal(
-                button.dataset.bookingId,
-                button.dataset.checkIn,
-                button.dataset.checkOut,
-                button.dataset.guests
-            );
-        });
-        card.querySelector(".cancel-btn").addEventListener("click", () => {
-            openCancelModal(booking.booking_id);
-        });
+      card.querySelector(".modify-btn").addEventListener("click", (e) => {
+        const button = e.target;
+        openModifyModal(
+          button.dataset.bookingId,
+          button.dataset.checkIn,
+          button.dataset.checkOut,
+          button.dataset.guests
+        );
+      });
+      card.querySelector(".cancel-btn").addEventListener("click", () => {
+        openCancelModal(booking.booking_id);
+      });
     }
 
     return card;
   }
-  
+
   // Helper function to display bookings
   function displayBookings(bookings) {
     bookingsContainer.innerHTML = ""; // Clear existing content
@@ -163,11 +162,11 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
     document.body.insertAdjacentHTML("beforeend", modalHtml);
-  
+
     document.getElementById("closeModifyModal").addEventListener("click", () => {
       document.getElementById("modifyModal").remove();
     });
-  
+
     document.getElementById("confirmModify").addEventListener("click", () => {
       const today = new Date().toISOString().split("T")[0];
       const newCheckIn = document.getElementById("newCheckIn").value;
@@ -175,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const newGuests = document.getElementById("newGuests").value;
       const errors = [];
       let isValid = true;
-  
+
       if (!newCheckIn || !newCheckOut || !newGuests) {
         showErrorModal("All fields are required.");
         return;
@@ -187,15 +186,15 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (newCheckOut <= newCheckIn) {
-          isValid = false;
-          errors.push("Check-out date must be after the check-in date.");
+        isValid = false;
+        errors.push("Check-out date must be after the check-in date.");
       }
 
       if (!isValid) {
-          showErrorModal(errors.join(" "));
-          return;
+        showErrorModal(errors.join(" "));
+        return;
       }
-  
+
       fetch("../../actions/modifyBooking.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -220,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   }
-  
+
   function openCancelModal(bookingId) {
     const modalHtml = `
       <div id="cancelModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -235,11 +234,11 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     `;
     document.body.insertAdjacentHTML("beforeend", modalHtml);
-  
+
     document.getElementById("closeCancelModal").addEventListener("click", () => {
       document.getElementById("cancelModal").remove();
     });
-  
+
     document.getElementById("confirmCancel").addEventListener("click", () => {
       fetch("../../actions/cancelBooking.php", {
         method: "POST",
@@ -259,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
   }
-  
+
   function showSuccessModal(message) {
     const modalHtml = `
       <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
