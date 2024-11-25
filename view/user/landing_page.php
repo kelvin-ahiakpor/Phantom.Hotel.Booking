@@ -1,8 +1,3 @@
-<?php
-require "../middleware/checkInternetConnection.php";
-checkInternetConnection();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -268,6 +263,6 @@ checkInternetConnection();
         <p class="text-sm">&copy; 2024 Phantom Luxury Accommodations. All Rights Reserved.</p>
         <p class="text-sm">14 White Hart Lane, Opulent City, OC1 2LD</p>
     </footer>
-    <script src="../../assets/js/landing_page.js"></script>  
+    <script type="module" src="../../assets/js/landing_page.js"></script>  
 </body>
 </html>

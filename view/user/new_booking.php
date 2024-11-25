@@ -1,8 +1,6 @@
 <?php
 // Fetch hotels dynamically from the database
 require '../../db/config.php';
-require "../middleware/checkInternetConnection.php";
-checkInternetConnection();
 
 $query = "
     SELECT 
@@ -93,7 +91,7 @@ if ($result->num_rows > 0) {
             <?php endforeach; ?>
         </div>
     </main>
-    <script src="../../assets/js/search_hotels.js"></script>
+    <script type="module" src="../../assets/js/search_hotels.js"></script>
 </body>
 
 </html>

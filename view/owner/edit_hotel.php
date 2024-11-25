@@ -1,7 +1,5 @@
 <?php
 session_start();
-require "../../middleware/checkInternetConnection.php";
-checkInternetConnection();
 require_once '../../db/config.php';
 require_once '../../middleware/checkUserAccess.php';
 checkUserAccess('owner');
@@ -308,7 +306,7 @@ try {
             </div>
         </div>
     </main>
-    <script src="../../assets/js/edit_hotel.js"></script>
+    <script type="module" src="../../assets/js/edit_hotel.js"></script>
 </body>
 
 </html>

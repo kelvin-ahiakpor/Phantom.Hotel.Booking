@@ -1,8 +1,6 @@
 <?php
 require "../../functions/session_check.php";
 require '../../db/config.php';
-require "../middleware/checkInternetConnection.php";
-checkInternetConnection();
 
 // Check if user is logged in
 if (!isset($_SESSION['userId'])) {
@@ -106,6 +104,6 @@ if (!isset($_SESSION['userId'])) {
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       ></div>
     </main>
-    <script src="../../assets/js/bookings.js"></script>  
+    <script type="module" src="../../assets/js/bookings.js"></script>  
   </body>
 </html>

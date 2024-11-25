@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Internet Connection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4" id="status-title">No Internet Connection</h1>
+        <p class="text-gray-600 mb-8" id="status-description">It looks like you’re offline. Please check your internet connection and try again.</p>
+        <button onclick="retryConnection()" class="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700">
+            Retry
+        </button>
+    </div>
+    
+    <script>
+        // Function to retry checking internet connectivity
+        function retryConnection() {
+            if (navigator.onLine) {
+                document.getElementById('status-title').textContent = "Connection Restored!";
+                document.getElementById('status-description').textContent = "You are back online. Redirecting...";
+                setTimeout(() => {
+                    location.reload(); // Reload the current page
+                }, 2000);
+            } else {
+                alert("Still no internet connection. Please check and try again.");
+            }
+        }
+
+        // Listen for online/offline changes
+        window.addEventListener('online', () => {
+            document.getElementById('status-title').textContent = "Connection Restored!";
+            document.getElementById('status-description').textContent = "You are back online. Redirecting...";
+            setTimeout(() => {
+                location.reload(); // Reload the current page
+            }, 2000);
+        });
+
+        window.addEventListener('offline', () => {
+            document.getElementById('status-title').textContent = "No Internet Connection";
+            document.getElementById('status-description').textContent = "It looks like you're offline. Please check your internet connection and try again.";
+        });
+    </script>
+</body>
+</html>

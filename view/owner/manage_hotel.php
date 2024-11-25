@@ -1,11 +1,8 @@
 <?php
 session_start();
-require "../../middleware/checkInternetConnection.php";
-checkInternetConnection();
 require_once '../../db/config.php';
 require_once '../../middleware/checkUserAccess.php';
 checkUserAccess('owner');
-
 
 try {
     // Check if owner has a hotel

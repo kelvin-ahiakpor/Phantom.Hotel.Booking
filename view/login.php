@@ -1,8 +1,3 @@
-<?php
-require "../middleware/checkInternetConnection.php";
-checkInternetConnection();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,8 +103,6 @@ checkInternetConnection();
             </div>
         </div>
     </div>
-
+    <script type="module" src="../assets/js/login.js"></script>
 </body>
-<script src="../assets/js/login.js"></script>
-
 </html>
