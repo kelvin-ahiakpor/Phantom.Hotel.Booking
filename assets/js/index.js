@@ -1,8 +1,20 @@
 import checkInternetConnection from '../../utils/checkInternetConnection.js';
 
+// Service Worker Registration
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.js') // Ensure sw.js is in the root directory
+        .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+            console.error('Service Worker registration failed:', error);
+        });
+}
+
 function handleOffline() {
     alert("No internet connection. Redirecting to offline page...");
-    window.location.href = "/no_internet.html"; 
+    window.location.href = "../no_internet.html"; 
 }
 
 function handleOnline() {

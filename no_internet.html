@@ -22,7 +22,7 @@
                 document.getElementById('status-title').textContent = "Connection Restored!";
                 document.getElementById('status-description').textContent = "You are back online. Redirecting...";
                 setTimeout(() => {
-                    location.reload(); // Reload the current page
+                    window.history.back();
                 }, 2000);
             } else {
                 alert("Still no internet connection. Please check and try again.");
@@ -34,7 +34,7 @@
             document.getElementById('status-title').textContent = "Connection Restored!";
             document.getElementById('status-description').textContent = "You are back online. Redirecting...";
             setTimeout(() => {
-                location.reload(); // Reload the current page
+                window.history.back();
             }, 2000);
         });
 

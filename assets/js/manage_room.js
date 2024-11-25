@@ -2,7 +2,7 @@ import checkInternetConnection from '../../utils/checkInternetConnection.js';
 
 function handleOffline() {
     alert("No internet connection. Redirecting to offline page...");
-    window.location.href = "/no_internet.html"; 
+    window.location.href = "../no_internet.html"; 
 }
 
 function handleOnline() {
