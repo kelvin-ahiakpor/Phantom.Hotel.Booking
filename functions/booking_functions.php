@@ -12,27 +12,36 @@ function getBookingsByStatus($userId, $status = null)
 {
     global $conn;
 
-    // Base query (ensure guests column is included)
     $query = "
-        SELECT b.booking_id, h.hotel_name, r.room_type, b.check_in_date, b.check_out_date, b.total_price, b.status, b.guests
+        SELECT 
+            b.booking_id, 
+            h.hotel_name, 
+            r.room_type, 
+            b.check_in_date, 
+            b.check_out_date, 
+            b.total_price, 
+            b.status, 
+            b.guests, 
+            (
+                SELECT hi.image_url 
+                FROM hb_hotel_images hi 
+                WHERE hi.hotel_id = h.hotel_id 
+                LIMIT 1
+            ) AS image_url
         FROM hb_bookings b
         JOIN hb_hotels h ON b.hotel_id = h.hotel_id
         JOIN hb_rooms r ON b.room_id = r.room_id
         WHERE b.user_id = ?
     ";
 
-
-
-    // Append status condition if provided
-    if ($status) {
+    if ($status && strtolower($status) !== 'all') {
         $query .= " AND b.status = ?";
     }
 
     $query .= " ORDER BY b.created_at DESC";
 
     $stmt = $conn->prepare($query);
-
-    if ($status) {
+    if ($status && strtolower($status) !== 'all') {
         $stmt->bind_param("is", $userId, $status);
     } else {
         $stmt->bind_param("i", $userId);
@@ -42,8 +51,8 @@ function getBookingsByStatus($userId, $status = null)
     $result = $stmt->get_result();
 
     $bookings = [];
-    
     while ($row = $result->fetch_assoc()) {
+        $row['image_url'] = !empty($row['image_url']) ? '../../' . $row['image_url'] : '../../assets/images/placeholder.jpg';
         $bookings[] = $row;
     }
 
