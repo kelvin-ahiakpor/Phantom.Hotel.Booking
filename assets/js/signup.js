@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await response.json();
 
         if (data.success) {
+          // redirect
           window.location.href = "../view/login.php";
         } else {
           data.errors.forEach((error) => {
