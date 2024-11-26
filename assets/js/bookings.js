@@ -324,3 +324,4 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "../../actions/logout.php";
   });
 });
+

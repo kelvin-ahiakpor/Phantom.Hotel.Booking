@@ -37,17 +37,17 @@ function uploadImage($file)
 }
 
 // Handle the hotel creation request
+// Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = ['success' => false, 'errors' => []];
 
     try {
-        // Validate and sanitize input
         $hotelName = htmlspecialchars(trim($_POST['hotelName']));
         $location = htmlspecialchars(trim($_POST['hotelLocation']));
         $description = htmlspecialchars(trim($_POST['hotelDescription']));
         $ownerId = $_SESSION['userId'];
 
-        // Basic validation
+        // Validate input
         if (empty($hotelName)) {
             $response['errors'][] = 'Hotel name is required';
         }
@@ -61,17 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Process images
         $imageUrls = [];
         $imageFields = ['hotelImage1', 'hotelImage2', 'hotelImage3'];
-
         foreach ($imageFields as $field) {
             if (isset($_FILES[$field]) && $_FILES[$field]['error'] === UPLOAD_ERR_OK) {
-                // Validate file type
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                $allowedTypes = ['image/jpeg', 'image/png'];
                 if (!in_array($_FILES[$field]['type'], $allowedTypes)) {
                     $response['errors'][] = "Invalid file type for {$field}. Only JPG and PNG are allowed.";
                     continue;
                 }
 
-                // Validate file size (5MB max)
                 if ($_FILES[$field]['size'] > 5 * 1024 * 1024) {
                     $response['errors'][] = "File size too large for {$field}. Maximum size is 5MB.";
                     continue;
@@ -86,29 +83,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Get amenities values
-        $amenities = [
-            'wifi' => isset($_POST['wifi']) && $_POST['wifi'] === '1',
-            'pool' => isset($_POST['pool']) && $_POST['pool'] === '1',
-            'spa' => isset($_POST['spa']) && $_POST['spa'] === '1',
-            'restaurant' => isset($_POST['restaurant']) && $_POST['restaurant'] === '1',
-            'valet' => isset($_POST['valet']) && $_POST['valet'] === '1',
-            'concierge' => isset($_POST['concierge']) && $_POST['concierge'] === '1'
-        ];
+        // Dynamically handle amenities
+        $amenities = ['wifi', 'pool', 'spa', 'restaurant', 'valet', 'concierge'];
+        $amenityValues = [];
+        foreach ($amenities as $amenity) {
+            $amenityValues[$amenity] = isset($_POST[$amenity]) && $_POST[$amenity] === '1' ? 1 : 0;
+        }
 
-        // If there are no errors, proceed with hotel creation
         if (empty($response['errors'])) {
-            // Start transaction
+            // Begin transaction
             $conn->begin_transaction();
 
             try {
                 // Insert hotel record
                 $stmt = $conn->prepare("
                     INSERT INTO hb_hotels (
-                        hotel_name, 
-                        location, 
+                        hotel_name,
+                        location,
                         address,
-                        description, 
+                        description,
                         owner_id,
                         availability,
                         created_at
@@ -116,15 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ");
 
                 $address = $location; // Using location as address for now
-
-                $stmt->bind_param(
-                    "ssssi",
-                    $hotelName,
-                    $location,
-                    $address,
-                    $description,
-                    $ownerId
-                );
+                $stmt->bind_param("ssssi", $hotelName, $location, $address, $description, $ownerId);
 
                 if ($stmt->execute()) {
                     $hotelId = $conn->insert_id;
@@ -135,7 +120,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             INSERT INTO hb_hotel_images (hotel_id, image_url) 
                             VALUES (?, ?)
                         ");
-
                         foreach ($imageUrls as $imagePath) {
                             $imageStmt->bind_param("is", $hotelId, $imagePath);
                             $imageStmt->execute();
@@ -145,33 +129,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // Insert amenities
                     $amenitiesStmt = $conn->prepare("
                         INSERT INTO hb_hotel_amenities (
-                            hotel_id, 
-                            wifi, 
-                            pool, 
-                            spa, 
-                            restaurant, 
-                            valet, 
-                            concierge
+                            hotel_id, wifi, pool, spa, restaurant, valet, concierge
                         ) VALUES (?, ?, ?, ?, ?, ?, ?)
                     ");
-
-                    // Convert boolean values to integers
-                    $wifiVal = $amenities['wifi'] ? 1 : 0;
-                    $poolVal = $amenities['pool'] ? 1 : 0;
-                    $spaVal = $amenities['spa'] ? 1 : 0;
-                    $restaurantVal = $amenities['restaurant'] ? 1 : 0;
-                    $valetVal = $amenities['valet'] ? 1 : 0;
-                    $conciergeVal = $amenities['concierge'] ? 1 : 0;
-
                     $amenitiesStmt->bind_param(
                         "iiiiiii",
                         $hotelId,
-                        $wifiVal,
-                        $poolVal,
-                        $spaVal,
-                        $restaurantVal,
-                        $valetVal,
-                        $conciergeVal
+                        $amenityValues['wifi'],
+                        $amenityValues['pool'],
+                        $amenityValues['spa'],
+                        $amenityValues['restaurant'],
+                        $amenityValues['valet'],
+                        $amenityValues['concierge']
                     );
 
                     if (!$amenitiesStmt->execute()) {
@@ -187,9 +156,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             } catch (Exception $e) {
                 $conn->rollback();
-                $response['errors'][] = 'Database error: ' . $e->getMessage();
+                $response['errors'][] = 'Transaction failed: ' . $e->getMessage();
 
-                // Clean up uploaded images if hotel creation failed
+                // Clean up uploaded images
                 foreach ($imageUrls as $imagePath) {
                     $fullPath = '../' . $imagePath;
                     if (file_exists($fullPath)) {
@@ -202,7 +171,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['errors'][] = 'Server error: ' . $e->getMessage();
     }
 
-    // Send JSON response
     echo json_encode($response);
     exit;
 }
