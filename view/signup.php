@@ -166,7 +166,7 @@
         </div>
     </div>
 
-    <script src="../assets/js/signup.js"></script>
+    <script type="module" src="../assets/js/signup.js"></script>
 </body>
 
 </html>

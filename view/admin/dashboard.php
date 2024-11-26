@@ -1,3 +1,9 @@
+<?php
+session_start();
+require_once '../../db/config.php';
+require_once '../../middleware/checkUserAccess.php';
+checkUserAccess('admin');
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -130,7 +136,7 @@
             &copy; 2024 Phantom Hotel Management. All rights reserved.
         </div>
     </footer>
-    <script src="../../assets/js/dashboard.js"></script>
+    <script type="module" src="../../assets/js/dashboard.js"></script>
 </body>
 </html>
 

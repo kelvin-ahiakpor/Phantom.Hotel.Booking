@@ -1,3 +1,10 @@
+<?php
+session_start();
+require_once '../../db/config.php';
+require_once '../../middleware/checkUserAccess.php';
+checkUserAccess('owner');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -206,7 +213,7 @@
         </div>
     </footer>
 
-    <script src="../../assets/js/create_hotel.js"></script>
+    <script type="module" src="../../assets/js/create_hotel.js"></script>
 </body>
 
 </html>

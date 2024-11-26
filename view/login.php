@@ -103,8 +103,6 @@
             </div>
         </div>
     </div>
-
+    <script type="module" src="../assets/js/login.js"></script>
 </body>
-<script src="../assets/js/login.js"></script>
-
 </html>

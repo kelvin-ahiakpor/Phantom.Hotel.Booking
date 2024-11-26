@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once '../db/config.php';
-require_once '../middleware/checkUserAccess.php';
+require_once '../functions/session_check.php';
 
 try {
     // Get user details
@@ -211,7 +211,7 @@ try {
         </div>
     </div>
 
-    <script src="../assets/js/manage_account.js"></script>
+    <script type="module" src="../assets/js/manage_account.js"></script>
 </body>
 
 </html>

@@ -85,7 +85,7 @@ $hotel = $result->fetch_assoc();
             <div id="formFeedback" class="mt-4"></div>
         </div>
     </main>
-    <script src="../../assets/js/booking_form.js"></script>
+    <script type="module" src="../../assets/js/booking_form.js"></script>
 </body>
 
 </html>

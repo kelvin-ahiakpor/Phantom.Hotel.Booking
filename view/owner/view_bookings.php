@@ -1,7 +1,4 @@
 <?php
-// Resources to implement pagination:
-// https://www.youtube.com/watch?v=3-5DpAiCHy8
-// https://www.youtube.com/watch?v=zNBHBQ3g0j8
 session_start();
 require_once '../../db/config.php';
 require_once '../../middleware/checkUserAccess.php';

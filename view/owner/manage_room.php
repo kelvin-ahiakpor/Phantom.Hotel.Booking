@@ -285,7 +285,7 @@ try {
     </div>
 
     <!-- Scripts -->
-    <script src="../../assets/js/manage_room.js"></script>
+    <script type="module" src="../../assets/js/manage_room.js"></script>
 </body>
 
 </html>

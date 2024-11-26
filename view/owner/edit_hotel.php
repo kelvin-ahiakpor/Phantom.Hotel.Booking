@@ -306,7 +306,7 @@ try {
             </div>
         </div>
     </main>
-    <script src="../../assets/js/edit_hotel.js"></script>
+    <script type="module" src="../../assets/js/edit_hotel.js"></script>
 </body>
 
 </html>
