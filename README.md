@@ -10,6 +10,7 @@ Phantom.Hotel.Booking is a data-driven hotel management system designed to minim
 - [Sprint 2](https://drive.google.com/file/d/11NBVUe-_soCnR4NUqYEtQCUjZsDXSlLU/view?usp=share_link)
 - [Sprint 3](https://drive.google.com/file/d/1J6d2fH5wgOeJdzv_f7lmeIb43IAXQ7TE/view?usp=share_link)
 - [Current Project Site](http://169.239.251.102:3341/~kelvin.ahiakpor/PHANTOM_HOTEL_BOOKING/)
+- [Demo Video](https://youtu.be/xz4HmzH2W9U)
 
 ---
 
