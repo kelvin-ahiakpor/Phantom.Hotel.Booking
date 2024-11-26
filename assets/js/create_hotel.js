@@ -1,125 +1,91 @@
-import checkInternetConnection from '../../utils/checkInternetConnection.js';
-
-function handleOffline() {
-    alert("No internet connection. Redirecting to offline page...");
-    window.location.href = "../no_internet.html"; 
-}
-
-function handleOnline() {
-    console.log("Back online!");
-}
-
-checkInternetConnection(handleOffline, handleOnline);
-
 document.addEventListener('DOMContentLoaded', function () {
-    // Form elements
-    const hotelForm = document.getElementById('hotelForm');
-    const submitButton = hotelForm.querySelector('button[type="submit"]');
-    const loadingSpinner = document.querySelector('.loading-spinner');
+    // Get DOM elements
+    const elements = {
+        form: document.getElementById('hotelForm'),
+        profileBtn: document.getElementById('profileBtn'),
+        profileModal: document.getElementById('profileModal'),
+        closeProfileBtn: document.getElementById('closeProfileModal'),
+        submitButton: document.querySelector('button[type="submit"]'),
+        loadingSpinner: document.querySelector('.loading-spinner')
+    };
 
-    // Profile modal elements
-    const profileBtn = document.getElementById('profileBtn');
-    const profileModal = document.getElementById('profileModal');
-    const closeProfileModal = document.getElementById('closeProfileModal');
-
-    // Configure validation rules
+    // Configuration
     const config = {
         maxFileSize: 5 * 1024 * 1024, // 5MB
         allowedImageTypes: ['image/jpeg', 'image/png'],
         requiredFields: ['hotelName', 'hotelLocation', 'hotelDescription']
     };
 
-    // Profile modal handlers
-    if (profileBtn && profileModal && closeProfileModal) {
-        profileBtn.addEventListener('click', () => {
-            profileModal.classList.toggle('hidden');
+    // Profile Modal Functionality
+    if (elements.profileBtn && elements.profileModal && elements.closeProfileBtn) {
+        elements.profileBtn.addEventListener('click', () => {
+            elements.profileModal.classList.toggle('hidden');
         });
 
-        closeProfileModal.addEventListener('click', () => {
-            profileModal.classList.add('hidden');
+        elements.closeProfileBtn.addEventListener('click', () => {
+            elements.profileModal.classList.add('hidden');
         });
 
         // Close modal when clicking outside
         document.addEventListener('click', (e) => {
-            if (!profileModal.contains(e.target) && !profileBtn.contains(e.target)) {
-                profileModal.classList.add('hidden');
+            if (!elements.profileModal.contains(e.target) && !elements.profileBtn.contains(e.target)) {
+                elements.profileModal.classList.add('hidden');
             }
         });
     }
 
-    // Initialize preview areas
-    function setupImagePreviews() {
-        // Preview sections in the form
-        const uploadPreviews = ['preview1', 'preview2', 'preview3'];
-        uploadPreviews.forEach(previewId => {
-            const preview = document.getElementById(previewId);
-            if (preview) {
-                preview.style.display = 'none';
-            }
-        });
+    // Live Preview Functionality
+    function initializeLivePreview() {
+        const previewMappings = [
+            { input: 'hotelName', preview: 'previewName', placeholder: 'Hotel Name' },
+            { input: 'hotelLocation', preview: 'previewLocation', placeholder: 'Location' },
+            { input: 'hotelDescription', preview: 'previewDescription', placeholder: 'Description will appear here...' }
+        ];
 
-        // Live preview area
-        const previewImages = ['previewMainImage', 'previewImage2', 'previewImage3'];
-        previewImages.forEach(previewId => {
-            const preview = document.getElementById(previewId);
-            if (preview) {
-                preview.style.display = 'none';
-                const iconContainer = document.createElement('div');
-                iconContainer.className = 'w-full h-full flex items-center justify-center bg-gray-100 rounded-lg';
-                iconContainer.innerHTML = `
-                    <svg class="w-12 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                `;
-                preview.parentNode.insertBefore(iconContainer, preview.nextSibling);
+        previewMappings.forEach(({ input, preview, placeholder }) => {
+            const inputElement = document.getElementById(input);
+            const previewElement = document.getElementById(preview);
+
+            if (inputElement && previewElement) {
+                // Set initial preview
+                previewElement.textContent = inputElement.value || placeholder;
+
+                // Update preview on input
+                inputElement.addEventListener('input', () => {
+                    previewElement.textContent = inputElement.value || placeholder;
+                    hideError(`${input}Error`);
+                });
             }
         });
     }
 
-    // Handle image upload and preview
-    function setupImageInput(inputId, formPreviewId, livePreviewId) {
+    // Image Upload Functionality
+    function initializeImageUploads() {
+        const imageInputs = [
+            { input: 'hotelImage1', preview: 'preview1', livePreview: 'previewMainImage' },
+            { input: 'hotelImage2', preview: 'preview2', livePreview: 'previewImage2' },
+            { input: 'hotelImage3', preview: 'preview3', livePreview: 'previewImage3' }
+        ];
+
+        imageInputs.forEach(({ input, preview, livePreview }) => {
+            setupImageInput(input, preview, livePreview);
+        });
+    }
+
+    function setupImageInput(inputId, previewId, livePreviewId) {
         const input = document.getElementById(inputId);
-        const formPreview = document.getElementById(formPreviewId);
+        const preview = document.getElementById(previewId);
         const livePreview = document.getElementById(livePreviewId);
         const wrapper = input.closest('.image-input-wrapper');
         const placeholder = wrapper.querySelector('.placeholder-text');
-        const iconContainer = livePreview.nextElementSibling;
 
         wrapper.addEventListener('click', () => input.click());
 
         input.addEventListener('change', function () {
-            const file = this.files[0];
-            if (file) {
-                if (!config.allowedImageTypes.includes(file.type)) {
-                    showError('imageError', 'Please upload only JPG or PNG images');
-                    return;
-                }
-
-                if (file.size > config.maxFileSize) {
-                    showError('imageError', 'File size should not exceed 5MB');
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    // Update form preview
-                    formPreview.src = e.target.result;
-                    formPreview.style.display = 'block';
-                    placeholder.style.display = 'none';
-
-                    // Update live preview
-                    livePreview.src = e.target.result;
-                    livePreview.style.display = 'block';
-                    iconContainer.style.display = 'none';
-                };
-                reader.readAsDataURL(file);
-                hideError('imageError');
-            }
+            handleImageSelection(this.files[0], preview, livePreview, placeholder);
         });
 
-        // Drag and drop handling
+        // Drag and drop functionality
         wrapper.addEventListener('dragover', (e) => {
             e.preventDefault();
             wrapper.classList.add('border-blue-500');
@@ -132,113 +98,90 @@ document.addEventListener('DOMContentLoaded', function () {
         wrapper.addEventListener('drop', (e) => {
             e.preventDefault();
             wrapper.classList.remove('border-blue-500');
-            const file = e.dataTransfer.files[0];
-            if (file) {
-                input.files = e.dataTransfer.files;
-                input.dispatchEvent(new Event('change'));
-            }
+            handleImageSelection(e.dataTransfer.files[0], preview, livePreview, placeholder);
         });
     }
 
-    // Handle live preview updates
-    function setupLivePreview() {
-        const elements = {
-            name: { input: 'hotelName', preview: 'previewName' },
-            location: { input: 'hotelLocation', preview: 'previewLocation' },
-            description: { input: 'hotelDescription', preview: 'previewDescription' }
+    function handleImageSelection(file, preview, livePreview, placeholder) {
+        if (!file) return;
+
+        if (!config.allowedImageTypes.includes(file.type)) {
+            showError('imageError', 'Please upload only JPG or PNG images');
+            return;
+        }
+
+        if (file.size > config.maxFileSize) {
+            showError('imageError', 'File size should not exceed 5MB');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            livePreview.src = e.target.result;
+            livePreview.style.display = 'block';
+            placeholder.style.display = 'none';
+            hideError('imageError');
         };
-
-        Object.entries(elements).forEach(([key, { input, preview }]) => {
-            const inputElement = document.getElementById(input);
-            const previewElement = document.getElementById(preview);
-
-            inputElement.addEventListener('input', () => {
-                previewElement.textContent = inputElement.value || `Enter ${key}...`;
-                hideError(`${input}Error`);
-            });
-        });
+        reader.readAsDataURL(file);
     }
 
-    // Amenities handling
-    const amenityIcons = {
-        wifi: '📶',
-        pool: '🏊',
-        spa: '💆',
-        restaurant: '🍽️',
-        valet: '🚗',
-        concierge: '👨‍💼'
-    };
-
-    function setupAmenities() {
-        const amenitiesContainer = document.getElementById('previewAmenities');
-
+    // Amenities Preview Functionality
+    function initializeAmenities() {
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                updateAmenitiesPreview(amenitiesContainer);
-            });
+            checkbox.addEventListener('change', updateAmenitiesPreview);
         });
+        updateAmenitiesPreview(); // Initial update
     }
 
-    function updateAmenitiesPreview(container) {
-        container.innerHTML = '';
+    function updateAmenitiesPreview() {
+        const amenitiesContainer = document.querySelector('.preview-amenities');
+        if (!amenitiesContainer) return;
 
-        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-            const amenityId = checkbox.id;
-            const amenityLabel = checkbox.nextElementSibling.textContent.trim();
+        const selectedAmenities = document.querySelectorAll('input[type="checkbox"]:checked');
+        amenitiesContainer.innerHTML = '';
 
-            const badge = createAmenityBadge(amenityId, amenityLabel);
-            container.appendChild(badge);
-        });
+        if (selectedAmenities.length > 0) {
+            amenitiesContainer.innerHTML = '<h4 class="text-sm font-medium text-gray-700 mb-2">Amenities</h4>';
+            const amenitiesGrid = document.createElement('div');
+            amenitiesGrid.className = 'flex flex-wrap gap-2';
+
+            selectedAmenities.forEach(checkbox => {
+                const badge = createAmenityBadge(
+                    checkbox.id,
+                    checkbox.nextElementSibling.textContent.trim()
+                );
+                amenitiesGrid.appendChild(badge);
+            });
+
+            amenitiesContainer.appendChild(amenitiesGrid);
+        }
     }
 
     function createAmenityBadge(amenityId, label) {
         const badge = document.createElement('span');
-        badge.className = 'inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm mr-2 mb-2 ' +
-            'transition-transform duration-200 hover:scale-105 hover:shadow-md';
-        badge.innerHTML = `${amenityIcons[amenityId]} ${label}`;
+        badge.className = 'inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm';
+        badge.textContent = label;
         return badge;
     }
 
-    // Form submission handler
-    async function handleFormSubmit(e) {
+    // Form Submission
+    async function handleSubmit(e) {
         e.preventDefault();
         clearErrors();
 
         if (!validateForm()) return;
 
-        submitButton.disabled = true;
-        loadingSpinner.style.display = 'inline-block';
-
-        const formData = new FormData();
-
-        // Add basic fields
-        config.requiredFields.forEach(field => {
-            formData.append(field, document.getElementById(field).value);
-        });
-
-        // Add images
-        ['hotelImage1', 'hotelImage2', 'hotelImage3'].forEach(inputId => {
-            const input = document.getElementById(inputId);
-            if (input.files[0]) {
-                formData.append(inputId, input.files[0]);
-            }
-        });
-
-        // Add amenities
-        ['wifi', 'pool', 'spa', 'restaurant', 'valet', 'concierge'].forEach(amenity => {
-            const checkbox = document.getElementById(amenity);
-            formData.append(amenity, checkbox.checked ? '1' : '0');
-        });
-
         try {
-            const response = await fetch('../../actions/create_hotel.php', {
+            elements.submitButton.disabled = true;
+            elements.loadingSpinner.style.display = 'block';
+
+            const formData = new FormData(elements.form);
+            const response = await fetch('../../actions/createHotel.php', {
                 method: 'POST',
                 body: formData
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
 
             const data = await response.json();
 
@@ -246,34 +189,30 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Hotel created successfully!', 'success');
                 setTimeout(() => window.location.href = data.redirect, 1500);
             } else {
-                throw new Error(data.errors?.join('\n') || 'Failed to create hotel');
+                throw new Error(data.message || 'Failed to create hotel');
             }
         } catch (error) {
-            console.error('Error:', error);
             showNotification(error.message, 'error');
         } finally {
-            submitButton.disabled = false;
-            loadingSpinner.style.display = 'none';
+            elements.submitButton.disabled = false;
+            elements.loadingSpinner.style.display = 'none';
         }
     }
 
-    // Validation helpers
+    // Validation and Error Handling
     function validateForm() {
         let isValid = true;
 
-        // Required fields
         config.requiredFields.forEach(field => {
             const input = document.getElementById(field);
             if (!input.value.trim()) {
-                showError(
-                    `${field}Error`,
+                showError(`${field}Error`,
                     `${field.replace('hotel', '').replace(/([A-Z])/g, ' $1').trim()} is required`
                 );
                 isValid = false;
             }
         });
 
-        // Image validation
         const hasImage = ['hotelImage1', 'hotelImage2', 'hotelImage3'].some(id => {
             const input = document.getElementById(id);
             return input.files && input.files[0];
@@ -317,15 +256,12 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => notification.remove(), 3000);
     }
 
-    // Initialize everything
+    // Initialize all functionality
     function initialize() {
-        setupImagePreviews();
-        ['hotelImage1', 'hotelImage2', 'hotelImage3'].forEach(id => {
-            setupImageInput(id, `preview${id.slice(-1)}`, `previewMainImage${id.slice(-1) === '1' ? '' : id.slice(-1)}`);
-        });
-        setupLivePreview();
-        setupAmenities();
-        hotelForm.addEventListener('submit', handleFormSubmit);
+        initializeLivePreview();
+        initializeImageUploads();
+        initializeAmenities();
+        elements.form.addEventListener('submit', handleSubmit);
     }
 
     // Start the application

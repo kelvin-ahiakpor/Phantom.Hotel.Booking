@@ -1,12 +1,12 @@
 import checkInternetConnection from '../../utils/checkInternetConnection.js';
 
 function handleOffline() {
-    alert("No internet connection. Redirecting to offline page...");
-    window.location.href = "../no_internet.html"; 
+  alert("No internet connection. Redirecting to offline page...");
+  window.location.href = "../no_internet.html";
 }
 
 function handleOnline() {
-    console.log("Back online!");
+  console.log("Back online!");
 }
 
 checkInternetConnection(handleOffline, handleOnline);
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ${booking.status === "confirmed" || booking.status === "pending" ? `
                     <div class="flex justify-end space-x-4 pt-4 border-t border-gray-100">
                         <button class="modify-btn px-6 py-2.5 border border-black text-sm font-medium text-black 
-                                     hover:bg-black hover:text-white transition duration-300 rounded-lg" 
+                                     hover:bg-black hover:text-white transition duration-300" 
                             data-booking-id="${booking.booking_id}"
                             data-check-in="${booking.check_in_date}"
                             data-check-out="${booking.check_out_date}"
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <i class="fas fa-edit mr-2"></i>Modify
                         </button>
                         <button class="cancel-btn px-6 py-2.5 bg-black text-white text-sm font-medium 
-                                     hover:bg-zinc-800 transition duration-300 rounded-lg" 
+                                     hover:bg-zinc-800 transition duration-300" 
                             data-booking-id="${booking.booking_id}">
                             <i class="fas fa-times mr-2"></i>Cancel
                         </button>

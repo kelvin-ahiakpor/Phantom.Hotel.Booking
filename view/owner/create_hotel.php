@@ -164,11 +164,14 @@ checkUserAccess('owner');
                     <div class="space-y-4">
                         <!-- Image Preview -->
                         <div class="aspect-w-16 aspect-h-9 mb-4">
-                            <img id="previewMainImage" src="../../assets/images/default-hotel.png" alt="Hotel Preview" class="w-full h-48 object-cover rounded-lg">
+                            <img id="previewMainImage" src="../../assets/images/default-hotel.png"
+                                alt="Hotel Preview" class="w-full h-48 object-cover rounded-lg">
                         </div>
                         <div class="grid grid-cols-2 gap-2">
-                            <img id="previewImage2" src="../../assets/images/default-hotel.png" alt="Hotel Preview" class="w-full h-24 object-cover rounded-lg">
-                            <img id="previewImage3" src="../../assets/images/default-hotel.png" alt="Hotel Preview" class="w-full h-24 object-cover rounded-lg">
+                            <img id="previewImage2" src="../../assets/images/default-hotel.png"
+                                alt="Hotel Preview" class="w-full h-24 object-cover rounded-lg">
+                            <img id="previewImage3" src="../../assets/images/default-hotel.png"
+                                alt="Hotel Preview" class="w-full h-24 object-cover rounded-lg">
                         </div>
 
                         <!-- Hotel Details Preview -->
@@ -179,28 +182,8 @@ checkUserAccess('owner');
                         </div>
 
                         <!-- Amenities Preview -->
-                        <div class="mt-4">
-                            <h4 class="text-sm font-medium text-gray-700 mb-2">Amenities</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <?php
-                                $amenityIcons = [
-                                    'wifi' => ['icon' => '📶', 'label' => 'Free WiFi'],
-                                    'pool' => ['icon' => '🏊', 'label' => 'Indoor Pool'],
-                                    'spa' => ['icon' => '💆', 'label' => 'Luxury Spa'],
-                                    'restaurant' => ['icon' => '🍽️', 'label' => 'Fine Dining'],
-                                    'valet' => ['icon' => '🚗', 'label' => 'Valet Parking'],
-                                    'concierge' => ['icon' => '👨‍💼', 'label' => '24/7 Concierge']
-                                ];
-
-                                foreach ($amenityIcons as $amenity => $details) {
-                                    if (isset($hotelDetails[$amenity]) && $hotelDetails[$amenity]) {
-                                        echo '<span class="inline-block px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">';
-                                        echo $details['icon'] . ' ' . $details['label'];
-                                        echo '</span>';
-                                    }
-                                }
-                                ?>
-                            </div>
+                        <div class="preview-amenities">
+                            <!-- This will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
