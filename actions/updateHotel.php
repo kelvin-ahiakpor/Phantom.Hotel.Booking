@@ -25,7 +25,7 @@ function sendJsonResponse($success, $errors = [], $data = [])
 function uploadImage($file)
 {
     try {
-        $uploadDir = '../../uploads/';
+        $uploadDir = '../uploads/';
         if (!file_exists($uploadDir)) {
             if (!mkdir($uploadDir, 0777, true)) {
                 throw new Exception("Failed to create upload directory");
@@ -236,7 +236,7 @@ try {
 
             // Clean up old image files
             foreach ($oldImages as $oldImage) {
-                $fullPath = '../' . $oldImage;
+                $fullPath = '../../' . $oldImage;
                 if (file_exists($fullPath)) {
                     unlink($fullPath);
                 }

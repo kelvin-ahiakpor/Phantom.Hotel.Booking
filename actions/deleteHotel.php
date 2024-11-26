@@ -10,7 +10,7 @@ try {
 
     // Get POST data
     $data = json_decode(file_get_contents('php://input'), true);
-    $hotelId = $data['hotelId'] ?? null;
+    $hotelId = filter_var($data['hotelId'] ?? null, FILTER_VALIDATE_INT);
     $ownerId = $_SESSION['userId'];
 
     if (!$hotelId) {
@@ -35,13 +35,15 @@ try {
         $stmt->execute();
         $result = $stmt->get_result();
         while ($row = $result->fetch_assoc()) {
-            $imagePath = '../../' . $row['image_url'];
+            $imagePath = '../' . $row['image_url'];
             if (file_exists($imagePath)) {
-                unlink($imagePath);
+                if (!unlink($imagePath)) {
+                    error_log("Failed to delete image: " . $imagePath);
+                }
             }
         }
 
-        // Delete related records
+        // Delete related records in the right order
         $tables = ['hb_hotel_images', 'hb_hotel_amenities', 'hb_reviews', 'hb_rooms', 'hb_hotels'];
 
         foreach ($tables as $table) {
@@ -50,10 +52,17 @@ try {
             $stmt->execute();
         }
 
+        // Commit the transaction
         $conn->commit();
-        echo json_encode(['success' => true]);
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Hotel and related data successfully deleted.'
+        ]);
     } catch (Exception $e) {
+        // Rollback on error
         $conn->rollback();
+        error_log("Error deleting hotel: " . $e->getMessage());
         throw $e;
     }
 } catch (Exception $e) {
