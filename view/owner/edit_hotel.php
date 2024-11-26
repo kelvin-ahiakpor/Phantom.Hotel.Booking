@@ -207,14 +207,16 @@ try {
                                         accept="image/jpeg,image/png"
                                         class="hidden">
                                     <?php if (isset($hotelImages[$i])): ?>
-                                        <img src="/<?php echo htmlspecialchars($hotelImages[$i]); ?>"
+                                        <img src="../../<?php echo htmlspecialchars($hotelImages[$i]); ?>"
                                             class="preview-image"
                                             id="preview<?php echo $i + 1; ?>"
+                                            style="display: block;"
                                             alt="Hotel image <?php echo $i + 1; ?>">
                                     <?php else: ?>
                                         <img id="preview<?php echo $i + 1; ?>"
                                             class="preview-image"
-                                            style="display: none;">
+                                            style="display: none;"
+                                            alt="Preview">
                                         <div class="placeholder-text">
                                             <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
                                             <span class="text-sm text-gray-500">

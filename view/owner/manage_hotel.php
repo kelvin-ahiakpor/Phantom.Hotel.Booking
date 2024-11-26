@@ -142,6 +142,7 @@ try {
                                 <!-- Main Image -->
                                 <div class="relative w-full h-64 rounded-lg overflow-hidden">
                                     <img
+
                                         src="<?php echo !empty($hotelImages) ? "../../" . htmlspecialchars($hotelImages[0]) : '../../assets/images/default-hotel.jpg'; ?>"
                                         alt="<?php echo htmlspecialchars($hotelDetails['hotel_name']); ?>"
                                         class="w-full h-full object-cover hotel-image" />
