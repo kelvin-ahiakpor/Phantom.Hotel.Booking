@@ -101,7 +101,7 @@ try {
                         Create Hotel
                     </a>
                 <?php endif; ?>
-                <button class="text-gray-600 hover:text-gray-800" id="profile-btn">
+                <button class="text-gray-600 hover:text-gray-800" id="profileBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
                     </svg>
@@ -111,21 +111,22 @@ try {
     </header>
 
     <!-- Profile Modal -->
-    <div class="hidden fixed top-14 right-5 w-auto bg-white p-6 rounded-lg shadow-lg" id="profile-modal">
-        <div class="flex items-center space-x-4">
-            <!-- <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-full" /> -->
-            <div class="flex flex-col space-y-2">
-                <h2 class="text-lg font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h2>
-                <p class="text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
-                <a href="../../view/manage_account.php" class="text-blue-500 hover:text-blue-600">Manage account</a>
-                <a href="../../actions/logout.php" class="text-blue-500 hover:text-blue-600">Log Out</a>
+    <div id="profileModal" class="hidden fixed top-14 right-4 bg-white rounded-lg shadow-lg p-6 z-20">
+        <div class="flex flex-col space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h3>
+                    <p class="text-sm text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
+                </div>
+
+                <button id="closeProfileModal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+            <hr>
+            <a href="../../view/manage_account.php" class="text-blue-600 hover:text-blue-700">Manage Account</a>
+            <a href="../../actions/logout.php" class="text-red-600 hover:text-red-700">Logout</a>
         </div>
-        <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-600" id="close-modal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-            </svg>
-        </button>
     </div>
 
 
@@ -294,24 +295,49 @@ try {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const profileBtn = document.getElementById('profile-btn');
-            const profileModal = document.getElementById('profile-modal');
-            const closeModal = document.getElementById('close-modal');
+            // const profileBtn = document.getElementById('profile-btn');
+            // const profileModal = document.getElementById('profile-modal');
+            // const closeModal = document.getElementById('close-modal');
 
-            profileBtn.addEventListener('click', () => {
-                profileModal.classList.toggle('hidden');
-            });
+            const elements = {
+                profileBtn: document.getElementById('profileBtn'),
+                profileModal: document.getElementById('profileModal'),
+                closeProfileBtn: document.getElementById('closeProfileModal'),
+            };
 
-            closeModal.addEventListener('click', () => {
-                profileModal.classList.add('hidden');
-            });
+            // profileBtn.addEventListener('click', () => {
+            //     profileModal.classList.toggle('hidden');
+            // });
 
-            window.addEventListener('click', (e) => {
-                if (!profileModal.contains(e.target) && !profileBtn.contains(e.target)) {
-                    profileModal.classList.add('hidden');
-                }
+            // closeModal.addEventListener('click', () => {
+            //     profileModal.classList.add('hidden');
+            // });
 
-            });
+
+            // window.addEventListener('click', (e) => {
+            //     if (!profileModal.contains(e.target) && !profileBtn.contains(e.target)) {
+            //         profileModal.classList.add('hidden');
+            //     }
+            // });
+
+
+            // Profile Modal Functionality
+            if (elements.profileBtn && elements.profileModal && elements.closeProfileBtn) {
+                elements.profileBtn.addEventListener('click', () => {
+                    elements.profileModal.classList.toggle('hidden');
+                });
+
+                elements.closeProfileBtn.addEventListener('click', () => {
+                    elements.profileModal.classList.add('hidden');
+                });
+
+                // Close modal when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!elements.profileModal.contains(e.target) && !elements.profileBtn.contains(e.target)) {
+                        elements.profileModal.classList.add('hidden');
+                    }
+                });
+            }
 
             window.showDeleteModal = function() {
                 document.getElementById('deleteModal').classList.remove('hidden');
