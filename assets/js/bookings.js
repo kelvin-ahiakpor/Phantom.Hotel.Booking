@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Improved Booking card with status and action buttons
   function createBookingCard(booking) {
     const statusClass = {
-      confirmed: "bg-green-100 text-green-800",
-      pending: "bg-yellow-100 text-yellow-800",
-      cancelled: "bg-red-100 text-red-800"
+      confirmed: "bg-green-100 text-green-800 border border-green-200",
+      pending: "bg-yellow-100 text-yellow-800 border border-yellow-200",
+      cancelled: "bg-red-100 text-red-800 border border-red-200"
     }[booking.status] || "";
 
     const card = document.createElement("div");
@@ -51,23 +51,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
     card.innerHTML = `
         <div class="relative">
-            <!-- Image Section -->
-            <div class="h-56 relative">
-                <img src="${booking.image_url}" alt="${booking.room_type}" 
-                     class="h-full w-full object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div class="absolute top-4 left-4">
-                    <span class="px-4 py-2 rounded-full text-sm font-medium ${statusClass} shadow-lg">
+            <!-- Image Section with Enhanced Overlay -->
+            <div class="h-64 relative overflow-hidden group">
+                <img src="${booking.image_url}" 
+                     alt="${booking.room_type}" 
+                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+                     
+                <!-- Multiple gradient overlays for better text readability -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent"></div>
+                
+                <!-- Status Badge -->
+                <div class="absolute top-4 left-4 z-20">
+                    <span class="px-4 py-2 rounded-full text-sm font-semibold ${statusClass} shadow-lg backdrop-blur-sm">
                         ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                     </span>
                 </div>
-                <div class="absolute bottom-4 left-4 right-4">
-                    <h3 class="text-xl font-bold text-white mb-1">
-                        ${booking.hotel_name}
-                    </h3>
-                    <p class="text-white/90 text-sm">
-                        ${booking.room_type}
-                    </p>
+
+                <!-- Hotel Information with enhanced readability -->
+                <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white drop-shadow-md tracking-wide">
+                            ${booking.hotel_name}
+                        </h3>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-bed text-gray-300"></i>
+                            <p class="text-gray-200 text-sm font-medium tracking-wide">
+                                ${booking.room_type}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -75,32 +88,29 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="p-6 space-y-6">
                 <!-- Booking Details -->
                 <div class="space-y-4">
-                    <div class="flex items-center space-x-2 text-gray-500">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        <span>Booking ID: ${booking.booking_id}</span>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2 text-gray-600">
+                            <i class="fas fa-bookmark text-gray-400"></i>
+                            <span class="text-sm">Booking ID: ${booking.booking_id}</span>
+                        </div>
+                        <span class="text-sm font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-600">
+                            ${moment(booking.check_out_date).diff(moment(booking.check_in_date), "days")} Nights
+                        </span>
                     </div>
+                    
                     <div class="flex justify-between items-center pb-4 border-b border-gray-100">
                         <span class="text-2xl font-bold text-gray-900">
                             $${parseFloat(booking.total_price).toFixed(2)}
                         </span>
-                        <span class="text-gray-500">
-                            ${moment(booking.check_out_date).diff(moment(booking.check_in_date), "days")} Nights
-                        </span>
                     </div>
                 </div>
 
-                <!-- Dates and Guests Grid -->
+                <!-- Dates and Guests -->
                 <div class="grid grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <p class="text-sm font-medium text-gray-500">Check-in</p>
                         <div class="flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
+                            <i class="fas fa-calendar text-gray-400"></i>
                             <p class="font-medium text-gray-900">
                                 ${moment(booking.check_in_date).format("MMM D, YYYY")}
                             </p>
@@ -110,21 +120,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="space-y-2">
                         <p class="text-sm font-medium text-gray-500">Check-out</p>
                         <div class="flex items-center space-x-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
+                            <i class="fas fa-calendar-check text-gray-400"></i>
                             <p class="font-medium text-gray-900">
                                 ${moment(booking.check_out_date).format("MMM D, YYYY")}
                             </p>
                         </div>
                     </div>
 
-                    <div class="col-span-2 flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
+                    <div class="col-span-2 flex items-center space-x-2 border-t pt-4 border-gray-100">
+                        <i class="fas fa-user-friends text-gray-400"></i>
                         <p class="font-medium text-gray-900">${booking.guests} Guests</p>
                     </div>
                 </div>
@@ -132,16 +136,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 <!-- Action Buttons -->
                 ${booking.status === "confirmed" || booking.status === "pending" ? `
                     <div class="flex justify-end space-x-4 pt-4 border-t border-gray-100">
-                        <button class="modify-btn px-6 py-2.5 border border-black text-sm font-medium text-black hover:bg-black hover:text-white transition duration-150" 
+                        <button class="modify-btn px-6 py-2.5 border border-black text-sm font-medium text-black 
+                                     hover:bg-black hover:text-white transition duration-300 rounded-lg" 
                             data-booking-id="${booking.booking_id}"
                             data-check-in="${booking.check_in_date}"
                             data-check-out="${booking.check_out_date}"
                             data-guests="${booking.guests}">
-                            Modify
+                            <i class="fas fa-edit mr-2"></i>Modify
                         </button>
-                        <button class="cancel-btn px-6 py-2.5 bg-black text-white text-sm font-medium hover:bg-zinc-600 transition duration-150" 
+                        <button class="cancel-btn px-6 py-2.5 bg-black text-white text-sm font-medium 
+                                     hover:bg-zinc-800 transition duration-300 rounded-lg" 
                             data-booking-id="${booking.booking_id}">
-                            Cancel
+                            <i class="fas fa-times mr-2"></i>Cancel
                         </button>
                     </div>
                 ` : ''}
