@@ -236,7 +236,7 @@ try {
 
             // Clean up old image files
             foreach ($oldImages as $oldImage) {
-                $fullPath = '../../' . $oldImage;
+                $fullPath = '../' . $oldImage;
                 if (file_exists($fullPath)) {
                     unlink($fullPath);
                 }
