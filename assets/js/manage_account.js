@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
             loadingSpinner.style.display = 'block';
 
             const formData = new FormData(accountForm);
-            const response = await fetch('../../actions/update_account.php', {
+            const response = await fetch('../actions/updateAccount.php', {
                 method: 'POST',
                 body: formData
             });

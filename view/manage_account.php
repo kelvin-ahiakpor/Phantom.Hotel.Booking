@@ -78,8 +78,8 @@ try {
                             ← Back to Dashboard
                         </a>
                     <?php else: ?>
-                        <a href="../dashboard.php" class="text-gray-600 hover:text-gray-800">
-                            ← Back to Dashboard
+                        <a href="javascript:window.history.back();" class="text-gray-600 hover:text-gray-800">
+                            ← Back
                         </a>
                     <?php endif; ?>
                 </div>
@@ -213,5 +213,4 @@ try {
 
     <script type="module" src="../assets/js/manage_account.js"></script>
 </body>
-
 </html>
