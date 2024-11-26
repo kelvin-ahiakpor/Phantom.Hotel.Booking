@@ -47,6 +47,14 @@ if (new DateTime($checkOut) <= new DateTime($checkIn)) {
     exit;
 }
 
+// Calculate the number of nights
+$nights = (new DateTime($checkOut))->diff(new DateTime($checkIn))->days;
+
+// Check if the booking is at least 2 nights
+if ($nights < 2) {
+    echo json_encode(["success" => false, "message" => "The booking must be at least 2 nights."]);
+    exit;
+}
 
 // Validate room availability and capacity
 $stmt = $conn->prepare("SELECT room_id, price_per_night, capacity FROM hb_rooms WHERE hotel_id = ? AND room_id = ? AND availability = TRUE");

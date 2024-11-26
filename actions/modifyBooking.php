@@ -51,6 +51,15 @@ if ($guests > $roomCapacity) {
     exit;
 }
 
+// Calculate the number of nights
+$nights = (new DateTime($checkOutDate))->diff(new DateTime($checkInDate))->days;
+
+// Validate that the booking is at least 2 nights
+if ($nights < 2) {
+    echo json_encode(["success" => false, "message" => "The booking must be at least 2 nights."]);
+    exit;
+}
+
 // Calculate new total price
 $nights = (new DateTime($checkOutDate))->diff(new DateTime($checkInDate))->days;
 

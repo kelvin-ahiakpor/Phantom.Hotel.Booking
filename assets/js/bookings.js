@@ -51,98 +51,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
-  // Improved Booking card with status and action buttons
+  // Helper function to create a booking card
   function createBookingCard(booking) {
-    const statusClass = {
-      confirmed: "bg-green-100 text-green-800 border border-green-200",
-      pending: "bg-yellow-100 text-yellow-800 border border-yellow-200",
-      cancelled: "bg-red-100 text-red-800 border border-red-200"
-    }[booking.status] || "";
+    const statusClass =
+      booking.status === "confirmed"
+        ? "bg-green-100 text-green-800"
+        : booking.status === "pending"
+          ? "bg-yellow-100 text-yellow-800"
+          : booking.status === "cancelled"
+            ? "bg-red-100 text-red-800"
+            : "";
 
     const card = document.createElement("div");
-    card.className = "bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl";
+    card.className =
+      "bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl";
 
     card.innerHTML = `
-        <div class="relative">
-            <!-- Image Section with Enhanced Overlay -->
-            <div class="h-64 relative overflow-hidden group">
-                <img src="${booking.image_url}" 
-                     alt="${booking.room_type}" 
-                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
-                     
-                <!-- Multiple gradient overlays for better text readability -->
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60"></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent"></div>
-                
-                <!-- Status Badge -->
-                <div class="absolute top-4 left-4 z-20">
-                    <span class="px-4 py-2 rounded-full text-sm font-semibold ${statusClass} shadow-lg backdrop-blur-sm">
+        <div class="flex flex-col lg:flex-row">
+            <div class="lg:w-1/3 relative">
+                <img src="${booking.image_url}" alt="${booking.room_type}" class="h-48 lg:h-full w-full object-cover">
+                <div class="absolute top-4 left-4">
+                    <span class="px-4 py-2 rounded-full text-sm font-medium ${statusClass}">
                         ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                     </span>
                 </div>
-
-                <!-- Hotel Information with enhanced readability -->
-                <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/60 to-transparent">
-                    <div class="space-y-2">
-                        <h3 class="text-2xl font-bold text-white drop-shadow-md tracking-wide">
-                            ${booking.hotel_name}
-                        </h3>
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-bed text-gray-300"></i>
-                            <p class="text-gray-200 text-sm font-medium tracking-wide">
-                                ${booking.room_type}
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
-
-            <!-- Content Section -->
-            <div class="p-6 space-y-6">
-                <!-- Booking Details -->
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-2 text-gray-600">
-                            <i class="fas fa-bookmark text-gray-400"></i>
-                            <span class="text-sm">Booking ID: ${booking.booking_id}</span>
-                        </div>
-                        <span class="text-sm font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-600">
-                            ${moment(booking.check_out_date).diff(moment(booking.check_in_date), "days")} Nights
-                        </span>
+            <div class="p-6 lg:p-8 lg:w-2/3">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">${booking.hotel_name} - ${booking.room_type}</h3>
+                        <p class="text-sm text-gray-600 mt-1">Booking ID: ${booking.booking_id}</p>
                     </div>
-                    
-                    <div class="flex justify-between items-center pb-4 border-b border-gray-100">
-                        <span class="text-2xl font-bold text-gray-900">
-                            $${parseFloat(booking.total_price).toFixed(2)}
-                        </span>
-                    </div>
+                    <p class="text-2xl font-bold text-gray-900">$${parseFloat(booking.total_price).toFixed(2)}</p>
                 </div>
-
-                <!-- Dates and Guests -->
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="space-y-2">
+                <div class="mt-4 grid grid-cols-2 gap-4">
+                    <div>
                         <p class="text-sm font-medium text-gray-500">Check-in</p>
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-calendar text-gray-400"></i>
-                            <p class="font-medium text-gray-900">
-                                ${moment(booking.check_in_date).format("MMM D, YYYY")}
-                            </p>
-                        </div>
+                        <p class="mt-1 font-medium text-gray-900">${moment(booking.check_in_date).format("MMM D, YYYY")}</p>
                     </div>
-
-                    <div class="space-y-2">
+                    <div>
                         <p class="text-sm font-medium text-gray-500">Check-out</p>
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-calendar-check text-gray-400"></i>
-                            <p class="font-medium text-gray-900">
-                                ${moment(booking.check_out_date).format("MMM D, YYYY")}
-                            </p>
-                        </div>
+                        <p class="mt-1 font-medium text-gray-900">${moment(booking.check_out_date).format("MMM D, YYYY")}</p>
                     </div>
-
-                    <div class="col-span-2 flex items-center space-x-2 border-t pt-4 border-gray-100">
-                        <i class="fas fa-user-friends text-gray-400"></i>
-                        <p class="font-medium text-gray-900">${booking.guests} Guests</p>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Duration</p>
+                        <p class="mt-1 font-medium text-gray-900">${moment(booking.check_out_date).diff(moment(booking.check_in_date), "days")} Nights</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Guests</p>
+                        <p class="mt-1 font-medium text-gray-900">${booking.guests}</p>
                     </div>
                 </div>
 
@@ -168,21 +125,18 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     `;
 
-    // Add event listeners for buttons
+    // Attach event listeners for Modify and Cancel buttons
     if (booking.status === "confirmed" || booking.status === "pending") {
-      const modifyBtn = card.querySelector(".modify-btn");
-      const cancelBtn = card.querySelector(".cancel-btn");
-
-      modifyBtn.addEventListener("click", (e) => {
+      card.querySelector(".modify-btn").addEventListener("click", (e) => {
+        const button = e.target;
         openModifyModal(
-          e.target.dataset.bookingId,
-          e.target.dataset.checkIn,
-          e.target.dataset.checkOut,
-          e.target.dataset.guests
+          button.dataset.bookingId,
+          button.dataset.checkIn,
+          button.dataset.checkOut,
+          button.dataset.guests
         );
       });
-
-      cancelBtn.addEventListener("click", () => {
+      card.querySelector(".cancel-btn").addEventListener("click", () => {
         openCancelModal(booking.booking_id);
       });
     }
@@ -234,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const newCheckIn = document.getElementById("newCheckIn").value;
       const newCheckOut = document.getElementById("newCheckOut").value;
       const newGuests = document.getElementById("newGuests").value;
+      const duration = (newCheckOut - newCheckIn) / (1000 * 3600 * 24);
       const errors = [];
       let isValid = true;
 
@@ -250,6 +205,11 @@ document.addEventListener("DOMContentLoaded", function () {
       if (newCheckOut <= newCheckIn) {
         isValid = false;
         errors.push("Check-out date must be after the check-in date.");
+      }
+
+      if (duration < 2) {
+        isValid = false;
+        errors.push("Booking must be at least 2 nights.");
       }
 
       if (!isValid) {
