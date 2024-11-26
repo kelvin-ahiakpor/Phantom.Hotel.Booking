@@ -48,23 +48,28 @@ Here is the hierarchical structure of the project:
 Project File Structure:
 -----------------------
 .
+Project File Structure:
+-----------------------
+.
+├── actions
 ├── assets
 │   ├── css
 │   ├── images
-│   └── js
-├── actions
+│   ├── js
 ├── db
 ├── functions
-├── middleware
 ├── view
 │   ├── admin
 │   ├── owner
 │   ├── user
-├── .env
-├── .gitignore
+├── middleware
+├── uploads
+├── utils
+├── vendor
+├── index.php
 ├── composer.json
 ├── composer.lock
-├── index.php
+├── sw.js
 ├── LICENSE
 ├── README.md
 ```

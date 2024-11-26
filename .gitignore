@@ -1,5 +1,5 @@
 .env
 .DS_Store
 .cache_ggshield
-.generate_structure.sh
-.file_structure.txt
+file_structure.txt
+generate_structure.sh
