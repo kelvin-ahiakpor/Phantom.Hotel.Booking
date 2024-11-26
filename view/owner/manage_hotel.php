@@ -113,7 +113,7 @@ try {
     <!-- Profile Modal -->
     <div class="hidden fixed top-14 right-5 w-auto bg-white p-6 rounded-lg shadow-lg" id="profile-modal">
         <div class="flex items-center space-x-4">
-            <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-full" />
+            <!-- <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-full" /> -->
             <div class="flex flex-col space-y-2">
                 <h2 class="text-lg font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h2>
                 <p class="text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
@@ -127,6 +127,8 @@ try {
             </svg>
         </button>
     </div>
+
+
 
     <main class="min-h-screen container mx-auto px-4 py-8">
         <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
@@ -175,6 +177,32 @@ try {
                                     <a href="manage_room.php" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
                                         Manage Rooms
                                     </a>
+                                    <button onclick="showDeleteModal()"
+                                        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+                                        Delete Hotel
+                                    </button>
+                                    <!-- Delete Modal HTML -->
+                                    <div id="deleteModal"
+                                        class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                                        <!-- Modal content -->
+                                        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 relative">
+                                            <h3 class="text-2xl font-bold mb-4">Delete Hotel</h3>
+                                            <p class="text-gray-600 mb-6">
+                                                Are you sure you want to delete "<?php echo htmlspecialchars($hotelDetails['hotel_name']); ?>"?
+                                                This action cannot be undone and will remove all associated data including bookings and reviews.
+                                            </p>
+                                            <div class="flex justify-end space-x-4">
+                                                <button onclick="hideDeleteModal()"
+                                                    class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 transition">
+                                                    Cancel
+                                                </button>
+                                                <button onclick="deleteHotel(<?php echo $hotelDetails['hotel_id']; ?>)"
+                                                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
+                                                    Delete Hotel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -282,7 +310,68 @@ try {
                 if (!profileModal.contains(e.target) && !profileBtn.contains(e.target)) {
                     profileModal.classList.add('hidden');
                 }
+
             });
+
+            window.showDeleteModal = function() {
+                document.getElementById('deleteModal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+
+            window.hideDeleteModal = function() {
+                document.getElementById('deleteModal').classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+
+            window.deleteHotel = async function(hotelId) {
+                try {
+                    const response = await fetch('../../actions/deleteHotel.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            hotelId: hotelId
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Show success message
+                        showNotification('Hotel deleted successfully', 'success');
+                        // Redirect after a short delay
+                        setTimeout(() => {
+                            window.location.href = 'manage_hotel.php';
+                        }, 1500);
+                    } else {
+                        showNotification(data.message || 'Failed to delete hotel', 'error');
+                    }
+                } catch (error) {
+                    showNotification('An error occurred while deleting the hotel', 'error');
+                } finally {
+                    hideDeleteModal();
+                }
+            }
+
+            // Notification function
+            function showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 
+                ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+
+            // Close modal on outside click
+            document.getElementById('deleteModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideDeleteModal();
+                }
+            });
+
+
         });
     </script>
 </body>

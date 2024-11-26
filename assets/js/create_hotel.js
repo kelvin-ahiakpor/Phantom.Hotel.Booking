@@ -191,6 +191,23 @@ document.addEventListener('DOMContentLoaded', function () {
             elements.loadingSpinner.style.display = 'block';
 
             const formData = new FormData(elements.form);
+
+            // Explicitly add amenities with proper values
+            const amenities = ['wifi', 'pool', 'spa', 'restaurant', 'valet', 'concierge'];
+            amenities.forEach(amenity => {
+                const checkbox = document.getElementById(amenity);
+                // Set value to '1' if checked, '0' if not
+                formData.set(amenity, checkbox.checked ? '1' : '0');
+            });
+
+            // Add images if they exist
+            ['hotelImage1', 'hotelImage2', 'hotelImage3'].forEach(imageId => {
+                const input = document.getElementById(imageId);
+                if (input.files[0]) {
+                    formData.set(imageId, input.files[0]);
+                }
+            });
+
             const response = await fetch('../../actions/createHotel.php', {
                 method: 'POST',
                 body: formData
@@ -202,7 +219,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 showNotification('Hotel created successfully!', 'success');
                 setTimeout(() => window.location.href = data.redirect, 1500);
             } else {
-                throw new Error(data.message || 'Failed to create hotel');
+                throw new Error(data.errors?.join('\n') || 'Failed to create hotel');
             }
         } catch (error) {
             showNotification(error.message, 'error');
