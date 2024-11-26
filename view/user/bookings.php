@@ -2,7 +2,7 @@
 require "../../functions/session_check.php";
 require '../../db/config.php';
 require_once '../../middleware/checkUserAccess.php';
-checkUserAccess('user');
+checkUserAccess('guest');
 
 // Check if user is logged in
 if (!isset($_SESSION['userId'])) {

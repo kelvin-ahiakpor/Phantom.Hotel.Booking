@@ -2,7 +2,7 @@
 // Fetch hotels dynamically from the database
 require '../../db/config.php';
 require_once '../../middleware/checkUserAccess.php';
-checkUserAccess('user');
+checkUserAccess('guest');
 
 $query = "
     SELECT 

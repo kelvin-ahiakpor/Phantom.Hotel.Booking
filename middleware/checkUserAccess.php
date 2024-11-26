@@ -18,30 +18,10 @@ function checkUserAccess($allowedUserType)
         // Redirect based on user type
         if ($_SESSION['userType'] === 'owner') {
             header("Location: ../owner/manage_hotel.php");
-        } else {
-            header("Location: ../preview.php");
-        }
-        exit;
-    }
-
-    // Check if user type matches allowed type
-    if ($_SESSION['userType'] !== $allowedUserType) {
-        // Redirect based on user type
-        if ($_SESSION['userType'] === 'admin') {
+        } elseif ($_SESSION['userType'] === 'guest') {
+            header("Location: ../user/bookings.php");
+        } elseif ($_SESSION['userType'] === 'admin') {
             header("Location: ../admin/dashboard.php");
-        } else {
-            header("Location: ../preview.php");
-        }
-        exit;
-    }
-
-    // Check if user type matches allowed type
-    if ($_SESSION['userType'] !== $allowedUserType) {
-        // Redirect based on user type
-        if ($_SESSION['userType'] === 'guest') {
-            header("Location: ../user/dashboard.php");
-        } else {
-            header("Location: ../new_booking.php");
         }
         exit;
     }

@@ -1,7 +1,7 @@
 <?php
 require '../../db/config.php';
 require_once '../../middleware/checkUserAccess.php';
-checkUserAccess('user');
+checkUserAccess('guest');
 
 if (!isset($_GET['hotel_id'])) {
     header('Location: new_booking.php');
