@@ -86,13 +86,20 @@ try {
 
     <!-- Profile Modal -->
     <div id="profileModal" class="hidden fixed top-14 right-4 bg-white rounded-lg shadow-lg p-6 z-20">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h3>
-            <button id="closeProfileModal" class="text-gray-400 hover:text-gray-500">×</button>
-        </div>
-        <div class="space-y-2">
-            <p class="text-sm text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
-            <a href="../../actions/logout.php" class="block text-red-600 hover:text-red-700">Logout</a>
+        <div class="flex flex-col space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h3>
+                    <p class="text-sm text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
+                </div>
+
+                <button id="closeProfileModal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <hr>
+            <a href="../manage_account.php" class="text-blue-600 hover:text-blue-700">Manage Account</a>
+            <a href="../../actions/logout.php" class="text-red-600 hover:text-red-700">Logout</a>
         </div>
     </div>
 

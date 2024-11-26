@@ -37,6 +37,7 @@ checkUserAccess('owner');
                     <h3 class="font-medium"><?php echo htmlspecialchars($_SESSION['firstName']); ?></h3>
                     <p class="text-sm text-gray-500"><?php echo htmlspecialchars($_SESSION['email']); ?></p>
                 </div>
+
                 <button id="closeProfileModal" class="text-gray-400 hover:text-gray-500">
                     <i class="fas fa-times"></i>
                 </button>
